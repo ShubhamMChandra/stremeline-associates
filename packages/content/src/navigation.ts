@@ -27,9 +27,9 @@ export const footerNav = {
 
 export const siteConfig = {
   name: "Streamline Associates",
-  tagline: "AI agents that give time back to your business.",
+  tagline: "AI agents that cut the manual work out of your operations.",
   description:
-    "We design and deploy AI agent automations for small-to-medium businesses. Faster execution, fewer errors, systems that scale without adding headcount.",
+    "We design and deploy AI agents that reduce manual overhead and simplify complex processes. Less busywork, fewer errors, operations that scale without adding headcount.",
   url: "https://streamlineassociates.com",
   email: "hello@streamlineassociates.com",
 };

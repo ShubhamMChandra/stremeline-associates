@@ -64,7 +64,7 @@ export function Hero() {
               className="mb-4"
             >
               <span className="font-mono text-xs tracking-widest text-amber-500/80 uppercase">
-                // AI Automation Studio
+                // streamline-associates
               </span>
             </motion.div>
 
@@ -96,7 +96,7 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
               className="mt-8 flex flex-wrap gap-4"
             >
-              <Button asChild size="lg" className="relative overflow-hidden">
+              <Button asChild size="lg" className="btn-glow relative overflow-hidden">
                 <Link href="/contact">
                   <span className="relative z-10">Book an Audit</span>
                   <motion.div
@@ -119,9 +119,9 @@ export function Hero() {
               className="mt-10 flex flex-col gap-3 border-t border-white/[0.06] pt-6 sm:flex-row sm:gap-8"
             >
               {[
-                { value: "< 2 wks", label: "to deploy" },
-                { value: "40+ hrs", label: "reclaimed / week" },
-                { value: "3×", label: "fewer manual steps" },
+                { value: "< 2 wks", label: "to go live" },
+                { value: "0", label: "lock-in contracts" },
+                { value: "Your tools", label: "we just connect them" },
               ].map((stat) => (
                 <div key={stat.label} className="flex items-baseline gap-2">
                   <span className="font-mono text-sm font-semibold text-amber-400">

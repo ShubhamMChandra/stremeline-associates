@@ -15,9 +15,9 @@ import { BorderBeam } from "@/components/ui/border-beam";
  */
 
 const stats = [
-  { value: 40, suffix: "+", label: "Hours of overhead eliminated / week", displayValue: "" },
-  { value: 3, suffix: "×", label: "Fewer manual steps per process", displayValue: "" },
-  { value: 2, suffix: " wks", label: "Avg. time to deploy", displayValue: "" },
+  { value: 2, suffix: " wks", label: "Average time to go live", displayValue: "" },
+  { value: 0, suffix: "", label: "Upfront platform cost", displayValue: "$0" },
+  { value: 30, suffix: " days", label: "To see measurable results", displayValue: "" },
 ];
 
 export function CTASection() {
@@ -26,6 +26,11 @@ export function CTASection() {
       id="cta"
       className="relative overflow-hidden py-[clamp(6rem,4rem+8vw,12rem)]"
     >
+      {/* Ambient background glow — centered warm radial */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-amber-500/[0.04] blur-[150px]"
+      />
       <Container className="relative z-10">
         <div className="mx-auto max-w-2xl text-center">
           {/* Monospace label */}
@@ -53,7 +58,7 @@ export function CTASection() {
           <div className="mt-10 grid grid-cols-1 gap-6 rounded-xl border border-white/[0.06] bg-surface/50 p-6 sm:grid-cols-3 sm:gap-8 sm:p-8">
             {stats.map((stat, i) => (
               <div key={i} className="text-center">
-                <div className="text-2xl font-bold text-amber-400 sm:text-3xl">
+                <div className="stat-glow text-2xl font-bold text-amber-400 sm:text-3xl">
                   {stat.displayValue ? (
                     stat.displayValue
                   ) : (
@@ -92,7 +97,7 @@ export function CTASection() {
               live in under two weeks.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="btn-glow">
                 <Link href="/contact">Book an Audit</Link>
               </Button>
               <Button asChild variant="outline" size="lg">

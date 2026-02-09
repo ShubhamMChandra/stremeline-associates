@@ -75,7 +75,7 @@ export function SocialProof() {
             <dl className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
               <div className="text-center">
                 <dt className="sr-only">Manual work eliminated per week</dt>
-                <dd className="text-2xl font-bold text-amber-400 sm:text-3xl" aria-label="40 plus hours">
+                <dd className="stat-glow text-2xl font-bold text-amber-400 sm:text-3xl" aria-label="40 plus hours">
                   <NumberTicker value={40} className="text-amber-400" />
                   <span>+ hrs</span>
                 </dd>
@@ -85,7 +85,7 @@ export function SocialProof() {
               </div>
               <div className="text-center">
                 <dt className="sr-only">Fewer steps per process</dt>
-                <dd className="text-2xl font-bold text-amber-400 sm:text-3xl" aria-label="3 times fewer">
+                <dd className="stat-glow text-2xl font-bold text-amber-400 sm:text-3xl" aria-label="3 times fewer">
                   <NumberTicker value={3} className="text-amber-400" />
                   <span>×</span>
                 </dd>
@@ -95,7 +95,7 @@ export function SocialProof() {
               </div>
               <div className="text-center">
                 <dt className="sr-only">Process consolidation</dt>
-                <dd className="text-2xl font-bold text-amber-400 sm:text-3xl" aria-label="12 tools consolidated into 1 agent">
+                <dd className="stat-glow text-2xl font-bold text-amber-400 sm:text-3xl" aria-label="12 tools consolidated into 1 agent">
                   <span className="text-lg text-muted-foreground line-through">
                     12 tools
                   </span>
@@ -109,10 +109,10 @@ export function SocialProof() {
             </dl>
 
             {/* 3. Customer quote */}
-            <div className="mt-8 border-t border-white/[0.06] pt-6 text-center">
+            <div className="quote-accent mt-8 border-t border-white/[0.06] pt-6 text-center">
               <p className="mx-auto max-w-xl text-sm leading-relaxed italic text-muted-foreground">
-                &ldquo;We had 12 people doing what one agent does now. The
-                overhead just… vanished.&rdquo;
+                Response times went from hours to minutes. Our reps
+                stopped doing data entry and started actually selling.
               </p>
               <p className="mt-2 text-xs text-amber-500/80">
                 — {story?.client ?? "B2B Software Company"}
@@ -140,7 +140,7 @@ export function SocialProof() {
               // integrates with
             </p>
           </Container>
-          <Marquee pauseOnHover className="[--duration:30s] [--gap:3rem]" aria-label="Platforms we integrate with">
+          <Marquee pauseOnHover className="marquee-fade [--duration:30s] [--gap:3rem]" aria-label="Platforms we integrate with">
             {techPlatforms.map((platform) => (
               <span
                 key={platform}

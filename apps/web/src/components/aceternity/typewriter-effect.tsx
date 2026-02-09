@@ -34,8 +34,18 @@ export function TypewriterEffect({
     return () => clearInterval(interval);
   }, [words.length, typingSpeed, prefersReducedMotion]);
 
+  // Find the longest word to use as an invisible sizing reference.
+  // This prevents layout shift when shorter/longer words swap in.
+  const longestWord = words.reduce((a, b) => (a.length > b.length ? a : b), "");
+
   return (
-    <span className={cn("inline-flex items-center", className)}>
+    <span className={cn("relative inline-flex items-center", className)}>
+      {/* Invisible longest word — reserves the width so surrounding text never jumps */}
+      <span className="invisible" aria-hidden="true">
+        {longestWord}
+      </span>
+
+      {/* Visible animated word — absolutely positioned over the reserved space */}
       <AnimatePresence mode="wait">
         <motion.span
           key={currentIndex}
@@ -43,11 +53,12 @@ export function TypewriterEffect({
           animate={{ opacity: 1, y: 0 }}
           exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-block text-amber-500"
+          className="absolute left-0 inline-block text-amber-500"
         >
           {words[currentIndex]}
         </motion.span>
       </AnimatePresence>
+
       {/* Blinking cursor — hidden for reduced motion */}
       {!prefersReducedMotion && (
         <motion.span

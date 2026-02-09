@@ -34,7 +34,7 @@ export function Capabilities() {
           <div className="mb-10 lg:mb-16">
             <Code className="mb-3 block">// capabilities</Code>
             <Heading size="h2" as="h2">
-              What We Automate.
+              What We <span className="text-gradient">Automate.</span>
             </Heading>
             <p className="mt-3 max-w-lg text-muted-foreground">
               Every agent targets a specific bottleneck — fewer steps, less overhead, cleaner operations.

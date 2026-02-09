@@ -33,11 +33,12 @@ export function UseCases() {
           <div className="mb-12">
             <Code className="mb-3 block">// use-cases</Code>
             <Heading size="h2" as="h2">
-              Common Bottlenecks We Fix.
+              Common Bottlenecks We <span className="text-gradient">Fix.</span>
             </Heading>
             <p className="mt-3 max-w-lg text-muted-foreground">
               The same manual overhead shows up everywhere. These are the patterns we automate most.
             </p>
+            <div className="mt-6 h-px w-24 bg-gradient-to-r from-amber-500 to-amber-500/0" />
           </div>
 
           {/* Cards */}
@@ -52,7 +53,7 @@ export function UseCases() {
                     className={i === 2 ? "sm:col-span-2 lg:col-span-1" : ""}
                     style={{ marginTop: i % 2 !== 0 ? "1.5rem" : "0" }}
                   >
-                    <SpotlightCard className="h-full p-6">
+                    <SpotlightCard className="card-lift h-full p-6">
                       <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-white/[0.04] text-muted-foreground transition-colors group-hover:bg-amber-500/10 group-hover:text-amber-500">
                         <Icon className="h-5 w-5" />
                       </div>

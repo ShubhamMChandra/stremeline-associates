@@ -81,7 +81,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Streamline Associates. All rights reserved.
           </p>
           <p className="font-mono text-xs text-muted-foreground">
-            No bloated teams. Just automation that works.
+            Less overhead. More output. Agents that just work.
           </p>
         </div>
       </Container>
