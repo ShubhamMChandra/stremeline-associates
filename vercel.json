@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "cd ../.. && pnpm turbo build --filter=web",
+  "installCommand": "pnpm install",
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet -- . ':(exclude)**.md' ':(exclude)**.mdx'",
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}
