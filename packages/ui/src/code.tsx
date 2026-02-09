@@ -1,11 +1,15 @@
-import { type JSX } from "react";
+import { type HTMLAttributes } from "react";
+import { cn } from "./cn";
 
-export function Code({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}): JSX.Element {
-  return <code className={className}>{children}</code>;
+function Code({ children, className, ...props }: HTMLAttributes<HTMLElement>) {
+  return (
+    <code
+      className={cn("font-mono text-xs text-gray-500 tracking-wider", className)}
+      {...props}
+    >
+      {children}
+    </code>
+  );
 }
+
+export { Code };

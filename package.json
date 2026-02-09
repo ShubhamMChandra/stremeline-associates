@@ -5,13 +5,26 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,mdx,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,mdx,css}\"",
+    "check-types": "turbo run check-types",
+    "test": "turbo run test",
+    "test:e2e": "playwright test",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.4",
+    "@playwright/test": "^1.52.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
     "prettier": "^3.7.4",
+    "prettier-plugin-tailwindcss": "^0.6.12",
     "turbo": "^2.8.3",
     "typescript": "5.9.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": ["eslint --fix --max-warnings 0", "prettier --write"],
+    "*.{json,md,mdx,css}": ["prettier --write"]
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {

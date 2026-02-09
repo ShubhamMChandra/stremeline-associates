@@ -25,6 +25,7 @@ export const nextJsConfig = [
     "build/**",
     "next-env.d.ts",
   ]),
+  // Merge React plugin with service worker globals
   {
     ...pluginReact.configs.flat.recommended,
     languageOptions: {
@@ -34,6 +35,7 @@ export const nextJsConfig = [
       },
     },
   },
+  // Apply Next.js recommended and core-web-vitals rules
   {
     plugins: {
       "@next/next": pluginNext,
