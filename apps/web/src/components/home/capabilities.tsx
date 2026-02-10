@@ -27,20 +27,19 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 export function Capabilities() {
   return (
-    <section id="capabilities" className="relative pb-[clamp(5rem,4rem+6vw,10rem)] pt-[clamp(3rem,2rem+4vw,6rem)]">
+    <section id="capabilities" className="relative bg-[#0B0A09] py-12 md:py-16">
       <DotBackground dotColor="rgba(217, 119, 6, 0.08)" dotSize={1} gap={24}>
         <Container>
           {/* Section header — left-aligned, gradient line accent instead of LampEffect */}
-          <div className="mb-10 lg:mb-16">
+          <div className="mb-8">
             <Code className="mb-3 block">// capabilities</Code>
             <Heading size="h2" as="h2">
-              What We <span className="text-gradient">Automate.</span>
+              What We Automate.
             </Heading>
             <p className="mt-3 max-w-lg text-muted-foreground">
               Every agent targets a specific bottleneck — fewer steps, less overhead, cleaner operations.
             </p>
-            {/* Gradient line accent — the drama without the dead space */}
-            <div className="mt-6 h-px w-24 bg-gradient-to-r from-amber-500 to-amber-500/0" />
+            <div className="mt-4 h-px w-24 bg-gradient-to-r from-amber-500 to-amber-500/0" />
           </div>
           <BentoGrid className="auto-rows-[18rem] grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service, i) => (

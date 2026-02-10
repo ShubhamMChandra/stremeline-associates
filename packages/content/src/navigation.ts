@@ -26,10 +26,10 @@ export const footerNav = {
 };
 
 export const siteConfig = {
-  name: "Streamline Associates",
+  name: "Stremeline Associates",
   tagline: "AI agents that cut the manual work out of your operations.",
   description:
     "We design and deploy AI agents that reduce manual overhead and simplify complex processes. Less busywork, fewer errors, operations that scale without adding headcount.",
-  url: "https://streamlineassociates.com",
-  email: "hello@streamlineassociates.com",
+  url: "https://stremelineassociates.com",
+  email: "hello@stremelineassociates.com",
 };

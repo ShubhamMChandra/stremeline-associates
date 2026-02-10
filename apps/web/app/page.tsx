@@ -23,13 +23,9 @@ export default function HomePage() {
       <Header />
       <main id="main-content" className="min-h-screen pt-16">
         <Hero />
-        <div className="section-divider" aria-hidden="true" />
         <Capabilities />
-        <div className="section-divider" aria-hidden="true" />
         <SocialProof />
-        <div className="section-divider" aria-hidden="true" />
         <UseCases />
-        <div className="section-divider" aria-hidden="true" />
         <CTASection />
       </main>
       <Footer />

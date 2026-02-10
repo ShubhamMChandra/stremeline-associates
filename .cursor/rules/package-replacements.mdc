@@ -1,0 +1,56 @@
+---
+description: Tracks which basic components are superseded by premium alternatives — prevents accidental use of the weaker version
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Package Replacement Guide
+
+Some components built by the initial scaffolding have premium replacements installed.
+Use the PREMIUM version. The basic version stays for backwards compatibility but should
+be phased out in new code.
+
+## Replaced Components
+
+| Basic (avoid in new code) | Premium (use this instead) | Why |
+|---|---|---|
+| `Counter` from `@repo/animation` | `NumberTicker` from `@/components/ui/number-ticker` | Magic UI's slot-machine style animation is far more visually impressive than a basic spring counter |
+| `useScrollAnimation` from `@repo/animation` | `useInView` from `motion/react` | Motion's built-in hook does the same thing; no need for a custom IntersectionObserver wrapper |
+| Hand-rolled scroll fade-ups (for major sections) | GSAP `ScrollTrigger` | GSAP can pin, parallax, and sequence — way beyond simple fade-up. Use `@repo/animation` FadeIn for small elements, GSAP for big section reveals |
+
+## Where Premium Components Live
+
+| Component | Path | Package |
+|---|---|---|
+| NumberTicker | `apps/web/components/ui/number-ticker.tsx` | Magic UI |
+| Marquee | `apps/web/components/ui/marquee.tsx` | Magic UI |
+| AnimatedBeam | `apps/web/components/ui/animated-beam.tsx` | Magic UI |
+| BentoGrid | `apps/web/components/ui/bento-grid.tsx` | Magic UI |
+| OrbitingCircles | `apps/web/components/ui/orbiting-circles.tsx` | Magic UI |
+| AnimatedList | `apps/web/components/ui/animated-list.tsx` | Magic UI |
+| BorderBeam | `apps/web/components/ui/border-beam.tsx` | Magic UI |
+
+## What Still Works from @repo/animation (KEEP)
+
+These are solid and complement the premium components:
+
+- `FadeIn`, `AnimateOnScroll` — Good for small element reveals (cards, text blocks)
+- `WordReveal` — Nice word-by-word text animation (pairs well with Aceternity's TextGenerateEffect for different contexts)
+- `StaggerChildren` / `StaggerItem` — Useful for list/grid stagger patterns
+- `useMagneticCursor` — Unique hover effect, no premium replacement needed
+- `useReducedMotion` — Accessibility hook, always use this
+- All variants in `variants.ts` — Clean motion presets, reuse freely
+
+## Aceternity UI (copy-paste, no npm package)
+
+These are NOT installed via npm. Copy the source from ui.aceternity.com when you need them:
+- Aurora Background
+- Background Beams
+- Spotlight
+- Text Generate Effect
+- Typewriter Effect
+- Lamp Effect
+- 3D Card Effect
+- Moving Border
+
+Place copied Aceternity components in: `apps/web/components/aceternity/`

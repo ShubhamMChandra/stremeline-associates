@@ -5,7 +5,6 @@ import { Container, Heading, Button } from "@repo/ui";
 import { caseStudies } from "@repo/content";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { Marquee } from "@/components/ui/marquee";
-import { Search, PenTool, Rocket, BarChart3 } from "lucide-react";
 
 /**
  * What this does: Compact social proof section — process steps, metrics, customer quote, platform marquee
@@ -38,40 +37,15 @@ export function SocialProof() {
   return (
     <section
       id="social-proof"
-      className="relative pb-[clamp(3rem,2rem+3vw,5rem)] pt-[clamp(2rem,1.5rem+2vw,3.5rem)]"
+      className="relative py-10 md:py-12"
     >
-      {/* Slightly elevated background */}
-      <div className="absolute inset-0 bg-surface/30" />
+      {/* Slightly elevated background — faint warm tint to distinguish from pure black */}
+      <div className="absolute inset-0 bg-[#0D0C0A]/80" />
 
       <div className="relative z-10">
         <Container>
           <div className="mx-auto max-w-4xl">
-            {/* 1. Process row — horizontal on desktop, 2×2 on mobile */}
-            <div className="mb-10 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-              {[Search, PenTool, Rocket, BarChart3].map((Icon, i) => {
-                const labels = ["Audit", "Design", "Build", "Optimize"];
-                return (
-                  <div
-                    key={i}
-                    className="flex items-center gap-4 sm:gap-6"
-                  >
-                    <div className="group flex flex-col items-center gap-2">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full border border-amber-500/30 bg-surface text-amber-500 transition-all group-hover:border-amber-500/60 group-hover:shadow-[0_0_12px_rgba(217,119,6,0.15)] sm:h-12 sm:w-12">
-                        <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
-                      </div>
-                      <span className="text-xs font-medium text-muted-foreground">
-                        {labels[i]}
-                      </span>
-                    </div>
-                    {i < 3 && (
-                      <div className="hidden h-px w-8 bg-gradient-to-r from-amber-500/40 to-amber-500/10 sm:block" />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* 2. Metrics — anchored to operational efficiency */}
+            {/* Metrics — anchored to operational efficiency */}
             <dl className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
               <div className="text-center">
                 <dt className="sr-only">Manual work eliminated per week</dt>
@@ -108,11 +82,11 @@ export function SocialProof() {
               </div>
             </dl>
 
-            {/* 3. Customer quote */}
-            <div className="quote-accent mt-8 border-t border-white/[0.06] pt-6 text-center">
-              <p className="mx-auto max-w-xl text-sm leading-relaxed italic text-muted-foreground">
-                Response times went from hours to minutes. Our reps
-                stopped doing data entry and started actually selling.
+            {/* Customer quote */}
+            <div className="mt-8 border-t border-white/[0.06] pt-6 text-center">
+              <p className="mx-auto max-w-xl border-l-2 border-amber-500/20 pl-4 text-left text-sm leading-relaxed italic text-muted-foreground sm:text-center sm:border-l-0 sm:pl-0">
+                &ldquo;Response times went from hours to minutes. Our reps
+                stopped doing data entry and started actually selling.&rdquo;
               </p>
               <p className="mt-2 text-xs text-amber-500/80">
                 — {story?.client ?? "B2B Software Company"}
@@ -133,7 +107,7 @@ export function SocialProof() {
           </div>
         </Container>
 
-        {/* 4. Platform marquee — full bleed */}
+        {/* Platform marquee — full bleed */}
         <div className="mt-8 border-t border-white/[0.04] pt-6">
           <Container>
             <p className="mb-3 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">

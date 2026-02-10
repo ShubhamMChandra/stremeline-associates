@@ -8,7 +8,7 @@ const headingVariants = cva("font-bold text-foreground", {
       display:
         "text-[clamp(3.5rem,2rem+7.5vw,6rem)] leading-none tracking-[-0.03em]",
       h1: "text-[clamp(2.75rem,1.75rem+5vw,3.75rem)] leading-tight tracking-[-0.03em]",
-      h2: "text-[clamp(1.875rem,1.5rem+1.875vw,2.25rem)] leading-tight tracking-[-0.02em]",
+      h2: "text-[clamp(2rem,1.5rem+2.5vw,2.75rem)] leading-tight tracking-[-0.02em]",
       h3: "text-[clamp(1.5rem,1.25rem+1.25vw,1.875rem)] leading-snug tracking-[-0.02em]",
       h4: "text-[clamp(1.125rem,1rem+0.5vw,1.25rem)] leading-snug",
     },

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://streamlineassociates.com";
-const SITE_NAME = "Streamline Associates";
+const SITE_NAME = "Stremeline Associates";
 
 interface MetadataOptions {
   title: string;

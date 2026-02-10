@@ -57,7 +57,7 @@ export async function POST(request: Request) {
 
     if (process.env.RESEND_API_KEY) {
       await getResend().emails.send({
-        from: "Streamline Associates <noreply@streamlineassociates.com>",
+        from: "Stremeline Associates <noreply@stremelineassociates.com>",
         to: [teamEmail],
         replyTo: email,
         subject: `New Contact: ${name} from ${company}`,

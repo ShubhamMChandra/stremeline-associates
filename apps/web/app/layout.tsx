@@ -24,19 +24,19 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Streamline Associates — AI Agents That Give Time Back to Your Business",
-    template: "%s | Streamline Associates",
+    default: "Stremeline Associates — AI Agents for Leaner Operations",
+    template: "%s | Stremeline Associates",
   },
   description:
     "We design and deploy AI agent automations for small-to-medium businesses. Faster execution, fewer errors, systems that scale without adding headcount.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://streamlineassociates.com",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://stremelineassociates.com",
   ),
   openGraph: {
-    title: "Streamline Associates — AI Agents That Give Time Back to Your Business",
+    title: "Stremeline Associates — AI Agents for Leaner Operations",
     description:
-      "We design and deploy AI agent automations for small-to-medium businesses. Faster execution, fewer errors, systems that scale without adding headcount.",
-    siteName: "Streamline Associates",
+      "We design and deploy AI agents that reduce manual overhead and simplify complex processes. Less busywork, fewer errors, operations that scale without adding headcount.",
+    siteName: "Stremeline Associates",
     type: "website",
   },
   twitter: {

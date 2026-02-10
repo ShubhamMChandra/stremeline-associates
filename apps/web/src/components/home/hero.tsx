@@ -7,7 +7,7 @@ import { BackgroundBeams } from "../aceternity/background-beams";
 import { TextGenerateEffect } from "../aceternity/text-generate-effect";
 import { TypewriterEffect } from "../aceternity/typewriter-effect";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
-import { Search, PenTool, Rocket, BarChart3, Zap, GitBranch } from "lucide-react";
+import { Search, PenTool, Rocket, BarChart3, Zap } from "lucide-react";
 
 /**
  * What this does: Full-viewport hero with animated beams, text reveal, OrbitingCircles, and social proof
@@ -29,26 +29,15 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center overflow-hidden"
+      className="relative flex items-center overflow-hidden pt-8 md:pt-12"
     >
       {/* Animated background beams */}
       <BackgroundBeams className="z-0" />
 
-      {/* CSS grid overlay — subtle linear texture */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-
       {/* Gradient blobs — ambient drift, no scroll-linking (avoids Lenis/Framer conflict) */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1]">
         <div className="absolute -left-1/4 -top-1/4 h-[300px] w-[300px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/15 blur-[120px] lg:h-[600px] lg:w-[600px]" />
-        <div className="absolute -right-1/4 top-1/4 h-[250px] w-[250px] animate-[drift_25s_ease-in-out_infinite_reverse] rounded-full bg-blue-500/5 blur-[100px] lg:h-[500px] lg:w-[500px]" />
+        <div className="absolute -right-1/4 top-1/4 h-[250px] w-[250px] animate-[drift_25s_ease-in-out_infinite_reverse] rounded-full bg-sky-500/[0.08] blur-[100px] lg:h-[500px] lg:w-[500px]" />
       </div>
 
       {/* Content */}
@@ -64,14 +53,14 @@ export function Hero() {
               className="mb-4"
             >
               <span className="font-mono text-xs tracking-widest text-amber-500/80 uppercase">
-                // streamline-associates
+                // stremeline-associates
               </span>
             </motion.div>
 
             {/* Headline with text generate effect */}
             <h1 className="text-[clamp(2.5rem,1.5rem+5vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.03em]">
               <TextGenerateEffect
-                words="AI agents that cut the manual work out of your operations."
+                words="Your operations, minus the busywork."
                 className="block"
                 duration={0.4}
               />
@@ -96,15 +85,8 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
               className="mt-8 flex flex-wrap gap-4"
             >
-              <Button asChild size="lg" className="btn-glow relative overflow-hidden">
-                <Link href="/contact">
-                  <span className="relative z-10">Book an Audit</span>
-                  <motion.div
-                    className="absolute inset-0 -z-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                    animate={{ x: ["-100%", "100%"] }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                  />
-                </Link>
+              <Button asChild size="lg" className="btn-glow">
+                <Link href="/contact">Book an Audit</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link href="/case-studies">See Our Work</Link>
@@ -163,24 +145,8 @@ export function Hero() {
                 </div>
               </OrbitingCircles>
 
-              {/* Outer orbit — tech labels (slower, reverse, darker amber) */}
-              <OrbitingCircles radius={115} duration={40} speed={1} reverse iconSize={28} path>
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-600/10 text-[10px] font-mono text-amber-600/80">
-                  AI
-                </div>
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-600/10 text-[10px] font-mono text-amber-600/80">
-                  CRM
-                </div>
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-600/10 text-[10px] font-mono text-amber-600/80">
-                  API
-                </div>
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-600/10 text-[10px] font-mono text-amber-600/80">
-                  DB
-                </div>
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-600/10 text-[10px] font-mono text-amber-600/80">
-                  ML
-                </div>
-              </OrbitingCircles>
+              {/* Faint outer ring — gives depth without noise */}
+              <OrbitingCircles radius={115} duration={40} speed={1} reverse iconSize={0} path />
             </div>
           </motion.div>
         </div>

@@ -31,7 +31,7 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6 md:px-8">
-        <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80" aria-label="Streamline Associates — home">
+        <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80" aria-label="Stremeline Associates — home">
           <Logo />
         </Link>
 

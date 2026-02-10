@@ -1,0 +1,84 @@
+---
+description: Web dev stack and conventions for this project (Next.js 16, React 19, TypeScript, pnpm monorepo)
+alwaysApply: true
+---
+
+# Web Dev Stack — Stremeline Associates
+
+## Stack Summary
+
+| Layer | Choice |
+|-------|--------|
+| **Runtime** | Node >= 18 |
+| **Package manager** | pnpm 9 (workspaces) |
+| **Build / tasks** | Turbo (monorepo) |
+| **Web app** | Next.js 16 (App Router), React 19 |
+| **Language** | TypeScript 5.9 (strict) |
+| **Styling** | Tailwind CSS v4 (CSS-based config, no tailwind.config.js) |
+| **Animation** | Motion (Framer Motion), GSAP + ScrollTrigger |
+| **Smooth scroll** | Lenis |
+| **UI components** | shadcn/ui (base), Aceternity UI (hero/visual), Magic UI (animated data) |
+| **3D / WebGL** | React Three Fiber + Drei (hero particles/globe) |
+| **Forms** | React Hook Form + Zod |
+| **Email** | Resend + React Email |
+| **Lint / format** | ESLint 9 (flat config), Prettier |
+| **Shared packages** | @repo/ui, @repo/tokens, @repo/types, @repo/utils, @repo/validation, @repo/content, @repo/eslint-config, @repo/typescript-config |
+
+## Monorepo Layout
+
+```
+apps/
+  web/          # Main Next.js 16 app (App Router)
+packages/
+  ui/           # Shared React components (@repo/ui)
+  tokens/       # Design tokens — colors, spacing, typography (@repo/tokens)
+  types/        # Shared TypeScript types (@repo/types)
+  utils/        # Utility functions like cn() (@repo/utils)
+  validation/   # Zod schemas for forms (@repo/validation)
+  content/      # Static content — services, case studies, team (@repo/content)
+  eslint-config/
+  typescript-config/
+```
+
+## Key Conventions
+
+### Next.js (App Router)
+- Server Components by default; add `"use client"` only for hooks/interactivity.
+- Pages in `app/` directory: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`.
+- Route handlers under `app/api/`.
+
+### Styling (Tailwind v4)
+- Config lives in CSS (`@import "tailwindcss"` in globals.css), NOT in tailwind.config.js.
+- PostCSS plugin: `@tailwindcss/postcss`.
+- Use `cn()` from `@repo/utils` to merge Tailwind classes.
+
+### Animation Hierarchy
+- **Motion (Framer Motion)**: Component-level animations (enter/exit, hover, gestures).
+- **GSAP + ScrollTrigger**: Scroll-driven section animations, parallax, pinning, timelines.
+- **Lenis**: Global smooth scrolling wrapper — integrates with GSAP ScrollTrigger.
+- **Aceternity UI**: Copy-paste animated hero/background components (aurora, beams, spotlight, text effects).
+- **Magic UI**: Copy-paste animated data components (number ticker, marquee, bento grid, animated beam, orbit).
+
+### Component Sources
+- **shadcn/ui** components go in `components/ui/`.
+- **Magic UI** components go in `components/magicui/`.
+- **Aceternity UI** components go in `components/aceternity/`.
+- Custom components go in `components/`.
+
+### TypeScript
+- Strict typing — no `any` unless justified.
+- Shared types in `@repo/types`, imported across apps and packages.
+- Run `pnpm check-types` from root.
+
+### Forms & Validation
+- Schemas defined in `@repo/validation` using Zod.
+- Forms built with React Hook Form + `@hookform/resolvers/zod`.
+
+## Quick Commands
+
+- `pnpm dev` — Start all apps (web on port 3000)
+- `pnpm build` — Build everything via Turbo
+- `pnpm lint` — Lint all projects (zero warnings policy)
+- `pnpm format` — Format with Prettier
+- `pnpm check-types` — Typecheck all projects
+- `pnpm add <pkg> -F web` — Add dep to web app

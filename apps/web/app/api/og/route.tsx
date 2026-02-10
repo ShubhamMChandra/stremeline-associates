@@ -5,10 +5,10 @@ export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
-  const title = searchParams.get("title") || "Streamline Associates";
+  const title = searchParams.get("title") || "Stremeline Associates";
   const description =
     searchParams.get("description") ||
-    "AI agents that give time back to your business.";
+    "Your operations, minus the busywork.";
 
   return new ImageResponse(
     (
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
               color: "#FAFAF9",
             }}
           >
-            Streamline Associates
+            Stremeline Associates
           </span>
         </div>
 

@@ -1,0 +1,106 @@
+---
+description: Maps each Stremeline Associates site section to specific premium UI components from Aceternity UI and Magic UI
+globs: apps/web/app/**/*.tsx, apps/web/components/**/*.tsx
+alwaysApply: false
+---
+
+# Stremeline Associates — Component Map
+
+Use this as a reference when building each section of the site.
+Components marked (A) = Aceternity UI, (M) = Magic UI, (S) = shadcn/ui.
+
+## Hero Section
+
+| Element | Component | Source |
+|---------|-----------|--------|
+| Background | Aurora Background or Background Beams | (A) ui.aceternity.com/components/background-beams |
+| Headline reveal | Text Generate Effect | (A) ui.aceternity.com/components/text-generate-effect |
+| Subheadline | Typewriter Effect — cycle through "leads", "workflows", "operations" | (A) ui.aceternity.com/components/typewriter-effect |
+| CTA buttons | Button with shimmer/glow | (S) + custom |
+| 3D ambient | Particle field or globe via React Three Fiber | @react-three/fiber + drei |
+
+Tagline: "AI agents that give time back to your business."
+
+## What We Do (Services)
+
+| Element | Component |
+|---------|-----------|
+| Section layout | Bento Grid | (M) magicui.design/docs/components/bento-grid |
+| Card hover | 3D Card Effect | (A) ui.aceternity.com/components/3d-card-effect |
+| Icons | Lucide React icons |
+| Scroll reveal | GSAP ScrollTrigger fade-up on each card |
+
+Services: Lead capture, Workflow automation, CRM data hygiene, Sales/ops handoffs, Alerts/reporting.
+
+## How It Works (Process)
+
+| Element | Component |
+|---------|-----------|
+| Section header | Lamp Effect | (A) ui.aceternity.com/components/lamp-effect |
+| Step flow | Animated Beam diagram | (M) magicui.design/docs/components/animated-beam |
+| Step pins | GSAP ScrollTrigger pin each step as user scrolls |
+| Step icons | Orbiting Circles | (M) magicui.design/docs/components/orbiting-circles |
+
+Steps: 1. Audit  2. Design  3. Build & Deploy  4. Optimize
+
+## Results / Social Proof
+
+| Element | Component |
+|---------|-----------|
+| Stats | Number Ticker | (M) magicui.design/docs/components/number-ticker |
+| Client logos | Marquee | (M) magicui.design/docs/components/marquee |
+| Testimonial cards | Card with spotlight hover | (A) |
+| Scroll trigger | GSAP — numbers count up when section enters viewport |
+
+Stats to animate: "Hours to minutes", "Zero leads dropped", "Multiple hours reclaimed/week".
+
+## Case Study
+
+| Element | Component |
+|---------|-----------|
+| Problem/Solution layout | Tabs or accordion | (S) |
+| Before/after | Animated comparison | Custom with Motion |
+| Results callout | Number Ticker | (M) |
+
+## About / Team
+
+| Element | Component |
+|---------|-----------|
+| Section background | Spotlight | (A) ui.aceternity.com/components/spotlight |
+| Team cards | Hover card with Moving Border | (A) ui.aceternity.com/components/moving-border |
+| Credentials | Animated List | (M) magicui.design/docs/components/animated-list |
+
+## Contact / Lead Capture
+
+| Element | Component |
+|---------|-----------|
+| Form | React Hook Form + Zod schema from @repo/validation |
+| Input styling | shadcn Input, Textarea, Select | (S) |
+| Submit animation | Button with loading spinner | (S) |
+| Background | Dot Background or Grid | (A) |
+| Success state | Motion AnimatePresence exit/enter |
+| Email notification | Resend + React Email template |
+
+## Global
+
+| Element | Component |
+|---------|-----------|
+| Smooth scrolling | Lenis (wrap in layout.tsx) |
+| Nav | shadcn Navigation Menu + Motion for mobile drawer | (S) |
+| Footer | Standard layout with Lucide icons |
+| Page transitions | Motion AnimatePresence on route change |
+| Scroll-to-top | Custom button with Motion |
+
+## Install Commands (run after Claude Code finishes)
+
+```bash
+# Aceternity components — copy-paste from ui.aceternity.com (no package to install)
+# Magic UI components:
+npx shadcn@latest add "https://magicui.design/r/number-ticker"
+npx shadcn@latest add "https://magicui.design/r/marquee"
+npx shadcn@latest add "https://magicui.design/r/bento-grid"
+npx shadcn@latest add "https://magicui.design/r/animated-beam"
+npx shadcn@latest add "https://magicui.design/r/orbiting-circles"
+npx shadcn@latest add "https://magicui.design/r/animated-list"
+npx shadcn@latest add "https://magicui.design/r/border-beam"
+```
