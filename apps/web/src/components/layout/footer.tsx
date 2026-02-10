@@ -18,12 +18,12 @@ export function Footer() {
           {/* Company */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold text-foreground">Company</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-1">
               {footerNav.company.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-block py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -35,12 +35,12 @@ export function Footer() {
           {/* Services */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold text-foreground">Services</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-1">
               {footerNav.services.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-block py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -65,9 +65,9 @@ export function Footer() {
                 name="email"
                 placeholder="you@company.com"
                 required
-                className="h-9 text-xs"
+                className="h-11 text-xs"
               />
-              <Button type="submit" size="sm">
+              <Button type="submit" size="sm" className="h-11">
                 Subscribe
               </Button>
             </form>

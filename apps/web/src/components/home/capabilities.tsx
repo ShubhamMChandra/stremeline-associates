@@ -91,7 +91,7 @@ export function Capabilities() {
   }, [reducedMotion]);
 
   return (
-    <section className="light bg-background pt-8 pb-12 md:pt-10 md:pb-16">
+    <section className="light overflow-hidden bg-background pt-8 pb-12 md:pt-10 md:pb-16">
       <Container>
         {/* Section intro */}
         <div className="mb-8">

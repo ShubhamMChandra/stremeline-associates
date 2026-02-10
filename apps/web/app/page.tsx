@@ -24,7 +24,7 @@ export default function HomePage() {
       </a>
       <ScrollProgress />
       <Header />
-      <main id="main-content" className="min-h-screen pt-16">
+      <main id="main-content" className="min-h-screen overflow-x-hidden pt-16">
         {/* ── Dark zone: Hero + Problem ── */}
         <Hero />
         <ProblemScroll />
