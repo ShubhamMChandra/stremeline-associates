@@ -26,7 +26,7 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "glass border-b border-white/[0.05]"
+          ? "glass border-b border-border"
           : "bg-transparent",
       )}
     >
@@ -42,7 +42,7 @@ export function Header() {
               href={item.href}
               aria-current={pathname === item.href ? "page" : undefined}
               className={cn(
-                "relative px-4 py-2 text-sm font-medium transition-colors",
+                "link-draw relative px-4 py-2 text-sm font-medium transition-colors",
                 pathname === item.href
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground",

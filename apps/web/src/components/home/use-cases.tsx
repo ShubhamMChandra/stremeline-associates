@@ -1,69 +1,70 @@
 "use client";
 
-import { Container, Heading, Code } from "@repo/ui";
-import { StaggerChildren, staggerItem } from "@repo/animation";
+import { Container, Heading } from "@repo/ui";
 import { useCases } from "@repo/content";
-import { motion } from "motion/react";
-import { SpotlightCard } from "../aceternity/spotlight";
-import { UserPlus, Database, Mail, ArrowLeftRight, Bell } from "lucide-react";
+import { useReducedMotion, AnimateOnScroll } from "@repo/animation";
 
 /**
- * What this does: Grid of use cases with SpotlightCard hover effects
- * Why it's here: Helps visitors self-identify — "this is my problem, they solve it"
- * How it works: SpotlightCards add hover interactivity, StaggerChildren animates cards in on scroll
- * Dependencies: @repo/ui, @repo/content, @repo/animation, Aceternity (SpotlightCard), lucide-react
+ * What this does: Light-section use cases — clean vertical list with staggered animations
+ * Why it's here: Each use case gets its own row, tight and scannable
+ * How it works: Simple vertical layout with numbered items. AnimateOnScroll for entrance.
+ *   Alternating subtle background tints for visual rhythm.
+ * Dependencies: @repo/ui, @repo/content, @repo/animation
  */
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  "user-plus": UserPlus,
-  database: Database,
-  mail: Mail,
-  "arrow-right-left": ArrowLeftRight,
-  bell: Bell,
-};
-
 export function UseCases() {
-  return (
-    <section id="use-cases" className="relative py-12 md:py-16">
-        <Container>
-          {/* Header */}
-          <div className="mb-8">
-            <Code className="mb-3 block">// use-cases</Code>
-            <Heading size="h2" as="h2">
-              Common Bottlenecks We Fix.
-            </Heading>
-            <p className="mt-3 max-w-lg text-muted-foreground">
-              The same manual overhead shows up everywhere. These are the patterns we automate most.
-            </p>
-          </div>
+  const reducedMotion = useReducedMotion();
 
-          {/* Cards */}
-          {/* 6-col grid: top row 3×2, bottom row 2×3 — both rows fill completely */}
-          <StaggerChildren>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
-              {useCases.map((uc, i) => {
-                const Icon = iconMap[uc.icon] || Bell;
-                // First 3 cards: span 2 of 6 cols. Last 2: span 3 of 6 cols.
-                const colClass = i < 3 ? "lg:col-span-2" : "lg:col-span-3";
-                return (
-                  <motion.div
-                    key={uc.slug}
-                    variants={staggerItem}
-                    className={colClass}
-                  >
-                    <SpotlightCard className="card-lift h-full p-6">
-                      <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-white/[0.04] text-muted-foreground transition-colors group-hover:bg-amber-500/10 group-hover:text-amber-500">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground">{uc.title}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{uc.description}</p>
-                    </SpotlightCard>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </StaggerChildren>
-        </Container>
+  return (
+    <section
+      id="use-cases"
+      className="light bg-background pt-8 pb-12 md:pt-10 md:pb-16"
+      aria-label="Common use cases"
+    >
+      <Container>
+        {/* Section header */}
+        <div className="mb-8">
+          <Heading as="h2" size="h2">
+            Common Bottlenecks We Fix.
+          </Heading>
+          <p className="mt-4 max-w-xl text-lg text-muted-foreground">
+            The same manual overhead shows up everywhere. These are the patterns
+            we automate most.
+          </p>
+        </div>
+
+        {/* Use case list */}
+        <div className="flex flex-col gap-px">
+          {useCases.map((useCase, i) => {
+            const inner = (
+              <div className="flex flex-col gap-4 border-t border-border py-8 md:flex-row md:items-start md:gap-12 md:py-10">
+                {/* Number */}
+                <span className="flex-shrink-0 text-[clamp(2.5rem,5vw,4rem)] font-extralight leading-none tracking-tight text-muted-foreground/25">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                {/* Content */}
+                <div className="max-w-xl">
+                  <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                    {useCase.title}
+                  </h3>
+                  <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                    {useCase.description}
+                  </p>
+                </div>
+              </div>
+            );
+
+            if (reducedMotion) return <div key={useCase.slug}>{inner}</div>;
+
+            return (
+              <AnimateOnScroll key={useCase.slug}>
+                {inner}
+              </AnimateOnScroll>
+            );
+          })}
+        </div>
+      </Container>
     </section>
   );
 }

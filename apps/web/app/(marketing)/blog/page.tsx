@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Heading, Badge, Button } from "@repo/ui";
 import { FadeIn, AnimateOnScroll } from "@repo/animation";
-import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
-
 /**
  * What this does: Blog listing page with atmospheric hero, featured post layout, and newsletter CTA
  * Why it's here: Content marketing and SEO — establishes Stremeline as thought leaders in AI automation
@@ -23,7 +21,7 @@ const posts = [
     title: "Why AI Agents, Not Chatbots, Are the Future of SMB Operations",
     description:
       "Chatbots answer questions. AI agents take action. Here's why that distinction matters for your business.",
-    publishedAt: "2025-01-20",
+    publishedAt: "2026-01-20",
     tags: ["AI Agents", "Operations"],
     featured: true,
   },
@@ -150,18 +148,18 @@ export default function BlogPage() {
         </section>
       )}
 
-      {/* ── CTA — scroll-driven serif text reveal ── */}
+      {/* ── CTA — serif quote ── */}
       <section className="py-16 md:py-24">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <ScrollTextReveal start={85} end={55}>
+            <FadeIn>
               <p
                 className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
                 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
               >
                 Ready to stop doing the work your agents could handle?
               </p>
-            </ScrollTextReveal>
+            </FadeIn>
             <FadeIn delay={0.3}>
               <Button asChild size="lg" className="btn-glow mt-10">
                 <Link href="/contact">Let&apos;s Talk</Link>

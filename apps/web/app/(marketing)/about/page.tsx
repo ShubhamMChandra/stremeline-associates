@@ -2,16 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Heading, Button } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
-import { ScrollAssembly } from "../../../src/components/ui/scroll-assembly";
-import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
-
 /**
  * What this does: About page with a narrative arc told in a direct, human voice
  * Why it's here: Builds conviction — explains why Stremeline exists and why you'd work with them
  * How it works: Four sections that read as one story: who we are → what we noticed →
  *   how we're different → closing. No generic process steps. No credential flexing.
- *   The copy sounds like a founder explaining the company to a friend.
- * Dependencies: @repo/ui, @repo/animation, ScrollAssembly, ScrollTextReveal
+ * Dependencies: @repo/ui, @repo/animation
  */
 
 export const metadata: Metadata = {
@@ -103,7 +99,7 @@ export default function AboutPage() {
             </Heading>
           </FadeIn>
 
-          <ScrollAssembly className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3">
             {[
               {
                 number: "01",
@@ -124,19 +120,21 @@ export default function AboutPage() {
                   "Small team, low overhead. You're not paying for an office in Manhattan or a bench of junior consultants. You're paying for the engineering work that actually ships.",
               },
             ].map((item) => (
-              <div key={item.number} data-assembly-item className="group">
-                <span className="font-mono text-sm text-muted-foreground/40">
-                  {item.number}
-                </span>
-                <h3 className="mt-3 text-lg font-semibold text-foreground">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {item.description}
-                </p>
-              </div>
+              <FadeIn key={item.number}>
+                <div className="group">
+                  <span className="font-mono text-sm text-muted-foreground/40">
+                    {item.number}
+                  </span>
+                  <h3 className="mt-3 text-lg font-semibold text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              </FadeIn>
             ))}
-          </ScrollAssembly>
+          </div>
         </Container>
       </section>
 
@@ -144,14 +142,14 @@ export default function AboutPage() {
       <section className="py-16 md:py-24">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <ScrollTextReveal start={85} end={55}>
+            <FadeIn>
               <p
                 className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
                 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
               >
                 No bloated teams. No unnecessary platforms. Just automation that works.
               </p>
-            </ScrollTextReveal>
+            </FadeIn>
             <FadeIn delay={0.3}>
               <Button asChild size="lg" className="btn-glow mt-10">
                 <Link href="/contact">Start a Conversation</Link>

@@ -234,10 +234,14 @@ body {
   z-index: 1;
 }
 
-/* Glass morphism utility */
+/* Glass morphism utility — adapts to dark/light context */
 .glass {
   background: rgba(10, 10, 11, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.light .glass {
+  background: rgba(250, 250, 249, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }

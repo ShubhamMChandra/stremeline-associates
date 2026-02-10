@@ -2,14 +2,20 @@
 
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
 
 /**
- * What this does: Wraps the app with Lenis smooth scrolling
- * Why it's here: Creates the premium "butter" scroll feel across the entire site
- * How it works: Initializes Lenis on mount, runs a rAF loop, and cleans up on unmount.
- *   Also integrates with GSAP ScrollTrigger if available.
- * Dependencies: lenis
+ * What this does: Wraps the app with Lenis smooth scrolling + GSAP ScrollTrigger integration
+ * Why it's here: Creates the premium "butter" scroll feel and powers all scroll-driven animations
+ * How it works: Initializes Lenis, registers ScrollTrigger, syncs them via lenis.on("scroll"),
+ *   and runs a rAF loop for both systems
+ * Dependencies: lenis, gsap, gsap/ScrollTrigger
  */
+
+// Register GSAP plugin at module level (safe to call multiple times)
+gsap.registerPlugin(ScrollTrigger);
+
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
 
@@ -27,21 +33,14 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
     lenisRef.current = lenis;
 
-    // Integrate with GSAP ScrollTrigger if loaded
-    // ScrollTrigger.scrollerProxy is set up in the GSAP hook
-    lenis.on("scroll", () => {
-      // This ensures GSAP ScrollTrigger stays in sync with Lenis
-      if (typeof window !== "undefined" && (window as any).__gsapScrollTrigger) {
-        (window as any).__gsapScrollTrigger.update();
-      }
+    // Sync Lenis scroll with GSAP ScrollTrigger
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // Use GSAP ticker for the Lenis rAF loop — keeps both systems in perfect sync
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
     });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.destroy();

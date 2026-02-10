@@ -3,14 +3,12 @@ import Link from "next/link";
 import { Container, Heading, Badge, Button } from "@repo/ui";
 import { AnimateOnScroll, FadeIn } from "@repo/animation";
 import { caseStudies } from "@repo/content";
-import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
-
 /**
- * What this does: Case studies page with featured layout, scroll-driven text reveal CTA
+ * What this does: Case studies page with featured layout and serif CTA
  * Why it's here: Social proof and credibility — shows actual outcomes from AI agent deployments
  * How it works: Server component with atmospheric hero, full-width featured case study
- *   with card-lift hover, and scroll-driven serif CTA reveal.
- * Dependencies: @repo/ui, @repo/content, @repo/animation, ScrollTextReveal
+ *   with card-lift hover, and serif CTA.
+ * Dependencies: @repo/ui, @repo/content, @repo/animation
  */
 
 export const metadata: Metadata = {
@@ -75,7 +73,7 @@ export default function CaseStudiesPage() {
                     )}
                   </div>
 
-                  <h2 className="text-2xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors md:text-3xl">
+                  <h2 className="text-3xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors md:text-4xl">
                     {featured.title}
                   </h2>
 
@@ -149,18 +147,18 @@ export default function CaseStudiesPage() {
         </section>
       )}
 
-      {/* ── CTA — scroll-driven serif text reveal ── */}
+      {/* ── CTA — serif quote ── */}
       <section className="py-16 md:py-24">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <ScrollTextReveal start={85} end={55}>
+            <FadeIn>
               <p
-                className="text-[clamp(1.375rem,2.5vw,2.25rem)] leading-[1.2] text-foreground/90"
+                className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
                 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
               >
                 Your results could be next.
               </p>
-            </ScrollTextReveal>
+            </FadeIn>
             <FadeIn delay={0.3}>
               <Button asChild size="lg" className="btn-glow mt-10">
                 <Link href="/contact">Book an Audit</Link>

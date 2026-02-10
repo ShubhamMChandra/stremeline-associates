@@ -2,19 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Heading, Button } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
-import { services, useCases, processTagline } from "@repo/content";
+import { services, processSteps, processTagline } from "@repo/content";
 import { Zap, Workflow, ShieldCheck, TrendingUp } from "lucide-react";
-import { ScrollAssembly } from "../../../src/components/ui/scroll-assembly";
 import { ScrollCounter } from "../../../src/components/ui/scroll-counter";
 import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
 
 /**
- * What this does: Services page with custom scroll-driven interactions on every section
- * Why it's here: Gives visitors the full picture of what we build — every section has its own moment
- * How it works: Server component composing client interactive components.
- *   Capabilities scatter-to-grid on scroll, stat numbers count on scroll,
- *   CTA text reveals via clip-path on scroll. No basic fade-ins.
- * Dependencies: @repo/ui, @repo/content, @repo/animation, lucide-react, custom scroll components
+ * What this does: Services page — four capabilities, process steps, proof stats, and CTA
+ * Why it's here: Dedicated page to explain what Stremeline builds, how, and with what results
+ * How it works: Server component with five visually distinct sections. Each uses a different format:
+ *   atmospheric hero → full-width feature rows → 4-column process grid → large scroll counters
+ *   → serif CTA. Light/dark alternation with gradient transitions for visual rhythm.
+ * Dependencies: @repo/ui, @repo/content, @repo/animation, lucide-react, ScrollCounter, ScrollTextReveal
  */
 
 const iconMap: Record<string, React.ElementType> = {
@@ -33,8 +32,9 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      {/* ── 1. Hero (dark) — atmospheric with proof stats ── */}
-      <section className="relative overflow-hidden pt-24 pb-14 md:pt-28 md:pb-16">
+      {/* ── 1. Hero (dark) — atmospheric opening with serif accent ── */}
+      <section className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-28">
+        {/* Background atmosphere */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
           <div className="absolute -left-1/4 -top-1/4 h-[250px] w-[250px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/10 blur-[100px] lg:h-[500px] lg:w-[500px]" />
           <div className="absolute -right-1/4 top-1/3 h-[200px] w-[200px] animate-[drift_25s_ease-in-out_infinite_reverse] rounded-full bg-sky-500/[0.05] blur-[80px] lg:h-[400px] lg:w-[400px]" />
@@ -56,83 +56,140 @@ export default function ServicesPage() {
             <Heading size="h1" as="h1" className="max-w-3xl">
               What We Build
             </Heading>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               AI agent systems that handle the work your team shouldn&apos;t be
               doing manually. We design, build, and deploy — fast.
             </p>
-
-            <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6 sm:flex-row sm:gap-8">
-              {[
-                { value: "4", label: "core capabilities" },
-                { value: "15+", label: "platforms connected" },
-                { value: "< 2 wks", label: "to go live" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex items-baseline gap-2">
-                  <span className="font-mono text-sm font-semibold text-primary">
-                    {stat.value}
-                  </span>
-                  <span className="text-xs text-muted-foreground">{stat.label}</span>
-                </div>
-              ))}
-            </div>
+            <p
+              className="mt-8 max-w-xl text-xl leading-relaxed text-foreground/80 md:text-2xl"
+              style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
+            >
+              Your team does the work that matters. Agents handle everything
+              else.
+            </p>
           </FadeIn>
         </Container>
       </section>
 
-      {/* ── 2. Capabilities (light) — GSAP scatter-to-grid assembly ── */}
+      {/* ── Transition: dark → light ── */}
+      <div
+        className="h-8 md:h-12"
+        style={{ background: "linear-gradient(to bottom, #0A0A0B, #FAFAF9)" }}
+        aria-hidden="true"
+      />
+
+      {/* ── 2. Services deep-dive (light) — each service gets a full row ── */}
       <section className="light bg-background py-16 md:py-20">
         <Container>
           <FadeIn>
-            <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // capabilities
-            </span>
-            <Heading size="h2" as="h2" className="mb-10">
+            <Heading size="h2" as="h2" className="mb-4">
               Core Capabilities
             </Heading>
+            <p className="mb-12 max-w-lg text-lg text-muted-foreground md:mb-16">
+              Four automation pillars. Each one removes a specific category of
+              manual work from your operations.
+            </p>
           </FadeIn>
 
-          <ScrollAssembly className="grid gap-5 md:grid-cols-2">
-            {services.map((service) => {
+          <div className="flex flex-col">
+            {services.map((service, i) => {
               const Icon = iconMap[service.icon];
               return (
-                <div
-                  key={service.slug}
-                  data-assembly-item
-                  className="card-lift group rounded-xl border border-border bg-card p-6 md:p-8"
-                >
-                  <div className="mb-4 flex items-center gap-3">
-                    {Icon && (
-                      <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10">
-                        <Icon className="size-5 text-primary" strokeWidth={1.75} />
-                      </div>
-                    )}
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {service.title}
-                    </h3>
+                <FadeIn key={service.slug}>
+                  <div className="group grid gap-4 border-t border-border py-10 md:grid-cols-[100px_1fr] md:gap-8 md:py-14">
+                    {/* Left: index + icon */}
+                    <div className="flex items-start gap-4 md:flex-col md:items-start md:gap-3">
+                      <span className="text-[clamp(2rem,4vw,3.5rem)] font-extralight leading-none tracking-tight text-muted-foreground/20">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      {Icon && (
+                        <Icon
+                          className="mt-1 size-5 text-primary md:mt-0"
+                          strokeWidth={1.75}
+                        />
+                      )}
+                    </div>
+
+                    {/* Right: content */}
+                    <div className="max-w-2xl">
+                      <span className="mb-2 inline-block font-mono text-[11px] tracking-widest text-primary/60 uppercase">
+                        {service.label}
+                      </span>
+                      <h3 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+                        {service.title}
+                      </h3>
+                      <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                        {service.longDescription}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {service.longDescription}
-                  </p>
-                </div>
+                </FadeIn>
               );
             })}
-          </ScrollAssembly>
+          </div>
         </Container>
       </section>
 
-      {/* ── 3. Stat band (dark) — scroll-driven counting numbers ── */}
-      <section className="border-y border-border py-14 md:py-16">
+      {/* ── Transition: light → dark ── */}
+      <div
+        className="h-8 md:h-12"
+        style={{ background: "linear-gradient(to bottom, #FAFAF9, #0A0A0B)" }}
+        aria-hidden="true"
+      />
+
+      {/* ── 3. How We Work (dark) — 4-column process grid ── */}
+      <section className="py-16 md:py-20">
         <Container>
-          <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
+          <FadeIn>
+            <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
+              // process
+            </span>
+            <Heading size="h2" as="h2" className="mb-4">
+              How We Work
+            </Heading>
+            <p className="mb-12 max-w-lg text-lg text-muted-foreground md:mb-16">
+              {processTagline}
+            </p>
+          </FadeIn>
+
+          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4 md:gap-0">
+            {processSteps.map((step, i) => (
+              <FadeIn key={step.number} delay={i * 0.1}>
+                <div
+                  className={`relative md:pl-6 md:pr-4 ${i > 0 ? "md:border-l md:border-border" : ""}`}
+                >
+                  <span className="text-5xl font-extralight leading-none tracking-tight text-foreground/10 md:text-6xl">
+                    {String(step.number).padStart(2, "0")}
+                  </span>
+                  <p className="mt-3 font-mono text-[11px] tracking-widest text-primary/60 uppercase">
+                    {step.label}
+                  </p>
+                  <h3 className="mt-2 text-lg font-semibold text-foreground">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {step.description}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ── 4. Proof band (dark) — large scroll-driven stats + serif quote ── */}
+      <section className="border-t border-border py-16 md:py-20">
+        <Container>
+          <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-3">
             <div>
               <ScrollCounter
                 from={0}
                 to={50}
                 suffix="+"
-                className="text-3xl font-extralight tracking-tight text-foreground md:text-4xl"
+                className="text-[clamp(3.5rem,8vw,7rem)] font-extralight leading-none tracking-tight text-foreground"
               />
-              <p className="mt-2 text-xs text-muted-foreground">
-                hours reclaimed / month
+              <p className="mt-3 text-sm text-muted-foreground">
+                hours reclaimed per month
               </p>
             </div>
             <div>
@@ -140,9 +197,9 @@ export default function ServicesPage() {
                 from={0}
                 to={90}
                 suffix="%"
-                className="text-3xl font-extralight tracking-tight text-foreground md:text-4xl"
+                className="text-[clamp(3.5rem,8vw,7rem)] font-extralight leading-none tracking-tight text-foreground"
               />
-              <p className="mt-2 text-xs text-muted-foreground">
+              <p className="mt-3 text-sm text-muted-foreground">
                 fewer data-entry errors
               </p>
             </div>
@@ -150,76 +207,37 @@ export default function ServicesPage() {
               <ScrollCounter
                 from={5}
                 to={1}
-                className="text-3xl font-extralight tracking-tight text-foreground md:text-4xl"
+                className="text-[clamp(3.5rem,8vw,7rem)] font-extralight leading-none tracking-tight text-foreground"
               />
-              <p className="mt-2 text-xs text-muted-foreground">
+              <p className="mt-3 text-sm text-muted-foreground">
                 week to first live workflow
               </p>
             </div>
-            <div>
-              <span className="text-3xl font-extralight tracking-tight text-foreground md:text-4xl">
-                0
-              </span>
-              <p className="mt-2 text-xs text-muted-foreground">
-                lock-in contracts
-              </p>
-            </div>
           </div>
+
+          <blockquote className="mx-auto mt-14 max-w-2xl text-center md:mt-16">
+            <p
+              className="text-xl leading-relaxed italic text-foreground/80 md:text-2xl"
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
+              &ldquo;Zero lock-in. Your agents earn their place every
+              month&nbsp;&mdash; or we haven&apos;t built them right.&rdquo;
+            </p>
+          </blockquote>
         </Container>
       </section>
 
-      {/* ── 4. Use Cases (light) — numbered rows with hover highlight ── */}
-      <section className="light bg-background py-16 md:py-20">
-        <Container>
-          <FadeIn>
-            <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // use cases
-            </span>
-            <Heading size="h2" as="h2" className="mb-8">
-              Common Bottlenecks We Fix
-            </Heading>
-          </FadeIn>
-
-          <div>
-            {useCases.map((uc, i) => (
-              <div
-                key={uc.slug}
-                className="group -mx-4 flex gap-4 rounded-lg border-t border-border px-4 py-5 transition-colors hover:bg-secondary/50 md:items-baseline md:gap-6 md:py-6"
-              >
-                <span className="shrink-0 font-mono text-sm text-muted-foreground/50 group-hover:text-primary transition-colors">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="text-base font-semibold text-foreground">
-                    {uc.title}
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                    {uc.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ── 5. CTA (dark) — scroll-driven serif text reveal ── */}
+      {/* ── 5. CTA (dark) — serif text reveal ── */}
       <section className="py-16 md:py-24">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            <p className="font-mono text-xs tracking-widest text-primary/60 uppercase">
-              {processTagline}
-            </p>
-            <ScrollTextReveal
-              className="mt-5"
-              start={85}
-              end={55}
-            >
+            <ScrollTextReveal className="mt-5" start={85} end={55}>
               <p
-                className="text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.2] text-foreground/90"
+                className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
                 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
               >
-                Let&apos;s map your workflows and show you where agents cut the overhead.
+                Tell us where the bottlenecks are. We&apos;ll show you what
+                agents can do.
               </p>
             </ScrollTextReveal>
             <FadeIn delay={0.3}>

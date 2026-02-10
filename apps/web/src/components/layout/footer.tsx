@@ -4,7 +4,7 @@ import { footerNav, siteConfig } from "@repo/content";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] bg-background">
+    <footer className="border-t border-border bg-background">
       <Container className="py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}

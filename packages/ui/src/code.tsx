@@ -4,7 +4,7 @@ import { cn } from "./cn";
 function Code({ children, className, ...props }: HTMLAttributes<HTMLElement>) {
   return (
     <code
-      className={cn("font-mono text-xs text-gray-500 tracking-wider", className)}
+      className={cn("font-mono text-xs text-muted-foreground tracking-wider", className)}
       {...props}
     >
       {children}

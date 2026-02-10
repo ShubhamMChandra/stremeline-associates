@@ -5,12 +5,13 @@ import { cn } from "./cn";
 const headingVariants = cva("font-bold text-foreground", {
   variants: {
     size: {
-      display:
-        "text-[clamp(3.5rem,2rem+7.5vw,6rem)] leading-none tracking-[-0.03em]",
-      h1: "text-[clamp(2.75rem,1.75rem+5vw,3.75rem)] leading-tight tracking-[-0.03em]",
-      h2: "text-[clamp(2rem,1.5rem+2.5vw,2.75rem)] leading-tight tracking-[-0.02em]",
-      h3: "text-[clamp(1.5rem,1.25rem+1.25vw,1.875rem)] leading-snug tracking-[-0.02em]",
-      h4: "text-[clamp(1.125rem,1rem+0.5vw,1.25rem)] leading-snug",
+      /* Use named theme tokens (from base.css @theme) instead of raw clamp()
+         so Tailwind's content scanner always generates the right classes */
+      display: "text-display leading-none tracking-tighter",
+      h1: "text-6xl leading-tight tracking-tighter",
+      h2: "text-5xl leading-tight tracking-tight",
+      h3: "text-3xl leading-snug tracking-tight",
+      h4: "text-xl leading-snug",
     },
   },
   defaultVariants: {

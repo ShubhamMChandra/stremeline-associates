@@ -1,72 +1,100 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Container, Heading, Button } from "@repo/ui";
-import { WordReveal } from "@repo/animation";
-import { BorderBeam } from "@/components/ui/border-beam";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Button, Container } from "@repo/ui";
+import { useReducedMotion, useMagneticCursor } from "@repo/animation";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
- * What this does: Final CTA section merging vision statement with conversion action
- * Why it's here: Emotional closer — paints the vision, then makes the ask
- * How it works: WordReveal headline, BorderBeam CTA card — all centered,
- *   floating in generous dark space with no competing visual noise
- * Dependencies: @repo/ui, @repo/animation (WordReveal), Magic UI (BorderBeam)
+ * What this does: Typographic crescendo CTA — serif text reveals line-by-line via scroll
+ * Why it's here: The emotional close. Type IS the design. Nothing else.
+ * How it works: Three lines of serif text animate their clipPath from hidden to visible
+ *   as the user scrolls into the section. GSAP ScrollTrigger with scrub. Magnetic button below.
+ * Dependencies: gsap, gsap/ScrollTrigger, @repo/ui, @repo/animation
  */
 
+const ctaLines = [
+  "Two weeks from now,",
+  "your team forgets",
+  "it was ever manual.",
+];
+
 export function CTASection() {
+  const reducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const linesRef = useRef<HTMLDivElement>(null);
+  const magnetic = useMagneticCursor(0.15);
+
+  useEffect(() => {
+    if (reducedMotion || !linesRef.current) return;
+
+    const lines = linesRef.current.querySelectorAll("[data-cta-line]");
+
+    lines.forEach((line, i) => {
+      gsap.fromTo(
+        line,
+        { clipPath: "inset(0 100% 0 0)" },
+        {
+          clipPath: "inset(0 0% 0 0)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            scrub: true,
+            // Stagger the reveals by offsetting start/end per line
+            start: `top ${70 - i * 10}%`,
+            end: `top ${35 - i * 10}%`,
+          },
+        },
+      );
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.trigger === sectionRef.current) t.kill();
+      });
+    };
+  }, [reducedMotion]);
+
   return (
     <section
+      ref={sectionRef}
       id="cta"
-      className="relative overflow-hidden py-12 md:py-16"
+      className="relative pt-12 pb-16 md:pt-12 md:pb-24"
+      aria-label="Call to action"
     >
-      {/* Faint cool tint — contrasts the warm sections above */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[#0A0B0D]/60" />
-      <Container className="relative z-10">
-        <div className="mx-auto max-w-2xl text-center">
-          {/* Monospace label */}
-          <span className="font-mono text-xs tracking-widest text-amber-500/80 uppercase">
-            // next-step
-          </span>
-
-          {/* WordReveal headline */}
-          <div className="mt-6">
-            <Heading size="h2" as="h2">
-              <WordReveal text="Simpler Operations. Starting Now." />
-            </Heading>
-          </div>
-
-          {/* Vision line — one sentence, then the ask */}
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            You don&apos;t need more people. You need less process.
-          </p>
-
-          {/* CTA card with BorderBeam */}
-          <div className="relative mt-8 overflow-hidden rounded-2xl border border-white/[0.06] bg-surface p-6 sm:p-8 lg:p-10">
-            <BorderBeam
-              size={300}
-              duration={10}
-              delay={0}
-              colorFrom="#FBBF24"
-              colorTo="#B45309"
-            />
-
-            <Heading size="h3" as="h3">
-              Start your audit today.
-            </Heading>
-            <p className="mt-3 text-muted-foreground">
-              We&apos;ll map your workflows, find the manual overhead, and
-              show you exactly where agents simplify things. Most teams are
-              live in under two weeks.
-            </p>
-            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Button asChild size="lg" className="btn-glow">
-                <Link href="/contact">Book an Audit</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/about">Learn About Us</Link>
-              </Button>
+      <Container className="flex flex-col items-center text-center">
+        {/* Serif text — reveals line by line */}
+        <div ref={linesRef} className="space-y-1 md:space-y-2">
+          {ctaLines.map((line, i) => (
+            <div
+              key={i}
+              data-cta-line
+              className="text-[clamp(2rem,4vw,4.5rem)] font-normal leading-[1.1] tracking-[-0.03em] text-foreground"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                clipPath: reducedMotion ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+              }}
+            >
+              {line}
             </div>
-          </div>
+          ))}
+        </div>
+
+        {/* Single magnetic button */}
+        <div
+          ref={magnetic.ref}
+          onMouseMove={magnetic.onMouseMove}
+          onMouseLeave={magnetic.onMouseLeave}
+          className="mt-12"
+        >
+          <Button asChild size="lg" className="btn-glow">
+            <Link href="/contact">Start Your Audit</Link>
+          </Button>
         </div>
       </Container>
     </section>

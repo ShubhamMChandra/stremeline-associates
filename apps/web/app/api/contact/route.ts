@@ -53,7 +53,7 @@ export async function POST(request: Request) {
 
     // Send email to your team's shared inbox via Resend
     // Set RESEND_API_KEY and CONTACT_EMAIL in your .env
-    const teamEmail = process.env.CONTACT_EMAIL || "hello@streamlineassociates.com";
+    const teamEmail = process.env.CONTACT_EMAIL || "hello@stremelineassociates.com";
 
     if (process.env.RESEND_API_KEY) {
       await getResend().emails.send({
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
               <p style="margin: 0; white-space: pre-wrap;">${message}</p>
             </div>
             <p style="margin-top: 24px; color: #999; font-size: 12px;">
-              Sent from streamlineassociates.com contact form
+              Sent from stremelineassociates.com contact form
             </p>
           </div>
         `,
