@@ -111,7 +111,7 @@ export default function ServicesPage() {
 
                     {/* Right: content */}
                     <div className="max-w-2xl">
-                      <span className="mb-2 inline-block font-mono text-[11px] tracking-widest text-primary/60 uppercase">
+                      <span className="mb-2 inline-block font-mono text-[11px] tracking-widest text-primary/80 uppercase">
                         {service.label}
                       </span>
                       <h3 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
@@ -166,7 +166,7 @@ export default function ServicesPage() {
                   <span className="text-5xl font-extralight leading-none tracking-tight text-foreground/10 md:text-6xl">
                     {String(step.number).padStart(2, "0")}
                   </span>
-                  <p className="mt-3 font-mono text-[11px] tracking-widest text-primary/60 uppercase">
+                  <p className="mt-3 font-mono text-[11px] tracking-widest text-primary/80 uppercase">
                     {step.label}
                   </p>
                   <h3 className="mt-2 text-lg font-semibold text-foreground">

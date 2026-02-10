@@ -117,11 +117,11 @@ export default function BlogPage() {
                         <span className="text-xs text-muted-foreground/50">
                           |
                         </span>
-                        <span className="font-mono text-xs text-muted-foreground/70">
+                        <span className="font-mono text-xs text-muted-foreground">
                           {post.readingTime}
                         </span>
                       </div>
-                      <span className="font-mono text-xs text-primary/60 transition-colors group-hover:text-primary">
+                      <span className="font-mono text-xs text-primary/80 transition-colors group-hover:text-primary">
                         Read &rarr;
                       </span>
                     </div>

@@ -110,7 +110,7 @@ export function SocialProof() {
         {/* Platform marquee — full bleed */}
         <div className="mt-8 border-t border-white/[0.04] pt-6">
           <Container>
-            <p className="mb-3 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
+            <p className="mb-3 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
               // integrates with
             </p>
           </Container>
