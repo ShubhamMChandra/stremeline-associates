@@ -74,28 +74,28 @@ export default function AboutPage() {
       </section>
 
       {/* ── Values — light section for contrast ── */}
-      <section className="light bg-background py-20 md:py-28">
+      <section className="light bg-background py-16 md:py-20">
         <Container>
           <AnimateOnScroll>
             <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
               // what drives us
             </span>
-            <Heading size="h2" as="h2" className="mb-14">
+            <Heading size="h2" as="h2" className="mb-10">
               Our Principles
             </Heading>
           </AnimateOnScroll>
 
-          <div className="grid gap-16 md:gap-12 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3">
             {values.map((v, i) => (
               <AnimateOnScroll key={i} delay={i * 0.12}>
                 <div className="group">
-                  <span className="text-[clamp(3rem,5vw,4.5rem)] font-extralight leading-none tracking-tight text-muted-foreground/25">
+                  <span className="font-mono text-sm text-muted-foreground/40">
                     {v.number}
                   </span>
-                  <h3 className="mt-4 text-lg font-semibold text-foreground">
+                  <h3 className="mt-3 text-lg font-semibold text-foreground">
                     {v.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {v.description}
                   </p>
                 </div>
@@ -105,35 +105,33 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ── Process — dark section, oversized step numbers ── */}
-      <section className="py-20 md:py-28">
+      {/* ── Process — dark section, numbered rows ── */}
+      <section className="py-16 md:py-20">
         <Container>
           <AnimateOnScroll>
             <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
               // how we work
             </span>
-            <Heading size="h2" as="h2" className="mb-16">
+            <Heading size="h2" as="h2" className="mb-10">
               Four Steps to Live
             </Heading>
           </AnimateOnScroll>
 
-          <div className="space-y-0">
+          <div>
             {processSteps.map((step, i) => (
               <AnimateOnScroll key={step.number} delay={i * 0.1}>
-                <div className="flex flex-col gap-4 border-t border-border py-10 md:flex-row md:items-start md:gap-12 md:py-14">
-                  {/* Oversized step number */}
-                  <div className="flex-shrink-0">
-                    <span className="text-[clamp(3.5rem,7vw,6rem)] font-extralight leading-none tracking-tight text-muted-foreground/20">
-                      {String(step.number).padStart(2, "0")}
-                    </span>
-                  </div>
+                <div className="flex gap-4 border-t border-border py-6 md:items-baseline md:gap-8 md:py-8">
+                  {/* Compact step number */}
+                  <span className="shrink-0 font-mono text-sm text-muted-foreground/40">
+                    {String(step.number).padStart(2, "0")}
+                  </span>
 
                   {/* Content */}
-                  <div className="max-w-xl md:pt-3">
-                    <h3 className="text-xl font-semibold text-foreground">
+                  <div>
+                    <h3 className="text-base font-semibold text-foreground">
                       {step.title}
                     </h3>
-                    <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                       {step.description}
                     </p>
                   </div>
@@ -143,7 +141,7 @@ export default function AboutPage() {
           </div>
 
           <AnimateOnScroll delay={0.3}>
-            <p className="mt-12 text-center font-mono text-sm text-primary/70">
+            <p className="mt-10 text-center font-mono text-sm text-primary/70">
               {processTagline}
             </p>
           </AnimateOnScroll>
