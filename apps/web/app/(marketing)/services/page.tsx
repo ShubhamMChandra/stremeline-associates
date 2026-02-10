@@ -153,6 +153,56 @@ export default function ServicesPage() {
         </Container>
       </section>
 
+      {/* ── Social proof (light) — quote + metrics ── */}
+      <section className="light bg-background border-t border-border py-12 md:py-16">
+        <Container>
+          <AnimateOnScroll>
+            <div className="mx-auto max-w-3xl text-center">
+              <p
+                className="text-lg leading-relaxed text-foreground/80 md:text-xl"
+                style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
+              >
+                &ldquo;Response times went from hours to minutes. Our reps
+                stopped doing data entry and started actually selling.&rdquo;
+              </p>
+              <p className="mt-3 font-mono text-xs tracking-wider text-muted-foreground uppercase">
+                B2B Software Company
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll delay={0.15}>
+            <div className="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-6 text-center">
+              {[
+                { value: "< 5 min", label: "Response time" },
+                { value: "0%", label: "Leads dropped" },
+                { value: "12 hrs/wk", label: "Admin time saved" },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <span className="font-mono text-2xl font-light text-primary md:text-3xl">
+                    {stat.value}
+                  </span>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll delay={0.25}>
+            <div className="mt-8 text-center">
+              <Link
+                href="/case-studies/b2b-software-lead-automation"
+                className="font-mono text-xs text-primary/70 transition-colors hover:text-primary"
+              >
+                Read the full case study &rarr;
+              </Link>
+            </div>
+          </AnimateOnScroll>
+        </Container>
+      </section>
+
       {/* ── Transition: light → dark ── */}
       <div
         className="h-8 md:h-12"
