@@ -1,0 +1,28 @@
+---
+description: Commit frequently to trigger automatic Vercel deploys
+alwaysApply: true
+---
+
+# Commit Often
+
+## Rule
+
+After completing any meaningful unit of work, **commit and push to `main`** so Vercel auto-deploys.
+
+A "meaningful unit" includes:
+- A new or updated component, page, or layout
+- A bug fix or style change
+- New or updated content (blog posts, case studies, copy changes)
+- Config or dependency changes
+- Any change the user asks to see live
+
+## How
+
+1. Stage only the relevant files (`git add <files>`) — avoid `git add -A` to prevent committing secrets or junk files.
+2. Write a concise commit message (1-2 sentences) describing what changed and why.
+3. Push to `main` (`git push origin main`).
+4. Vercel will auto-deploy on push — no manual deploy needed.
+
+## Do NOT batch
+
+Don't accumulate many unrelated changes into one giant commit. Prefer small, focused commits so each deploy is easy to inspect and roll back if needed.
