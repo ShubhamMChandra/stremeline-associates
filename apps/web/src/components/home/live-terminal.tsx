@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { useReducedMotion } from "@repo/animation";
 
 /**
  * What this does: A living terminal that types out automation scenarios in real time
@@ -65,11 +64,10 @@ function Cursor() {
 }
 
 export function LiveTerminal() {
-  const reducedMotion = useReducedMotion();
   const [currentScenario, setCurrentScenario] = useState(0);
   const [visibleLines, setVisibleLines] = useState<number>(0);
-  // -1 = not typing; 0 = cursor visible, no chars; 1+ = chars revealed
-  const [typedChars, setTypedChars] = useState(0);
+  // -1 = not started/between phases; 0 = cursor visible; 1+ = chars revealed
+  const [typedChars, setTypedChars] = useState(-1);
 
   const lines = scenarios[currentScenario] ?? scenarios[0]!;
   const commandLine = lines[0]!;
@@ -78,24 +76,19 @@ export function LiveTerminal() {
 
   /*
    * Single effect drives the entire animation loop.
-   * All timers are collected in an array and cleared on unmount/re-render
-   * to prevent timer leaks and ensure proper cleanup.
+   * Does NOT depend on reducedMotion — the terminal is the hero visual
+   * and should always animate. Timers are collected and cleared on cleanup.
    */
   useEffect(() => {
-    if (reducedMotion) {
-      setVisibleLines(lines.length);
-      setTypedChars(-1);
-      return;
-    }
-
-    // Reset for this scenario — cursor visible immediately
+    // Reset for this scenario
     setVisibleLines(0);
-    setTypedChars(0);
+    setTypedChars(-1);
 
     const timers: NodeJS.Timeout[] = [];
     let charIdx = 0;
     let lineIdx = 0;
-    const cmd = lines[0]!;
+    const scenarioLines = scenarios[currentScenario] ?? scenarios[0]!;
+    const cmd = scenarioLines[0]!;
 
     /* Phase 1 — type command char-by-char */
     function typeChar() {
@@ -125,14 +118,14 @@ export function LiveTerminal() {
 
     /* Phase 3 — reveal output lines one by one */
     function scheduleNextLine() {
-      if (lineIdx >= lines.length) {
+      if (lineIdx >= scenarioLines.length) {
         // All output shown — pause, then cycle to next scenario
         timers.push(setTimeout(() => {
           setCurrentScenario((s) => (s + 1) % scenarios.length);
         }, 3500));
         return;
       }
-      const nextLine = lines[lineIdx];
+      const nextLine = scenarioLines[lineIdx];
       if (nextLine) {
         const jitter = 1 + (Math.random() - 0.5) * 0.3; // ±15% realism
         timers.push(setTimeout(showNextLine, nextLine.delay * jitter));
@@ -145,15 +138,16 @@ export function LiveTerminal() {
       scheduleNextLine();
     }
 
-    // Kick off: short pause then start typing (cursor already visible)
-    timers.push(setTimeout(typeChar, 200));
+    // Kick off: show cursor, then start typing after a brief pause
+    timers.push(setTimeout(() => {
+      setTypedChars(0); // cursor appears
+      timers.push(setTimeout(typeChar, 150)); // first keystroke
+    }, 300));
 
     return () => {
       timers.forEach(clearTimeout);
     };
-    // lines is derived from currentScenario — no need in deps
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentScenario, reducedMotion]);
+  }, [currentScenario]);
 
   /* ── Color helpers ── */
   const prefixColor = (type: TerminalLine["type"]) =>
@@ -202,7 +196,7 @@ export function LiveTerminal() {
           <motion.div
             key={`${currentScenario}-${i}`}
             // Skip entrance animation on the command line (already shown via typing)
-            initial={reducedMotion || i === 0 ? false : { opacity: 0, y: 4 }}
+            initial={i === 0 ? false : { opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.15 }}
             className="flex gap-2"
