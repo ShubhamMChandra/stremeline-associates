@@ -39,7 +39,7 @@ export function UseCases() {
             const inner = (
               <div className="flex flex-col gap-4 border-t border-border py-8 md:flex-row md:items-start md:gap-12 md:py-10">
                 {/* Number */}
-                <span className="flex-shrink-0 text-[clamp(2.5rem,5vw,4rem)] font-extralight leading-none tracking-tight text-muted-foreground/25">
+                <span className="flex-shrink-0 text-[clamp(2.5rem,5vw,4rem)] font-extralight leading-none tracking-tight text-muted-foreground/50">
                   {String(i + 1).padStart(2, "0")}
                 </span>
 
