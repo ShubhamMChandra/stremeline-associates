@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { useReducedMotion } from "@repo/animation";
 
@@ -8,8 +8,9 @@ import { useReducedMotion } from "@repo/animation";
  * What this does: A living terminal that types out automation scenarios in real time
  * Why it's here: Replaces generic OrbitingCircles with a demo that SHOWS what the product does
  * How it works: Cycles through scenarios, typing commands char-by-char with human-like timing,
- *   then revealing output lines with staggered delays. Shows a blinking "ready" prompt
- *   between scenarios. Respects prefers-reduced-motion.
+ *   then revealing output lines with staggered delays. All timer logic lives in a single
+ *   useEffect with local variables — no side effects inside state updaters.
+ *   Respects prefers-reduced-motion.
  * Dependencies: motion/react, @repo/animation
  */
 
@@ -53,7 +54,7 @@ const scenarios: TerminalLine[][] = [
   ],
 ];
 
-/* ── Tiny cursor component — true on/off blink like a real terminal ── */
+/* ── Blinking cursor — true on/off like a real terminal ── */
 function Cursor() {
   return (
     <span
@@ -69,71 +70,17 @@ export function LiveTerminal() {
   const [visibleLines, setVisibleLines] = useState<number>(0);
   // -1 = not typing; 0+ = number of chars revealed on the command line
   const [typedChars, setTypedChars] = useState(-1);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const lines = scenarios[currentScenario] ?? scenarios[0]!;
   const commandLine = lines[0]!;
   const isTyping = typedChars >= 0 && visibleLines === 0;
   const allRevealed = visibleLines >= lines.length;
 
-  const clearTimer = useCallback(() => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-  }, []);
-
-  /* ── Advance through output lines (after command is typed) ── */
-  const advanceLine = useCallback(() => {
-    setVisibleLines((prev) => {
-      const next = prev + 1;
-      const currentLines = scenarios[currentScenario] ?? scenarios[0]!;
-      if (next >= currentLines.length) {
-        // All lines shown — pause, then cycle to next scenario
-        timeoutRef.current = setTimeout(() => {
-          setCurrentScenario((s) => (s + 1) % scenarios.length);
-          setVisibleLines(0);
-          setTypedChars(-1);
-        }, 3500);
-        return next;
-      }
-      // Schedule next line with slight timing jitter (±15%) for realism
-      const nextLine = currentLines[next];
-      if (nextLine) {
-        const jitter = 1 + (Math.random() - 0.5) * 0.3;
-        timeoutRef.current = setTimeout(advanceLine, nextLine.delay * jitter);
-      }
-      return next;
-    });
-  }, [currentScenario]);
-
-  /* ── Type command character-by-character ── */
-  const typeNextChar = useCallback(() => {
-    setTypedChars((prev) => {
-      const currentLines = scenarios[currentScenario] ?? scenarios[0]!;
-      const cmd = currentLines[0]!;
-      const next = prev + 1;
-
-      if (next >= cmd.text.length) {
-        // Command fully typed — brief "Enter" pause, then start output
-        timeoutRef.current = setTimeout(() => {
-          setTypedChars(-1);
-          setVisibleLines(1);
-          const nextLine = currentLines[1];
-          if (nextLine) {
-            timeoutRef.current = setTimeout(advanceLine, nextLine.delay);
-          }
-        }, 250);
-        return next;
-      }
-
-      // Human-like keystroke speed: 30-70ms per char with occasional pauses
-      const isSpace = cmd.text[next] === " ";
-      const baseSpeed = isSpace ? 20 : 32; // spaces are faster
-      const variance = Math.random() * 38;
-      timeoutRef.current = setTimeout(typeNextChar, baseSpeed + variance);
-      return next;
-    });
-  }, [currentScenario, advanceLine]);
-
-  /* ── Kick off each scenario ── */
+  /*
+   * Single effect drives the entire animation loop.
+   * All timers are managed via local variables — no side effects
+   * inside state updaters, which avoids React 18 concurrent-mode bugs.
+   */
   useEffect(() => {
     if (reducedMotion) {
       setVisibleLines(lines.length);
@@ -141,18 +88,71 @@ export function LiveTerminal() {
       return;
     }
 
+    // Reset for this scenario
     setVisibleLines(0);
     setTypedChars(-1);
 
-    // Brief pause, then show cursor and start typing
-    timeoutRef.current = setTimeout(() => {
-      setTypedChars(0);
-      // Let the empty cursor blink once before typing starts
-      timeoutRef.current = setTimeout(typeNextChar, 150);
+    let timer: NodeJS.Timeout;
+    let charIdx = 0;
+    let lineIdx = 0;
+    const cmd = lines[0]!;
+
+    /* Phase 1 — type command char-by-char */
+    function typeChar() {
+      charIdx++;
+      setTypedChars(charIdx);
+
+      if (charIdx >= cmd.text.length) {
+        // Command done — brief "Enter" pause, then show output
+        timer = setTimeout(startOutput, 250);
+        return;
+      }
+
+      // Human-like keystroke speed: spaces faster, letters 30–70ms
+      const nextChar = cmd.text[charIdx];
+      const baseSpeed = nextChar === " " ? 20 : 32;
+      const variance = Math.random() * 38;
+      timer = setTimeout(typeChar, baseSpeed + variance);
+    }
+
+    /* Phase 2 — transition from typing to output */
+    function startOutput() {
+      setTypedChars(-1);
+      lineIdx = 1;
+      setVisibleLines(1); // show the command as a complete line
+      scheduleNextLine();
+    }
+
+    /* Phase 3 — reveal output lines one by one */
+    function scheduleNextLine() {
+      if (lineIdx >= lines.length) {
+        // All output shown — pause, then cycle to next scenario
+        timer = setTimeout(() => {
+          setCurrentScenario((s) => (s + 1) % scenarios.length);
+        }, 3500);
+        return;
+      }
+      const nextLine = lines[lineIdx];
+      if (nextLine) {
+        const jitter = 1 + (Math.random() - 0.5) * 0.3; // ±15% realism
+        timer = setTimeout(showNextLine, nextLine.delay * jitter);
+      }
+    }
+
+    function showNextLine() {
+      lineIdx++;
+      setVisibleLines(lineIdx);
+      scheduleNextLine();
+    }
+
+    // Kick off: brief pause → show cursor → start typing
+    timer = setTimeout(() => {
+      setTypedChars(0); // cursor appears with 0 chars
+      timer = setTimeout(typeChar, 150); // first keystroke after a blink
     }, 400);
 
-    return clearTimer;
-  }, [currentScenario, reducedMotion, lines, typeNextChar, clearTimer]);
+    return () => clearTimeout(timer);
+  }, [currentScenario, reducedMotion, lines]);
 
   /* ── Color helpers ── */
   const prefixColor = (type: TerminalLine["type"]) =>
