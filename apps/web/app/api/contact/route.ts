@@ -6,6 +6,15 @@ function getResend() {
   return new Resend(process.env.RESEND_API_KEY);
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 // Simple in-memory rate limiting
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 5;
@@ -51,6 +60,13 @@ export async function POST(request: Request) {
 
     const { name, email, company, service, message } = parsed.data;
 
+    // Escape all user input before embedding in HTML email
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeCompany = escapeHtml(company);
+    const safeService = service ? escapeHtml(service) : "";
+    const safeMessage = escapeHtml(message);
+
     // Send email to your team's shared inbox via Resend
     // Set RESEND_API_KEY and CONTACT_EMAIL in your .env
     const teamEmail = process.env.CONTACT_EMAIL || "hello@stremelineassociates.com";
@@ -60,19 +76,19 @@ export async function POST(request: Request) {
         from: "Stremeline Associates <noreply@stremelineassociates.com>",
         to: [teamEmail],
         replyTo: email,
-        subject: `New Contact: ${name} from ${company}`,
+        subject: `New Contact: ${safeName} from ${safeCompany}`,
         html: `
           <div style="font-family: sans-serif; max-width: 600px;">
             <h2 style="color: #D97706;">New Contact Form Submission</h2>
             <table style="width: 100%; border-collapse: collapse;">
-              <tr><td style="padding: 8px 0; font-weight: bold; color: #666;">Name</td><td style="padding: 8px 0;">${name}</td></tr>
-              <tr><td style="padding: 8px 0; font-weight: bold; color: #666;">Email</td><td style="padding: 8px 0;"><a href="mailto:${email}">${email}</a></td></tr>
-              <tr><td style="padding: 8px 0; font-weight: bold; color: #666;">Company</td><td style="padding: 8px 0;">${company}</td></tr>
-              ${service ? `<tr><td style="padding: 8px 0; font-weight: bold; color: #666;">Service Interest</td><td style="padding: 8px 0;">${service}</td></tr>` : ""}
+              <tr><td style="padding: 8px 0; font-weight: bold; color: #666;">Name</td><td style="padding: 8px 0;">${safeName}</td></tr>
+              <tr><td style="padding: 8px 0; font-weight: bold; color: #666;">Email</td><td style="padding: 8px 0;"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
+              <tr><td style="padding: 8px 0; font-weight: bold; color: #666;">Company</td><td style="padding: 8px 0;">${safeCompany}</td></tr>
+              ${safeService ? `<tr><td style="padding: 8px 0; font-weight: bold; color: #666;">Service Interest</td><td style="padding: 8px 0;">${safeService}</td></tr>` : ""}
             </table>
             <div style="margin-top: 16px; padding: 16px; background: #f5f5f4; border-radius: 8px;">
               <p style="font-weight: bold; color: #666; margin: 0 0 8px;">Message</p>
-              <p style="margin: 0; white-space: pre-wrap;">${message}</p>
+              <p style="margin: 0; white-space: pre-wrap;">${safeMessage}</p>
             </div>
             <p style="margin-top: 24px; color: #999; font-size: 12px;">
               Sent from stremelineassociates.com contact form
