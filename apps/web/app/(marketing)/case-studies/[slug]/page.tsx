@@ -82,7 +82,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
               <AnimateOnScroll key={i} delay={i * 0.1}>
                 <Card className="text-center">
                   <div className="p-6">
-                    <div className="font-mono text-xs tracking-wider text-primary mb-2">
+                    <div className="font-mono text-xs tracking-wider text-muted-foreground mb-2">
                       {result.metric}
                     </div>
                     <div className="text-3xl font-bold text-foreground">
@@ -90,10 +90,10 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
                         <>
                           <span className="text-muted-foreground line-through text-lg">{result.before}</span>
                           {" → "}
-                          <span className="text-primary">{result.after}</span>
+                          {result.after}
                         </>
                       ) : (
-                        <span className="text-primary">{result.after}</span>
+                        result.after
                       )}
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">{result.description}</p>

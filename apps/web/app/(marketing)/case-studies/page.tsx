@@ -81,14 +81,22 @@ export default function CaseStudiesPage() {
                     {featured.summary}
                   </p>
 
-                  {/* Results — prominent display */}
-                  <div className="mt-8 grid gap-8 border-t border-border pt-8 sm:grid-cols-3">
+                  {/* Results */}
+                  <div className="mt-8 grid gap-6 border-t border-border pt-8 sm:grid-cols-3">
                     {featured.results.slice(0, 3).map((r, j) => (
                       <div key={j}>
-                        <span className="text-[clamp(2rem,4vw,3.5rem)] font-extralight leading-none tracking-tight text-primary">
-                          {r.after}
+                        <span className="block text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+                          {r.before ? (
+                            <>
+                              <span className="text-lg font-normal text-muted-foreground line-through">{r.before}</span>
+                              {" "}
+                              {r.after}
+                            </>
+                          ) : (
+                            r.after
+                          )}
                         </span>
-                        <p className="mt-2 text-sm text-muted-foreground">
+                        <p className="mt-1 text-sm text-muted-foreground">
                           {r.metric}
                         </p>
                       </div>
@@ -133,7 +141,7 @@ export default function CaseStudiesPage() {
                       <div className="mt-4 flex flex-wrap gap-4">
                         {study.results.slice(0, 3).map((r, j) => (
                           <div key={j} className="text-xs">
-                            <span className="font-semibold text-primary">{r.after}</span>
+                            <span className="font-semibold text-foreground">{r.after}</span>
                             <span className="text-muted-foreground"> — {r.metric}</span>
                           </div>
                         ))}
