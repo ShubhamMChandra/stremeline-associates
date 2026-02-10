@@ -40,6 +40,14 @@ Keep each field to 1-2 lines. Be concise. When creating or substantially editing
 - ESLint zero warnings policy.
 - Import shared code via `@repo/*` workspace aliases.
 
+## Deployment
+
+- Hosted on **Vercel** — production URL: `stremeline-associates-sam-chands-projects.vercel.app`
+- Vercel Root Directory is set to `apps/web`. The `vercel.json` lives in the repo root.
+- Build command: `cd ../.. && pnpm turbo build --filter=web` (runs from `apps/web`, navigates to repo root for Turbo).
+- Production deploys trigger on push to `main`.
+- Deployment protection is off for production (publicly viewable); SSO protection is preview-only.
+
 ## Commands
 
 - `pnpm dev` — Dev server

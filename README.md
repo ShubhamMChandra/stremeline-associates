@@ -55,6 +55,17 @@ pnpm dev
 
 The web app runs at `http://localhost:3001`.
 
+## Deployment
+
+Hosted on **Vercel**. Production URL: [stremeline-associates-sam-chands-projects.vercel.app](https://stremeline-associates-sam-chands-projects.vercel.app)
+
+- **Root Directory:** `apps/web`
+- **Framework:** Next.js (auto-detected)
+- **Build Command:** `cd ../.. && pnpm turbo build --filter=web`
+- **Install Command:** `pnpm install`
+- Production deploys trigger on push to `main`.
+- Deployment protection is disabled for production (publicly viewable).
+
 ## Scripts
 
 | Command | Description |
