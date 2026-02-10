@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { services } from "@repo/content";
 import { caseStudies } from "@repo/content";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://streamlineassociates.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://stremelineassociates.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [

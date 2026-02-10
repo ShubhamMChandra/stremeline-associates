@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <>
-      <section className="py-[clamp(4rem,3rem+5vw,8rem)]">
+      <section className="py-16 md:py-24">
         <Container className="max-w-3xl">
           <FadeIn>
             <Link
@@ -105,7 +105,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         </Container>
       </section>
 
-      <section className="border-t border-white/[0.06] py-[clamp(4rem,3rem+5vw,8rem)]">
+      <section className="border-t border-border py-16 md:py-24">
         <Container className="max-w-3xl">
           <FadeIn>
             <div className="text-center">

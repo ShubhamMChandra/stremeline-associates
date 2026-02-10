@@ -31,7 +31,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section className="py-[clamp(4rem,3rem+5vw,8rem)]">
+      <section className="py-16 md:py-24">
         <Container>
           <FadeIn>
             <Link
@@ -49,7 +49,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
       </section>
 
       {/* Problem */}
-      <section className="bg-surface/50 py-[clamp(4rem,3rem+5vw,8rem)]">
+      <section className="bg-card py-16 md:py-24">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2">
             <AnimateOnScroll>
@@ -71,7 +71,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
       </section>
 
       {/* Results */}
-      <section className="py-[clamp(4rem,3rem+5vw,8rem)]">
+      <section className="py-16 md:py-24">
         <Container>
           <AnimateOnScroll>
             <Code className="mb-4 block">// results</Code>
@@ -82,7 +82,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
               <AnimateOnScroll key={i} delay={i * 0.1}>
                 <Card className="text-center">
                   <div className="p-6">
-                    <div className="font-mono text-xs tracking-wider text-amber-500 mb-2">
+                    <div className="font-mono text-xs tracking-wider text-primary mb-2">
                       {result.metric}
                     </div>
                     <div className="text-3xl font-bold text-foreground">
@@ -90,10 +90,10 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
                         <>
                           <span className="text-muted-foreground line-through text-lg">{result.before}</span>
                           {" → "}
-                          <span className="text-amber-500">{result.after}</span>
+                          <span className="text-primary">{result.after}</span>
                         </>
                       ) : (
-                        <span className="text-amber-500">{result.after}</span>
+                        <span className="text-primary">{result.after}</span>
                       )}
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">{result.description}</p>
@@ -106,7 +106,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-white/[0.06] py-[clamp(4rem,3rem+5vw,8rem)]">
+      <section className="border-t border-border py-16 md:py-24">
         <Container>
           <FadeIn>
             <div className="mx-auto max-w-xl text-center">
