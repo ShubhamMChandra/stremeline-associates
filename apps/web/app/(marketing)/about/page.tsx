@@ -2,29 +2,28 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Heading, Button } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
-import { processSteps, processTagline } from "@repo/content";
 import { ScrollAssembly } from "../../../src/components/ui/scroll-assembly";
 import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
 
 /**
- * What this does: About page with a narrative arc — thesis, belief, differentiators, process, close
- * Why it's here: Builds credibility and conviction. Tells the story of WHY Stremeline exists.
- * How it works: Five sections that flow into each other: hero thesis → belief manifesto →
- *   concrete differentiators → brief process → scroll-reveal closing.
- *   Each section leads to the next. Not disconnected blocks.
- * Dependencies: @repo/ui, @repo/animation, @repo/content, ScrollAssembly, ScrollTextReveal
+ * What this does: About page with a narrative arc told in a direct, human voice
+ * Why it's here: Builds conviction — explains why Stremeline exists and why you'd work with them
+ * How it works: Four sections that read as one story: who we are → what we noticed →
+ *   how we're different → closing. No generic process steps. No credential flexing.
+ *   The copy sounds like a founder explaining the company to a friend.
+ * Dependencies: @repo/ui, @repo/animation, ScrollAssembly, ScrollTextReveal
  */
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "A lean automation studio built by Ivy League-trained engineers. Enterprise-grade AI agent systems, cost-effective for SMBs.",
+    "Stremeline is a small studio of engineers that builds AI agent workflows for growing businesses. Fast deployment, no lock-in, real results.",
 };
 
 export default function AboutPage() {
   return (
     <>
-      {/* ── 1. Hero — who we are ── */}
+      {/* ── 1. Hero — who we are, said simply ── */}
       <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-20">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
           <div className="absolute -left-1/4 -top-1/4 h-[250px] w-[250px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/10 blur-[100px] lg:h-[500px] lg:w-[500px]" />
@@ -45,45 +44,46 @@ export default function AboutPage() {
               // about
             </span>
             <Heading size="h1" as="h1" className="max-w-3xl">
-              A lean automation studio built by operators and engineers.
+              We build AI agents for teams that are growing faster than they can hire.
             </Heading>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Ivy League-trained engineers with Master&apos;s degrees in CS and AI,
-              backed by a global network of automation specialists. We build
-              enterprise-grade agent systems — priced for growing businesses.
+              Stremeline is a small studio of engineers and operators. We design
+              agent workflows that handle the repetitive work your team
+              shouldn&apos;t be doing — and we get them live fast.
             </p>
           </FadeIn>
         </Container>
       </section>
 
-      {/* ── 2. The Belief — WHY we exist (light, prose not bullets) ── */}
+      {/* ── 2. What we noticed — the insight, told like a human ── */}
       <section className="light bg-background py-16 md:py-20">
         <Container>
           <FadeIn>
             <div className="mx-auto max-w-2xl">
               <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-                // why we started
+                // why this exists
               </span>
               <Heading size="h2" as="h2" className="mb-8">
-                The Gap We Saw
+                What We Kept Seeing
               </Heading>
 
               <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
                 <p>
-                  Most SMBs are stuck between two bad options. Enterprise automation platforms
-                  cost six figures and take months to deploy. DIY tools like basic Zapier
-                  workflows break the moment things get complex. So teams keep doing the
-                  work manually — and the bottleneck grows as the business does.
+                  Growing companies with great products, where smart people spent
+                  half their day on tasks a well-designed agent could handle in
+                  seconds. Manually sorting leads. Copy-pasting between tools.
+                  Chasing follow-ups that slip through the cracks.
                 </p>
                 <p>
-                  We started Stremeline because we believed the engineering talent that builds
-                  automation for Fortune 500 companies could be applied to small and mid-size
-                  teams — faster, leaner, and at a fraction of the cost. Not by cutting corners,
-                  but by cutting overhead.
+                  The tools available either cost a fortune and take months to
+                  set up, or they&apos;re too fragile for anything beyond a simple
+                  trigger. So teams just keep doing it by hand — and the
+                  bottleneck gets worse the faster the business grows.
                 </p>
                 <p className="font-medium text-foreground">
-                  The same AI agent architectures. A studio instead of a consultancy.
-                  Your agents live in weeks, not quarters.
+                  We thought: what if we could build the kind of automation that
+                  actually works — scoped to what you need, plugged into the
+                  tools you already use, and live before you&apos;ve forgotten about it?
                 </p>
               </div>
             </div>
@@ -91,15 +91,15 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ── 3. What's Different — concrete differentiators, not abstract values ── */}
+      {/* ── 3. How we're different — specific, not generic ── */}
       <section className="py-16 md:py-20">
         <Container>
           <FadeIn>
             <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // what makes us different
+              // how we work
             </span>
             <Heading size="h2" as="h2" className="mb-10">
-              Three Things We Do That Others Don&apos;t
+              What You Get
             </Heading>
           </FadeIn>
 
@@ -107,21 +107,21 @@ export default function AboutPage() {
             {[
               {
                 number: "01",
-                title: "We build on your existing stack",
+                title: "We work inside your tools",
                 description:
-                  "No rip-and-replace. We integrate with the tools your team already uses — your CRM, your project management, your comms. Agents plug into what's already working.",
+                  "No new platforms to learn. We build agents that plug into your CRM, your project management, your comms — the systems your team already knows. Nothing gets replaced.",
               },
               {
                 number: "02",
-                title: "We ship in weeks, not quarters",
+                title: "We move fast",
                 description:
-                  "Small team, fast decisions, no committees. Your first agent workflow goes live in under two weeks. We iterate from there based on real results, not slide decks.",
+                  "We audit your workflows, design the agents, and deploy them — usually in under two weeks. Then we iterate based on what's actually happening, not what a slide deck predicted.",
               },
               {
                 number: "03",
-                title: "We charge like a studio, not a consultancy",
+                title: "We keep it lean",
                 description:
-                  "A global engineering network keeps our costs lean. You get Ivy League talent and enterprise architecture without the enterprise price tag.",
+                  "Small team, low overhead. You're not paying for an office in Manhattan or a bench of junior consultants. You're paying for the engineering work that actually ships.",
               },
             ].map((item) => (
               <div key={item.number} data-assembly-item className="group">
@@ -140,50 +140,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ── 4. How It Works — brief process, subordinate to the story ── */}
-      <section className="light bg-background py-16 md:py-20">
-        <Container>
-          <FadeIn>
-            <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // the engagement
-            </span>
-            <Heading size="h2" as="h2" className="mb-2">
-              What Working With Us Looks Like
-            </Heading>
-            <p className="mb-8 max-w-lg text-sm text-muted-foreground">
-              Four steps from first conversation to live agents. Most teams are
-              fully operational in under two weeks.
-            </p>
-          </FadeIn>
-
-          <div>
-            {processSteps.map((step) => (
-              <div
-                key={step.number}
-                className="group -mx-4 flex gap-4 rounded-lg border-t border-border px-4 py-5 transition-colors hover:bg-secondary/50 md:items-baseline md:gap-6 md:py-6"
-              >
-                <span className="shrink-0 font-mono text-sm text-muted-foreground/50 group-hover:text-primary transition-colors">
-                  {String(step.number).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="text-base font-semibold text-foreground">
-                    {step.title}
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p className="mt-8 font-mono text-sm text-primary/70">
-            {processTagline}
-          </p>
-        </Container>
-      </section>
-
-      {/* ── 5. Closing — scroll-driven serif text reveal + CTA ── */}
+      {/* ── 4. Closing — scroll-driven serif text reveal + CTA ── */}
       <section className="py-16 md:py-24">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
