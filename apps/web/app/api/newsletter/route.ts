@@ -3,7 +3,14 @@ import { newsletterSchema } from "@repo/validation";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const contentType = request.headers.get("content-type") ?? "";
+    let body: Record<string, unknown>;
+    if (contentType.includes("application/json")) {
+      body = await request.json();
+    } else {
+      const formData = await request.formData();
+      body = Object.fromEntries(formData.entries());
+    }
     const parsed = newsletterSchema.safeParse(body);
 
     if (!parsed.success) {

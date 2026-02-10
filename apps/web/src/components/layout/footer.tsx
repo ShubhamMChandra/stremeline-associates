@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Logo, Container, Separator, Input, Button } from "@repo/ui";
+import { Logo, Container, Separator } from "@repo/ui";
 import { footerNav, siteConfig } from "@repo/content";
+import { NewsletterForm } from "./newsletter-form";
 
 export function Footer() {
   return (
@@ -57,22 +58,7 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               Get insights on AI automation for your business.
             </p>
-            <form className="flex gap-2" action="/api/newsletter" method="POST">
-              <label htmlFor="newsletter-email" className="sr-only">
-                Email address
-              </label>
-              <Input
-                id="newsletter-email"
-                type="email"
-                name="email"
-                placeholder="you@company.com"
-                required
-                className="h-11 text-xs"
-              />
-              <Button type="submit" size="sm" className="h-11">
-                Subscribe
-              </Button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
 

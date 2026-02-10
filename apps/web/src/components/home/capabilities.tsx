@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Zap, Workflow, ShieldCheck, TrendingUp } from "lucide-react";
@@ -25,7 +26,7 @@ const iconMap: Record<string, React.ElementType> = {
   "trending-up": TrendingUp,
 };
 
-function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
   const card = e.currentTarget;
   const rect = card.getBoundingClientRect();
   const x = e.clientX - rect.left;
@@ -37,7 +38,7 @@ function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
   card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 }
 
-function handleMouseLeave(e: React.MouseEvent<HTMLDivElement>) {
+function handleMouseLeave(e: React.MouseEvent<HTMLElement>) {
   const card = e.currentTarget;
   card.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg)";
   card.style.transition = "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
@@ -117,10 +118,11 @@ export function Capabilities() {
             const isLead = i === 0;
 
             return (
-              <div
+              <Link
                 key={service.slug}
+                href={`/services/${service.slug}`}
                 data-capability-card
-                className="rounded-xl border border-border bg-card p-6 transition-shadow hover:shadow-md lg:col-span-3"
+                className="group rounded-xl border border-border bg-card p-6 transition-shadow hover:shadow-md hover:border-primary/20 lg:col-span-3"
                 // Cards are visible by default (no inline style hiding) — GSAP
                 // takes over via useEffect and controls opacity/transform
                 {...(isLead
@@ -130,13 +132,16 @@ export function Capabilities() {
                 {Icon && (
                   <Icon className="mb-4 size-6 text-primary" strokeWidth={1.75} />
                 )}
-                <h3 className="text-lg font-semibold text-foreground">
+                <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                   {service.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   {service.description}
                 </p>
-              </div>
+                <span className="mt-3 inline-block font-mono text-xs text-primary/70 group-hover:text-primary transition-colors">
+                  Learn more &rarr;
+                </span>
+              </Link>
             );
           })}
         </div>

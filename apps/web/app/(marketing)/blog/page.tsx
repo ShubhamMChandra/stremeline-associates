@@ -11,7 +11,7 @@ import { FadeIn, AnimateOnScroll } from "@repo/animation";
  */
 
 export const metadata: Metadata = {
-  title: "Blog | Stremeline Associates",
+  title: "Blog",
   description:
     "Analysis and perspectives on AI agent automation, operational efficiency, and the future of SMB operations.",
 };

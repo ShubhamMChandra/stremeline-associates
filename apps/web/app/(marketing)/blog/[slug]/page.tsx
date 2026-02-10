@@ -55,7 +55,7 @@ export async function generateMetadata({
   const post = getBlogPost(slug);
   if (!post) return {};
   return {
-    title: `${String(post.frontmatter.title || "")} | Stremeline Associates`,
+    title: String(post.frontmatter.title || ""),
     description: String(post.frontmatter.description || ""),
   };
 }
