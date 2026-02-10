@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# Stremeline Associates — Web
+
+Marketing website for Stremeline Associates, an AI automation agency helping SMBs with lead capture, workflow automation, error reduction, and scaling operations.
+
+## Tech Stack
+
+- **Next.js 16** (App Router) + **React 19** + **TypeScript 5.9**
+- **Tailwind CSS v4** (CSS-first config) + **Radix UI** + **CVA**
+- **GSAP**, **Motion**, **Lenis** for animations & smooth scroll
+- **React Hook Form** + **Zod** for forms
+- **Resend** for transactional email
+- **Vitest** + **Playwright** for testing
 
 ## Getting Started
 
-First, run the development server:
+From the **monorepo root**:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev          # starts web app on http://localhost:3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or from `apps/web/`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev          # http://localhost:3001
+pnpm build        # production build
+pnpm lint         # ESLint (zero warnings)
+pnpm check-types  # TypeScript type checking
+pnpm test         # unit tests (Vitest)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
+## Routes
 
-## Learn More
+| Path | Description |
+|------|-------------|
+| `/` | Home page (hero, problem scroll, capabilities, counter wall, use cases, CTA) |
+| `/about` | About the agency |
+| `/services` | Service listing |
+| `/services/[slug]` | Service detail (lead-capture, workflow-automation, error-reduction, scaling-operations) |
+| `/case-studies` | Case study listing |
+| `/case-studies/[slug]` | Case study detail |
+| `/blog` | Blog listing |
+| `/blog/[slug]` | Blog post |
+| `/contact` | Contact form |
 
-To learn more about Next.js, take a look at the following resources:
+## API Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/contact` | Contact form submission (sends email via Resend) |
+| `POST /api/newsletter` | Newsletter subscription |
+| `GET /api/og` | Dynamic Open Graph image generation |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+apps/web/
+  app/
+    (marketing)/     # Route group for marketing pages
+    api/             # API routes
+    layout.tsx       # Root layout (fonts, metadata, analytics)
+    page.tsx         # Home page
+  src/components/
+    home/            # Home page sections (hero, capabilities, etc.)
+    layout/          # Header, footer, mobile nav
+    ui/              # Scroll animation components
+    aceternity/      # Premium animation components
+    providers/       # Context providers (smooth scroll)
+  scripts/audit/     # Lighthouse audit automation
+  lib/               # Utilities & helpers
+  public/            # Static assets
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Workspace Packages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This app imports from shared monorepo packages via `@repo/*`:
+
+- `@repo/ui` — Button, Card, Input, Sheet, etc.
+- `@repo/content` — Services, case studies, navigation data
+- `@repo/types` — Shared TypeScript types
+- `@repo/utils` — cn(), formatDate(), slugify(), createMetadata()
+- `@repo/validation` — Zod schemas for contact & newsletter forms
+- `@repo/animation` — Animation hooks & utilities
+- `@repo/tokens` — Design tokens
+
+## Deployment
+
+Deployed on **Vercel**. Auto-deploys on push to `main`.
+
+Build command (set in `vercel.json`):
+
+```bash
+cd ../.. && pnpm turbo build --filter=web
+```
+
+## Audit Scripts
+
+```bash
+pnpm audit:desktop     # Lighthouse desktop audit
+pnpm audit:mobile      # Lighthouse mobile audit
+pnpm audit:responsive  # Responsive breakpoint audit
+pnpm audit:sections    # Section-by-section audit
+pnpm audit:all         # Run desktop + mobile + responsive
+```
