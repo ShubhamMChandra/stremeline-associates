@@ -61,18 +61,18 @@ export default function ContactPage() {
             <FadeIn delay={0.3}>
               <div className="space-y-10 lg:pt-32">
                 <div>
-                  <h3 className="text-sm font-semibold text-foreground mb-4">What happens next</h3>
-                  <ol className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground mb-5">What happens next</h3>
+                  <ol className="space-y-5">
                     {[
                       "We review your message within 24 hours",
                       "We schedule a 30-minute workflow audit call",
                       "You get a concrete plan for automation",
                     ].map((step, i) => (
                       <li key={i} className="flex gap-4">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/30 font-mono text-xs text-primary">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/30 font-mono text-sm text-primary">
                           {i + 1}
                         </span>
-                        <span className="text-sm text-muted-foreground pt-0.5">{step}</span>
+                        <span className="text-base text-muted-foreground pt-0.5">{step}</span>
                       </li>
                     ))}
                   </ol>
@@ -88,10 +88,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-semibold text-foreground mb-2">Email us directly</h3>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Email us directly</h3>
                   <a
                     href="mailto:hello@stremelineassociates.com"
-                    className="text-sm text-primary hover:underline"
+                    className="text-base text-primary hover:underline"
                   >
                     hello@stremelineassociates.com
                   </a>
