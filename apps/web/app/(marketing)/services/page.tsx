@@ -179,7 +179,7 @@ export default function ServicesPage() {
       {/* ── 4. Values band (dark) — honest commitments, not fake metrics ── */}
       <section className="border-t border-border py-16 md:py-20">
         <Container>
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4 md:gap-0">
             {[
               {
                 headline: "Live in weeks",
@@ -193,9 +193,11 @@ export default function ServicesPage() {
                 headline: "Your tools, not ours",
                 description: "We build inside your existing stack. Nothing gets replaced.",
               },
-            ].map((v) => (
-              <FadeIn key={v.headline}>
-                <div className="text-center sm:text-left">
+            ].map((v, i) => (
+              <FadeIn key={v.headline} delay={i * 0.1}>
+                <div
+                  className={`text-center sm:text-left md:pl-6 md:pr-4 ${i > 0 ? "md:border-l md:border-border" : ""}`}
+                >
                   <h3 className="text-xl font-semibold tracking-tight text-foreground md:text-2xl">
                     {v.headline}
                   </h3>
