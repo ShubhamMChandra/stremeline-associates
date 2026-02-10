@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container, Heading } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
 import { ContactForm } from "./contact-form";
+import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
 
 /**
  * What this does: Contact page with atmospheric hero, validated lead capture form, and serif closer
@@ -103,19 +104,19 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      {/* ── Closing — serif typographic moment ── */}
+      {/* ── Closing — scroll-driven serif text reveal ── */}
       <section className="py-16 md:py-24">
         <Container>
-          <FadeIn>
-            <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
+            <ScrollTextReveal start={85} end={55}>
               <p
                 className="text-[clamp(1.25rem,2.5vw,2.25rem)] leading-[1.2] text-foreground/90"
                 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
               >
                 Two weeks from now, your team forgets it was ever manual.
               </p>
-            </div>
-          </FadeIn>
+            </ScrollTextReveal>
+          </div>
         </Container>
       </section>
     </>

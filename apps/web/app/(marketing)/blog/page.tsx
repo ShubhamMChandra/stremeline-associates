@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Heading, Badge, Button } from "@repo/ui";
 import { FadeIn, AnimateOnScroll } from "@repo/animation";
+import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
 
 /**
  * What this does: Blog listing page with atmospheric hero, featured post layout, and newsletter CTA
@@ -75,7 +76,7 @@ export default function BlogPage() {
                 href={`/blog/${featured.slug}`}
                 className="group block"
               >
-                <div className="rounded-xl border border-border bg-card p-8 transition-all hover:shadow-md md:p-12">
+                <div className="card-lift rounded-xl border border-border bg-card p-8 md:p-12">
                   <div className="flex flex-wrap items-center gap-3 mb-6">
                     {featured.tags.map((tag) => (
                       <Badge key={tag} variant="mono">{tag}</Badge>
@@ -149,22 +150,24 @@ export default function BlogPage() {
         </section>
       )}
 
-      {/* ── CTA — serif typographic moment ── */}
-      <section className="py-20 md:py-32">
+      {/* ── CTA — scroll-driven serif text reveal ── */}
+      <section className="py-16 md:py-24">
         <Container>
-          <FadeIn>
-            <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
+            <ScrollTextReveal start={85} end={55}>
               <p
                 className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
                 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
               >
                 Ready to stop doing the work your agents could handle?
               </p>
+            </ScrollTextReveal>
+            <FadeIn delay={0.3}>
               <Button asChild size="lg" className="btn-glow mt-10">
                 <Link href="/contact">Let&apos;s Talk</Link>
               </Button>
-            </div>
-          </FadeIn>
+            </FadeIn>
+          </div>
         </Container>
       </section>
     </>
