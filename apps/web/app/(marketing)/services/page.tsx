@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Heading, Button } from "@repo/ui";
-import { FadeIn } from "@repo/animation";
+import { FadeIn, AnimateOnScroll } from "@repo/animation";
 import { services, processSteps, processTagline } from "@repo/content";
 import { Zap, Workflow, ShieldCheck, TrendingUp } from "lucide-react";
 import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
 
 /**
- * What this does: Services page — four capabilities, process steps, values, and CTA
+ * What this does: Services page — four capabilities as cards, process steps, values, and CTA
  * Why it's here: Dedicated page to explain what Stremeline builds and how they work
- * How it works: Server component with five visually distinct sections. Each uses a different format:
- *   atmospheric hero → full-width feature rows → 4-column process grid → large scroll counters
- *   → serif CTA. Light/dark alternation with gradient transitions for visual rhythm.
- * Dependencies: @repo/ui, @repo/content, @repo/animation, lucide-react, ScrollCounter, ScrollTextReveal
+ * How it works: Server component with five visually distinct sections. Featured first service card
+ *   + 3-card grid, atmospheric hero, process steps, values with amber borders, serif CTA.
+ *   Light/dark alternation with gradient transitions for visual rhythm.
+ * Dependencies: @repo/ui, @repo/content, @repo/animation, lucide-react, ScrollTextReveal
  */
 
 const iconMap: Record<string, React.ElementType> = {
@@ -77,58 +77,76 @@ export default function ServicesPage() {
         aria-hidden="true"
       />
 
-      {/* ── 2. Services deep-dive (light) — each service gets a full row ── */}
+      {/* ── 2. Services deep-dive (light) — uniform 2×2 card grid ── */}
       <section className="light bg-background py-16 md:py-20">
         <Container>
           <FadeIn>
             <Heading size="h2" as="h2" className="mb-4">
               Core Capabilities
             </Heading>
-            <p className="mb-8 max-w-lg text-lg text-muted-foreground md:mb-10">
+            <p className="mb-10 max-w-lg text-lg text-muted-foreground md:mb-14">
               Four automation pillars. Each one removes a specific category of
               manual work from your operations.
             </p>
           </FadeIn>
 
-          <div className="flex flex-col">
+          <div className="grid gap-6 md:grid-cols-2">
             {services.map((service, i) => {
               const Icon = iconMap[service.icon];
               return (
-                <FadeIn key={service.slug}>
-                  <div className="group grid gap-4 border-t border-border py-6 md:grid-cols-[100px_1fr] md:gap-8 md:py-8">
-                    {/* Left: index + icon */}
-                    <div className="flex items-start gap-4 md:flex-col md:items-start md:gap-3">
-                      <span className="text-[clamp(2rem,4vw,3.5rem)] font-extralight leading-none tracking-tight text-muted-foreground/20">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      {Icon && (
-                        <Icon
-                          className="mt-1 size-5 text-primary md:mt-0"
-                          strokeWidth={1.75}
-                        />
-                      )}
-                    </div>
+                <AnimateOnScroll key={service.slug} delay={i * 0.1}>
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="group block h-full"
+                  >
+                    <div className="card-lift flex h-full flex-col rounded-xl border border-border bg-card p-6 md:p-8">
+                      <div className="mb-5 flex items-center gap-3">
+                        {Icon && (
+                          <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10">
+                            <Icon
+                              className="size-5 text-primary"
+                              strokeWidth={1.75}
+                            />
+                          </div>
+                        )}
+                        <span className="font-mono text-[11px] tracking-widest text-primary/80 uppercase">
+                          {service.label}
+                        </span>
+                      </div>
 
-                    {/* Right: content */}
-                    <div className="max-w-2xl">
-                      <span className="mb-2 inline-block font-mono text-[11px] tracking-widest text-primary/80 uppercase">
-                        {service.label}
-                      </span>
-                      <h3 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+                      <h3 className="text-2xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary md:text-3xl">
                         {service.title}
                       </h3>
-                      <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                        {service.longDescription}
+
+                      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground md:text-base">
+                        {service.description}
                       </p>
-                      <Link
-                        href={`/services/${service.slug}`}
-                        className="mt-5 inline-flex items-center gap-1 font-mono text-sm text-primary transition-colors hover:text-primary/80"
-                      >
+
+                      {/* Tools badges */}
+                      {service.tools && service.tools.length > 0 && (
+                        <div className="mt-5 flex flex-wrap gap-1.5 border-t border-border pt-5">
+                          {service.tools.slice(0, 4).map((tool) => (
+                            <span
+                              key={tool}
+                              className="rounded-md bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
+                            >
+                              {tool}
+                            </span>
+                          ))}
+                          {service.tools.length > 4 && (
+                            <span className="rounded-md bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+                              +{service.tools.length - 4}
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs text-primary/70 transition-colors group-hover:text-primary">
                         Learn more &rarr;
-                      </Link>
+                      </span>
                     </div>
-                  </div>
-                </FadeIn>
+                  </Link>
+                </AnimateOnScroll>
               );
             })}
           </div>
@@ -143,7 +161,7 @@ export default function ServicesPage() {
       />
 
       {/* ── 3. How We Work (dark) — 4-column process grid ── */}
-      <section className="py-12 md:py-16">
+      <section className="py-16 md:py-20">
         <Container>
           <FadeIn>
             <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
@@ -152,16 +170,18 @@ export default function ServicesPage() {
             <Heading size="h2" as="h2" className="mb-4">
               How We Work
             </Heading>
-            <p className="mb-8 max-w-lg text-lg text-muted-foreground md:mb-10">
+            <p className="mb-10 max-w-lg text-lg text-muted-foreground md:mb-14">
               {processTagline}
             </p>
           </FadeIn>
 
-          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4 md:gap-0">
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4 md:gap-0">
             {processSteps.map((step, i) => (
-              <FadeIn key={step.number} delay={i * 0.1}>
+              <AnimateOnScroll key={step.number} delay={i * 0.1}>
                 <div
-                  className={`relative md:pl-6 md:pr-4 ${i > 0 ? "md:border-l md:border-border" : ""}`}
+                  className={`relative rounded-lg p-5 md:rounded-none md:p-0 md:pl-6 md:pr-4 ${
+                    i > 0 ? "md:border-l md:border-border" : ""
+                  }`}
                 >
                   <span className="text-5xl font-extralight leading-none tracking-tight text-foreground/10 md:text-6xl">
                     {String(step.number).padStart(2, "0")}
@@ -176,59 +196,72 @@ export default function ServicesPage() {
                     {step.description}
                   </p>
                 </div>
-              </FadeIn>
+              </AnimateOnScroll>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* ── 4. Values band (dark) — honest commitments, not fake metrics ── */}
-      <section className="border-t border-border py-12 md:py-16">
+      {/* ── 4. Values band (dark) — commitments with amber left borders ── */}
+      <section className="bg-card py-16 md:py-20">
         <Container>
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4 md:gap-0">
+          <FadeIn>
+            <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
+              // commitments
+            </span>
+            <Heading size="h3" as="h2" className="mb-10">
+              How We Operate
+            </Heading>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
               {
                 headline: "Live in weeks",
-                description: "Most engagements deploy in under two weeks — not months of scoping.",
+                description:
+                  "Most engagements deploy in under two weeks — not months of scoping.",
               },
               {
                 headline: "Zero lock-in",
-                description: "Month-to-month. Your agents earn their place or we haven't built them right.",
+                description:
+                  "Month-to-month. Your agents earn their place or we haven't built them right.",
               },
               {
                 headline: "Your tools, not ours",
-                description: "We build inside your existing stack. Nothing gets replaced.",
+                description:
+                  "We build inside your existing stack. Nothing gets replaced.",
               },
             ].map((v, i) => (
-              <FadeIn key={v.headline} delay={i * 0.1}>
-                <div
-                  className={`text-center sm:text-left md:pl-6 md:pr-4 ${i > 0 ? "md:border-l md:border-border" : ""}`}
-                >
-                  <h3 className="text-xl font-semibold tracking-tight text-foreground md:text-2xl">
-                    {v.headline}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {v.description}
-                  </p>
+              <AnimateOnScroll key={v.headline} delay={i * 0.1}>
+                <div className="rounded-lg border border-border bg-background p-6 pl-5">
+                  <div className="border-l-2 border-primary pl-4">
+                    <h3 className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
+                      {v.headline}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {v.description}
+                    </p>
+                  </div>
                 </div>
-              </FadeIn>
+              </AnimateOnScroll>
             ))}
           </div>
 
           <FadeIn>
+            <div className="mt-12 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent md:mt-16" />
             <p
-              className="mx-auto mt-10 max-w-2xl text-center text-xl leading-relaxed italic text-foreground/80 md:mt-12 md:text-2xl"
-              style={{ fontFamily: "var(--font-serif)" }}
+              className="mx-auto mt-10 max-w-2xl text-center text-xl leading-relaxed text-foreground/80 md:mt-12 md:text-2xl"
+              style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
             >
-              We build agents that handle the work your team shouldn&apos;t be doing.
-              Nothing more, nothing less.
+              We build agents that handle the work your team shouldn&apos;t be
+              doing. Nothing more, nothing less.
             </p>
           </FadeIn>
         </Container>
       </section>
 
       {/* ── 5. CTA (dark) — serif text reveal ── */}
-      <section className="py-12 md:py-16">
+      <section className="py-16 md:py-20">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
             <ScrollTextReveal className="mt-5" start={85} end={55}>

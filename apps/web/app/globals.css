@@ -224,6 +224,48 @@
   background-size: 100% 1px;
 }
 
+/* Blog H2 section markers */
+.prose h2::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 0.75em;
+  background: var(--primary);
+  margin-right: 0.75rem;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+/* Table container polish */
+.prose table {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* Stat highlight boxes (used in MDX via raw HTML) */
+.prose .stat-highlight {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  border: 1px solid rgba(217, 119, 6, 0.15);
+  border-radius: 0.75rem;
+  background: rgba(217, 119, 6, 0.04);
+}
+.prose .stat-highlight .stat-value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.prose .stat-highlight .stat-label {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card-lift:hover {
     transform: none;

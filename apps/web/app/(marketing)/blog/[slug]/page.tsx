@@ -5,8 +5,9 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
-import { Container, Heading, Prose, Badge, Button } from "@repo/ui";
+import { Container, Heading, Prose, Badge, Button, Code } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
+import { ScrollProgress } from "../../../../src/components/ui/scroll-progress";
 
 /**
  * What this does: Individual blog post page with McKinsey-style article layout
@@ -44,6 +45,20 @@ function getBlogSlugs() {
     .map((f) => f.replace(".mdx", ""));
 }
 
+function getAllBlogPosts() {
+  return getBlogSlugs()
+    .map((s) => {
+      const post = getBlogPost(s);
+      if (!post) return null;
+      return {
+        slug: s,
+        title: String(post.frontmatter.title || ""),
+        readingTime: estimateReadingTime(post.content),
+      };
+    })
+    .filter(Boolean) as { slug: string; title: string; readingTime: string }[];
+}
+
 export async function generateStaticParams() {
   return getBlogSlugs().map((slug) => ({ slug }));
 }
@@ -71,9 +86,13 @@ export default async function BlogPostPage({ params }: PageProps) {
   const title = String(post.frontmatter.title || "");
   const publishedAt = String(post.frontmatter.publishedAt || "");
   const readingTime = estimateReadingTime(post.content);
+  const allPosts = getAllBlogPosts();
+  const relatedPosts = allPosts.filter((p) => p.slug !== slug);
 
   return (
     <>
+      <ScrollProgress />
+
       {/* ── Article Header ── */}
       <section className="pt-16 pb-8 md:pt-20 md:pb-10">
         <Container className="max-w-3xl">
@@ -84,6 +103,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             >
               &larr; All Posts
             </Link>
+
+            <Code className="mb-5 block">{`// blog/${slug}`}</Code>
 
             <div className="mb-5 flex flex-wrap items-center gap-2">
               {tags.map((tag: string) => (
@@ -119,7 +140,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
       {/* ── Divider ── */}
       <Container className="max-w-3xl">
-        <div className="border-t border-border" />
+        <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       </Container>
 
       {/* ── Article Body ── */}
@@ -138,6 +159,35 @@ export default async function BlogPostPage({ params }: PageProps) {
           </Prose>
         </Container>
       </section>
+
+      {/* ── Related Posts ── */}
+      {relatedPosts.length > 0 && (
+        <section className="border-t border-border py-10 md:py-14">
+          <Container className="max-w-3xl">
+            <FadeIn>
+              <Heading size="h3" as="h2" className="mb-6">
+                Continue Reading
+              </Heading>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {relatedPosts.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/blog/${related.slug}`}
+                    className="group rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/20"
+                  >
+                    <h3 className="font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
+                      {related.title}
+                    </h3>
+                    <span className="mt-2 block font-mono text-xs text-muted-foreground">
+                      {related.readingTime}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </FadeIn>
+          </Container>
+        </section>
+      )}
 
       {/* ── CTA Footer ── */}
       <section className="border-t border-border py-12 md:py-16">

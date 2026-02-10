@@ -11,6 +11,19 @@ export const services: Service[] = [
     icon: "zap",
     label: "// intake",
     useCases: ["lead-intake-qualification", "crm-data-hygiene", "customer-follow-ups"],
+    problem:
+      "Leads come in around the clock — web forms, emails, referrals — but your team only works business hours. By the time someone opens the CRM, the prospect has gone cold. Slow response times and inconsistent follow-up quietly bleed revenue every single week.",
+    approach:
+      "We deploy AI agents that monitor every intake channel in real time. The moment a lead arrives, it's validated, enriched with firmographic data, scored against your criteria, and routed to the right rep — all within seconds, not hours.",
+    benefits: [
+      "Sub-minute response times on every lead",
+      "Automatic enrichment — company size, industry, tech stack",
+      "Consistent qualification scoring, no matter who's on shift",
+      "Zero manual data entry into your CRM",
+    ],
+    tools: ["HubSpot", "Salesforce", "Slack", "Gmail", "LinkedIn"],
+    ctaLine:
+      "Stop losing leads to lag time. Let agents handle the first five minutes.",
   },
   {
     slug: "workflow-automation",
@@ -22,6 +35,19 @@ export const services: Service[] = [
     icon: "workflow",
     label: "// orchestration",
     useCases: ["sales-ops-handoffs", "internal-alerts-reporting", "crm-data-hygiene"],
+    problem:
+      "Your team switches between ten or more tools every day — copying data from the CRM to the project tracker, pasting updates into Slack, reconciling spreadsheets by hand. Every handoff is a chance for something to fall through the cracks.",
+    approach:
+      "We map your cross-system workflows end-to-end and build agent chains that handle the handoffs automatically. Data flows where it needs to go, actions trigger in sequence, and your team stops being the glue between disconnected tools.",
+    benefits: [
+      "Eliminate copy-paste between systems entirely",
+      "Automated handoffs from sales to onboarding to delivery",
+      "Real-time data sync across your entire tool stack",
+      "Audit trails for every automated action",
+    ],
+    tools: ["Zapier", "Make", "Slack", "Notion", "Asana", "HubSpot"],
+    ctaLine:
+      "Your team has better things to do than move data between tabs.",
   },
   {
     slug: "error-reduction",
@@ -33,6 +59,19 @@ export const services: Service[] = [
     icon: "shield-check",
     label: "// data-integrity",
     useCases: ["crm-data-hygiene", "internal-alerts-reporting", "lead-intake-qualification"],
+    problem:
+      "Duplicate CRM records, missing fields, stale contacts, inconsistent formatting — bad data accumulates quietly until someone makes a decision based on numbers that aren't real. By then the damage is done.",
+    approach:
+      "We build agents that run continuous data quality checks across your systems — deduplicating records, filling gaps from external sources, flagging anomalies, and enforcing formatting standards. Your data stays clean without anyone manually auditing spreadsheets.",
+    benefits: [
+      "Continuous deduplication and merge across records",
+      "Automatic enrichment from third-party data sources",
+      "Real-time anomaly detection and alerting",
+      "Clean reporting you can actually trust",
+    ],
+    tools: ["HubSpot", "Salesforce", "Google Sheets", "Airtable"],
+    ctaLine:
+      "Decisions are only as good as the data behind them. Make yours trustworthy.",
   },
   {
     slug: "scaling-operations",
@@ -44,5 +83,18 @@ export const services: Service[] = [
     icon: "trending-up",
     label: "// scale",
     useCases: ["sales-ops-handoffs", "customer-follow-ups", "internal-alerts-reporting"],
+    problem:
+      "You're growing, but every new client means more manual work — more onboarding tasks, more follow-ups, more reporting. Hiring takes months and costs a fortune. In the meantime, things slip and quality drops.",
+    approach:
+      "We deploy agent systems that absorb the operational overhead of growth. More leads, more clients, more reporting — handled by agents that scale instantly. Your team stays focused on high-judgment work while throughput doubles.",
+    benefits: [
+      "Handle 2-3x volume with the same team size",
+      "Instant scaling — no hiring, no onboarding lag",
+      "Consistent quality at every volume level",
+      "Free up senior staff for strategic work",
+    ],
+    tools: ["HubSpot", "Slack", "Notion", "QuickBooks"],
+    ctaLine:
+      "Growth shouldn't mean more busywork. Let agents absorb the overhead.",
   },
 ];

@@ -6,6 +6,11 @@ export interface Service {
   icon: string;
   label: string;
   useCases: string[];
+  problem: string;
+  approach: string;
+  benefits: string[];
+  tools?: string[];
+  ctaLine: string;
 }
 
 export interface UseCase {
