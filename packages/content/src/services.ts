@@ -7,7 +7,7 @@ export const services: Service[] = [
     description:
       "Leads, requests, applications — whatever enters your business gets captured, validated, and routed automatically. Nothing waits. Nothing slips.",
     longDescription:
-      "Your prospects expect instant responses. Our AI agents monitor your intake channels 24/7, validate incoming data, enrich it with context, and route qualified leads to the right person — all in seconds. No more manual data entry, no more delayed follow-ups, no more lost opportunities.",
+      "Prospects expect instant responses. Our agents monitor intake channels around the clock — validating data, enriching it with context, and routing qualified leads to the right person in seconds. No more 12-hour lag between form fill and first touch.",
     icon: "zap",
     label: "// intake",
     useCases: ["lead-intake-qualification", "crm-data-hygiene", "customer-follow-ups"],
@@ -18,7 +18,7 @@ export const services: Service[] = [
     description:
       "Your team uses 10+ tools. Agents bridge them — syncing data, triggering actions, and eliminating the copy-paste between systems.",
     longDescription:
-      "Most operational bottlenecks come from manual handoffs between systems and people. We design AI agent workflows that connect your CRM, project management, communication, and reporting tools into seamless automated chains. The result: work that used to take hours happens in minutes, without human intervention.",
+      "Most bottlenecks come from manual handoffs between systems. We build agent workflows that connect your CRM, project tools, and comms into automated chains. Work that took hours happens in minutes — no copy-paste, no missed steps.",
     icon: "workflow",
     label: "// orchestration",
     useCases: ["sales-ops-handoffs", "internal-alerts-reporting", "crm-data-hygiene"],
@@ -29,7 +29,7 @@ export const services: Service[] = [
     description:
       "Agents that validate, deduplicate, and enrich your data continuously — so decisions are based on what's actually true.",
     longDescription:
-      "Human error in data entry, validation, and reporting costs businesses thousands in lost productivity and bad decisions. Our AI agents take over the repetitive, detail-oriented tasks — validating data, checking for inconsistencies, flagging anomalies, and ensuring every record is accurate. Your team stops fixing mistakes and starts making decisions.",
+      "Bad data leads to bad decisions. Our agents run continuous checks — deduplicating records, filling gaps, flagging anomalies — so your CRM and reporting tools always reflect reality. Your team stops cleaning spreadsheets and starts acting on them.",
     icon: "shield-check",
     label: "// data-integrity",
     useCases: ["crm-data-hygiene", "internal-alerts-reporting", "lead-intake-qualification"],
@@ -40,7 +40,7 @@ export const services: Service[] = [
     description:
       "As volume grows, agents grow with it. More throughput, same team size. No hiring, no onboarding, no overhead.",
     longDescription:
-      "Hiring is slow, expensive, and risky. AI agents let you scale operational capacity instantly — handling more leads, more customers, more reporting — without adding headcount. As your volume grows, your agents grow with it. No interviews, no onboarding, no overhead.",
+      "Hiring is slow and expensive. AI agents let you handle more leads, more customers, and more reporting without adding people. Volume doubles, your team stays the same size, and nothing falls through.",
     icon: "trending-up",
     label: "// scale",
     useCases: ["sales-ops-handoffs", "customer-follow-ups", "internal-alerts-reporting"],
