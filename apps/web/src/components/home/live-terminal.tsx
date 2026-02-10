@@ -6,10 +6,9 @@ import { motion } from "motion/react";
 /**
  * What this does: A living terminal that types out automation scenarios in real time
  * Why it's here: Replaces generic OrbitingCircles with a demo that SHOWS what the product does
- * How it works: Cycles through scenarios, typing commands char-by-char with human-like timing,
- *   then revealing output lines with staggered delays. All timer logic lives in a single
- *   useEffect with local variables — no side effects inside state updaters.
- *   Respects prefers-reduced-motion.
+ * How it works: Plays the first scenario once — types the command char-by-char with
+ *   human-like timing, reveals output lines with staggered delays, then stays static
+ *   with a blinking cursor. All timer logic lives in a single useEffect.
  * Dependencies: motion/react, @repo/animation
  */
 
@@ -64,30 +63,24 @@ function Cursor() {
 }
 
 export function LiveTerminal() {
-  const [currentScenario, setCurrentScenario] = useState(0);
   const [visibleLines, setVisibleLines] = useState<number>(0);
   // -1 = not started/between phases; 0 = cursor visible; 1+ = chars revealed
   const [typedChars, setTypedChars] = useState(-1);
 
-  const lines = scenarios[currentScenario] ?? scenarios[0]!;
+  const lines = scenarios[0]!;
   const commandLine = lines[0]!;
   const isTyping = typedChars >= 0 && visibleLines === 0;
   const allRevealed = visibleLines >= lines.length;
 
   /*
-   * Single effect drives the entire animation loop.
-   * Does NOT depend on reducedMotion — the terminal is the hero visual
-   * and should always animate. Timers are collected and cleared on cleanup.
+   * Single effect runs once on mount — plays the first scenario, then stops.
+   * Timers are collected and cleared on unmount.
    */
   useEffect(() => {
-    // Reset for this scenario
-    setVisibleLines(0);
-    setTypedChars(-1);
-
     const timers: NodeJS.Timeout[] = [];
     let charIdx = 0;
     let lineIdx = 0;
-    const scenarioLines = scenarios[currentScenario] ?? scenarios[0]!;
+    const scenarioLines = scenarios[0]!;
     const cmd = scenarioLines[0]!;
 
     /* Phase 1 — type command char-by-char */
@@ -96,12 +89,10 @@ export function LiveTerminal() {
       setTypedChars(charIdx);
 
       if (charIdx >= cmd.text.length) {
-        // Command done — brief "Enter" pause, then show output
         timers.push(setTimeout(startOutput, 250));
         return;
       }
 
-      // Human-like keystroke speed: spaces faster, letters 30–70ms
       const nextChar = cmd.text[charIdx];
       const baseSpeed = nextChar === " " ? 20 : 32;
       const variance = Math.random() * 38;
@@ -112,22 +103,16 @@ export function LiveTerminal() {
     function startOutput() {
       setTypedChars(-1);
       lineIdx = 1;
-      setVisibleLines(1); // show the command as a complete line
+      setVisibleLines(1);
       scheduleNextLine();
     }
 
-    /* Phase 3 — reveal output lines one by one */
+    /* Phase 3 — reveal output lines one by one, then stop */
     function scheduleNextLine() {
-      if (lineIdx >= scenarioLines.length) {
-        // All output shown — pause, then cycle to next scenario
-        timers.push(setTimeout(() => {
-          setCurrentScenario((s) => (s + 1) % scenarios.length);
-        }, 3500));
-        return;
-      }
+      if (lineIdx >= scenarioLines.length) return; // done — stay static
       const nextLine = scenarioLines[lineIdx];
       if (nextLine) {
-        const jitter = 1 + (Math.random() - 0.5) * 0.3; // ±15% realism
+        const jitter = 1 + (Math.random() - 0.5) * 0.3;
         timers.push(setTimeout(showNextLine, nextLine.delay * jitter));
       }
     }
@@ -138,16 +123,16 @@ export function LiveTerminal() {
       scheduleNextLine();
     }
 
-    // Kick off: show cursor, then start typing after a brief pause
+    // Kick off: show cursor, then start typing
     timers.push(setTimeout(() => {
-      setTypedChars(0); // cursor appears
-      timers.push(setTimeout(typeChar, 150)); // first keystroke
+      setTypedChars(0);
+      timers.push(setTimeout(typeChar, 150));
     }, 300));
 
     return () => {
       timers.forEach(clearTimeout);
     };
-  }, [currentScenario]);
+  }, []);
 
   /* ── Color helpers ── */
   const prefixColor = (type: TerminalLine["type"]) =>
@@ -194,7 +179,7 @@ export function LiveTerminal() {
         {/* ── Phase 2: Fully revealed lines ── */}
         {lines.slice(0, visibleLines).map((line, i) => (
           <motion.div
-            key={`${currentScenario}-${i}`}
+            key={i}
             // Skip entrance animation on the command line (already shown via typing)
             initial={i === 0 ? false : { opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
