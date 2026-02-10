@@ -81,4 +81,31 @@ Create a reusable hero pattern for inner pages:
 
 ## Execution Log
 
-Starting implementation...
+### Pass 1: Visual quality (atmosphere, rhythm, interactions)
+Done — gradient blobs, dark/light alternation, scroll-driven GSAP components.
+
+### Pass 2: About page narrative review
+
+Reading the About page as a visitor. The four sections are:
+1. Hero: "A lean automation studio built by operators and engineers." + credential flex
+2. "Our Principles" — Deep Technical Execution, Strong Business Judgment, Global Efficient Delivery
+3. "Four Steps to Live" — Audit, Design, Build & Deploy, Optimize
+4. Quote: "No bloated teams. No unnecessary platforms. Just automation that works."
+
+**The problem:** These are four disconnected blocks with no narrative thread.
+
+- The values are generic corporate abstractions. Who says they have SHALLOW technical execution? Every agency claims these.
+- The process is the exact "Audit → Design → Build → Optimize" that the design agent's own guidelines flag as "Generic process rows that every agency has."
+- There's no WHY. No origin story, no belief, no point of view. Nothing that tells me why this company exists or why it's different.
+- No connective tissue. Each section starts fresh with a new heading. Nothing links the hero to the values, the values to the process, or the process to the closing.
+
+**What an About page should do:** Tell a story. Answer: Why does this company exist? What gap did you see? Why are you the right people? What's different about how you think?
+
+**New narrative arc:**
+1. **Hero** — who we are (lean studio, strong credentials)
+2. **The Belief** — WHY we exist. Prose, not bullets. The gap we saw: enterprise automation is too expensive for SMBs, DIY tools are too shallow, teams are stuck.
+3. **What's Different** — not abstract values, but concrete differentiators: we build on your existing stack, we ship in weeks, we charge like a studio not a consultancy.
+4. **How It Works** — brief process, subordinate. Supporting detail, not a main event.
+5. **Closing** — tagline with weight.
+
+Each section flows FROM the previous one. The belief sets up the differentiators. The differentiators set up the process. The process sets up the closing.
