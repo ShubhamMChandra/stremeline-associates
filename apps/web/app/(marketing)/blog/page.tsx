@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Heading, Badge, Button } from "@repo/ui";
 import { FadeIn, AnimateOnScroll } from "@repo/animation";
+
 /**
  * What this does: Blog listing page with atmospheric hero and uniform post grid
  * Why it's here: Content marketing and SEO — establishes Stremeline as thought leaders in AI automation
@@ -10,34 +11,38 @@ import { FadeIn, AnimateOnScroll } from "@repo/animation";
  */
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Insights on AI automation, agent workflows, and operational efficiency for SMBs.",
+  title: "Insights | Stremeline Associates",
+  description:
+    "Analysis and perspectives on AI agent automation, operational efficiency, and the future of SMB operations.",
 };
 
 const posts = [
   {
     slug: "five-workflows-to-automate-first",
-    title: "5 Workflows Every SMB Should Automate First",
+    title: "The Five Workflows That Yield the Highest Automation ROI",
     description:
-      "Not sure where to start with AI automation? These five workflows give you the fastest ROI with the least disruption.",
+      "Most SMBs automate the wrong processes first. Our analysis of dozens of engagements reveals five workflows that consistently deliver 60–80% time savings within weeks — with minimal disruption to existing operations.",
     publishedAt: "2026-02-03",
-    tags: ["Automation", "SMB"],
+    readingTime: "7 min read",
+    tags: ["Operations", "Automation"],
   },
   {
     slug: "why-ai-agents-not-chatbots",
-    title: "Why AI Agents, Not Chatbots, Are the Future of SMB Operations",
+    title: "Beyond Chatbots: Why Autonomous AI Agents Are Reshaping SMB Operations",
     description:
-      "Chatbots answer questions. AI agents take action. Here's why that distinction matters for your business.",
+      "The distinction between chatbots and AI agents is not semantic — it is structural. Agents do not wait for input. They monitor, decide, and execute. For SMBs without dedicated operations teams, this shift changes the calculus entirely.",
     publishedAt: "2026-01-20",
-    tags: ["AI Agents", "Operations"],
+    readingTime: "6 min read",
+    tags: ["AI Agents", "Strategy"],
   },
   {
     slug: "build-vs-buy-ai-automation",
-    title: "Build vs. Buy: How to Think About AI Automation for Your Business",
+    title: "Build, Buy, or Partner: A Decision Framework for AI Automation",
     description:
-      "Should you build your own automations, use an off-the-shelf platform, or hire a team to build them for you? Here's a framework.",
+      "The automation landscape offers three paths — DIY tools, platform suites, and custom-built agents. Each carries distinct trade-offs in cost, flexibility, and reliability. Here is a structured framework for choosing the right approach.",
     publishedAt: "2026-01-06",
-    tags: ["Strategy", "AI Agents"],
+    readingTime: "8 min read",
+    tags: ["Strategy", "Frameworks"],
   },
 ];
 
@@ -69,8 +74,8 @@ export default function BlogPage() {
               Insights
             </Heading>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Thoughts on AI automation, agent workflows, and building more
-              leveraged businesses.
+              Analysis and perspectives on AI automation, operational
+              architecture, and the future of work for growth-stage businesses.
             </p>
           </FadeIn>
         </Container>
@@ -84,26 +89,39 @@ export default function BlogPage() {
               <AnimateOnScroll key={post.slug} delay={i * 0.1}>
                 <Link href={`/blog/${post.slug}`} className="group block h-full">
                   <div className="flex h-full flex-col rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/20 hover:shadow-md">
-                    <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <div className="mb-4 flex flex-wrap items-center gap-2">
                       {post.tags.map((tag) => (
-                        <Badge key={tag} variant="mono">{tag}</Badge>
+                        <Badge key={tag} variant="mono">
+                          {tag}
+                        </Badge>
                       ))}
                     </div>
-                    <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                    <h2 className="text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
                       {post.title}
                     </h2>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                       {post.description}
                     </p>
                     <div className="mt-auto flex items-center justify-between pt-6">
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                          month: "long",
-                          day: "numeric",
-                          year: "numeric",
-                        })}
-                      </span>
-                      <span className="font-mono text-xs text-primary/60 group-hover:text-primary transition-colors">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(post.publishedAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            },
+                          )}
+                        </span>
+                        <span className="text-xs text-muted-foreground/50">
+                          |
+                        </span>
+                        <span className="font-mono text-xs text-muted-foreground/70">
+                          {post.readingTime}
+                        </span>
+                      </div>
+                      <span className="font-mono text-xs text-primary/60 transition-colors group-hover:text-primary">
                         Read &rarr;
                       </span>
                     </div>
@@ -124,12 +142,13 @@ export default function BlogPage() {
                 className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
                 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
               >
-                Ready to stop doing the work your agents could handle?
+                The highest-performing teams automate the work that does not
+                require judgment — and protect the work that does.
               </p>
             </FadeIn>
             <FadeIn delay={0.3}>
               <Button asChild size="lg" className="btn-glow mt-10">
-                <Link href="/contact">Let&apos;s Talk</Link>
+                <Link href="/contact">Schedule a Diagnostic</Link>
               </Button>
             </FadeIn>
           </div>
