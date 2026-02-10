@@ -35,7 +35,7 @@ export function Header() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {mainNav.map((item) => (
             <Link
               key={item.href}

@@ -4,7 +4,8 @@ import Link from "next/link";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { Container, Heading, Code, Prose, Badge, Button } from "@repo/ui";
+import { marked } from "marked";
+import { Container, Heading, Prose, Badge, Button } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
 
 interface PageProps {
@@ -82,24 +83,15 @@ export default async function BlogPostPage({ params }: PageProps) {
         </Container>
       </section>
 
-      <section className="pb-[clamp(4rem,3rem+5vw,8rem)]">
+      <section className="pb-16 md:pb-24">
         <Container className="max-w-3xl">
           <Prose>
-            {/* Render MDX content as HTML (simplified — full MDX rendering in production) */}
             <div dangerouslySetInnerHTML={{
-              __html: post.content
-                .replace(/^# .+$/m, "")
-                .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-                .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-                .replace(/^\*\*(.+?)\*\*/gm, "<strong>$1</strong>")
-                .replace(/^- (.+)$/gm, "<li>$1</li>")
-                .replace(/(<li>.*<\/li>\n?)+/gs, (match) => `<ul>${match}</ul>`)
-                .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>')
-                .replace(/\n{2,}/g, "</p><p>")
-                .replace(/^(?!<[hulo])(.+)$/gm, "<p>$1</p>")
-                .replace(/<p><\/p>/g, "")
-                .replace(/---/g, "<hr />")
-                .replace(/<p>\*(.+?)\*<\/p>/g, "<p><em>$1</em></p>")
+              __html: marked.parse(
+                /* Strip the H1 so the page title isn't duplicated */
+                post.content.replace(/^# .+$/m, ""),
+                { gfm: true, breaks: false }
+              ) as string
             }} />
           </Prose>
         </Container>

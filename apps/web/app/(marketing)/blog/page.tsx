@@ -17,13 +17,31 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: "five-workflows-to-automate-first",
+    title: "5 Workflows Every SMB Should Automate First",
+    description:
+      "Not sure where to start with AI automation? These five workflows give you the fastest ROI with the least disruption.",
+    publishedAt: "2026-02-03",
+    tags: ["Automation", "SMB"],
+    featured: true,
+  },
+  {
     slug: "why-ai-agents-not-chatbots",
     title: "Why AI Agents, Not Chatbots, Are the Future of SMB Operations",
     description:
       "Chatbots answer questions. AI agents take action. Here's why that distinction matters for your business.",
     publishedAt: "2026-01-20",
     tags: ["AI Agents", "Operations"],
-    featured: true,
+    featured: false,
+  },
+  {
+    slug: "build-vs-buy-ai-automation",
+    title: "Build vs. Buy: How to Think About AI Automation for Your Business",
+    description:
+      "Should you build your own automations, use an off-the-shelf platform, or hire a team to build them for you? Here's a framework.",
+    publishedAt: "2026-01-06",
+    tags: ["Strategy", "AI Agents"],
+    featured: false,
   },
 ];
 
