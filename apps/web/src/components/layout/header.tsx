@@ -60,7 +60,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <Button asChild size="sm">
             <Link href="/contact">Get in Touch</Link>
           </Button>
