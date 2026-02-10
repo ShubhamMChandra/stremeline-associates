@@ -93,7 +93,7 @@ export function Hero() {
             {/* Headline — clip-path curtain wipe, no TextGenerateEffect */}
             <h1
               data-hero-headline
-              className="text-[clamp(2.5rem,1.5rem+5vw,4.5rem)] font-bold leading-[0.95] tracking-[-0.04em]"
+              className="text-[clamp(2.5rem,1.5rem+5vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.04em]"
               style={{
                 clipPath: reducedMotion ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
               }}
