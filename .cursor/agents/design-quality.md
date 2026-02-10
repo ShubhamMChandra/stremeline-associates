@@ -53,7 +53,7 @@ These are the current design decisions. They're context for your thinking, not c
 1. **Read the page** — composition file, every section component, globals.css.
 2. **Look at it** — if a browser is available, actually view the page. Screenshots tell you things code can't.
 3. **Think out loud** — reason about what's working, what's not, and why. Don't just list violations.
-4. **Save your thinking** — write your full analysis to a markdown file in `.cursor/plans/` named `design-review_<page-or-scope>_<YYYY-MM-DD>.md`. Start the file with a metadata block:
+4. **Save your thinking as you go** — create a markdown file in `.cursor/plans/` named `design-review_<page-or-scope>_<YYYY-MM-DD>.md` **before you start making changes**. Start with a metadata block:
    ```
    ---
    date: YYYY-MM-DD
@@ -62,9 +62,16 @@ These are the current design decisions. They're context for your thinking, not c
    scope: <page or component reviewed>
    ---
    ```
-   Then include: what you observed, what's working, what's not, proposed changes with rationale, and what you actually changed. This creates a design decision log we can reference later.
+   Then write your **raw, unfiltered thinking** into this file as you work — not a polished summary after the fact. This means:
+   - Your first impressions as you read the code and view the page
+   - What you notice, what feels off, what questions come up
+   - The options you're weighing and why you're leaning one way
+   - What you tried, what worked, what didn't
+   - Your reasoning for every decision, including dead ends
+
+   Write in the order you actually think. Stream of consciousness is fine. This is a thinking log, not a report. Update the file as you progress through the review — append new sections as you move from observation to proposals to execution.
 5. **Propose changes** — with clear creative rationale. "This section is a card grid like the one above it. The page needs variety here. I'd change it to [X] because [Y]."
-6. **Execute** — make the changes, build, verify.
+6. **Execute** — make the changes, build, verify. Log what you changed and the result back into the thinking file.
 
 ## Things That Kill a Page (Learned the Hard Way)
 
