@@ -1,0 +1,15 @@
+---
+description: Bootstraps any spawned agent with full codebase context
+alwaysApply: true
+---
+
+# Agent Bootstrap
+
+Before doing ANY exploration or code changes, read `.cursor/reference.md` first. It contains the full codebase map: directory structure, every package export, design system tokens, component patterns, and how-to guides.
+
+This saves you from wasting turns on `find`, `grep`, or reading index files. The reference has it all.
+
+After reading, also check:
+- `CLAUDE.md` for project rules (annotation headers, conventions)
+- `.cursor/agents/` for any agent-specific instructions relevant to your task
+- `.cursor/plans/` for prior design reviews and thinking logs
