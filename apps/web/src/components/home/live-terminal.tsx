@@ -78,8 +78,8 @@ export function LiveTerminal() {
 
   /*
    * Single effect drives the entire animation loop.
-   * All timers are managed via local variables — no side effects
-   * inside state updaters, which avoids React 18 concurrent-mode bugs.
+   * All timers are collected in an array and cleared on unmount/re-render
+   * to prevent timer leaks and ensure proper cleanup.
    */
   useEffect(() => {
     if (reducedMotion) {
@@ -92,7 +92,7 @@ export function LiveTerminal() {
     setVisibleLines(0);
     setTypedChars(-1);
 
-    let timer: NodeJS.Timeout;
+    const timers: NodeJS.Timeout[] = [];
     let charIdx = 0;
     let lineIdx = 0;
     const cmd = lines[0]!;
@@ -104,7 +104,7 @@ export function LiveTerminal() {
 
       if (charIdx >= cmd.text.length) {
         // Command done — brief "Enter" pause, then show output
-        timer = setTimeout(startOutput, 250);
+        timers.push(setTimeout(startOutput, 250));
         return;
       }
 
@@ -112,7 +112,7 @@ export function LiveTerminal() {
       const nextChar = cmd.text[charIdx];
       const baseSpeed = nextChar === " " ? 20 : 32;
       const variance = Math.random() * 38;
-      timer = setTimeout(typeChar, baseSpeed + variance);
+      timers.push(setTimeout(typeChar, baseSpeed + variance));
     }
 
     /* Phase 2 — transition from typing to output */
@@ -127,15 +127,15 @@ export function LiveTerminal() {
     function scheduleNextLine() {
       if (lineIdx >= lines.length) {
         // All output shown — pause, then cycle to next scenario
-        timer = setTimeout(() => {
+        timers.push(setTimeout(() => {
           setCurrentScenario((s) => (s + 1) % scenarios.length);
-        }, 3500);
+        }, 3500));
         return;
       }
       const nextLine = lines[lineIdx];
       if (nextLine) {
         const jitter = 1 + (Math.random() - 0.5) * 0.3; // ±15% realism
-        timer = setTimeout(showNextLine, nextLine.delay * jitter);
+        timers.push(setTimeout(showNextLine, nextLine.delay * jitter));
       }
     }
 
@@ -146,12 +146,14 @@ export function LiveTerminal() {
     }
 
     // Kick off: brief pause → show cursor → start typing
-    timer = setTimeout(() => {
+    timers.push(setTimeout(() => {
       setTypedChars(0); // cursor appears with 0 chars
-      timer = setTimeout(typeChar, 150); // first keystroke after a blink
-    }, 400);
+      timers.push(setTimeout(typeChar, 150)); // first keystroke after a blink
+    }, 400));
 
-    return () => clearTimeout(timer);
+    return () => {
+      timers.forEach(clearTimeout);
+    };
   }, [currentScenario, reducedMotion, lines]);
 
   /* ── Color helpers ── */
