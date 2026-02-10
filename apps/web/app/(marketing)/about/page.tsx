@@ -105,7 +105,7 @@ export default function AboutPage() {
                 number: "01",
                 title: "We work inside your tools",
                 description:
-                  "No new platforms to learn. We build agents that plug into your CRM, your project management, your comms — the systems your team already knows. Nothing gets replaced.",
+                  "No new platforms to learn. We build agents that plug into your CRM, your project management, and your comms — the systems your team already knows. Nothing gets replaced.",
               },
               {
                 number: "02",

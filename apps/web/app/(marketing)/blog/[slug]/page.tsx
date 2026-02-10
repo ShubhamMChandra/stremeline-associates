@@ -82,7 +82,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               href="/blog"
               className="mb-8 inline-flex items-center gap-1 font-mono text-xs tracking-wider text-muted-foreground uppercase transition-colors hover:text-foreground"
             >
-              &larr; All Insights
+              &larr; All Posts
             </Link>
 
             <div className="mb-5 flex flex-wrap items-center gap-2">

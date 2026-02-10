@@ -11,7 +11,7 @@ import { FadeIn, AnimateOnScroll } from "@repo/animation";
  */
 
 export const metadata: Metadata = {
-  title: "Insights | Stremeline Associates",
+  title: "Blog | Stremeline Associates",
   description:
     "Analysis and perspectives on AI agent automation, operational efficiency, and the future of SMB operations.",
 };
@@ -68,10 +68,10 @@ export default function BlogPage() {
         <Container className="relative z-10">
           <FadeIn>
             <span className="mb-4 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // insights
+              // blog
             </span>
             <Heading size="h1" as="h1">
-              Insights
+              Blog
             </Heading>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               Analysis and perspectives on AI automation, operational

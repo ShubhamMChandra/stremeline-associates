@@ -68,8 +68,8 @@ export function LiveTerminal() {
   const reducedMotion = useReducedMotion();
   const [currentScenario, setCurrentScenario] = useState(0);
   const [visibleLines, setVisibleLines] = useState<number>(0);
-  // -1 = not typing; 0+ = number of chars revealed on the command line
-  const [typedChars, setTypedChars] = useState(-1);
+  // -1 = not typing; 0 = cursor visible, no chars; 1+ = chars revealed
+  const [typedChars, setTypedChars] = useState(0);
 
   const lines = scenarios[currentScenario] ?? scenarios[0]!;
   const commandLine = lines[0]!;
@@ -88,9 +88,9 @@ export function LiveTerminal() {
       return;
     }
 
-    // Reset for this scenario
+    // Reset for this scenario — cursor visible immediately
     setVisibleLines(0);
-    setTypedChars(-1);
+    setTypedChars(0);
 
     const timers: NodeJS.Timeout[] = [];
     let charIdx = 0;
@@ -145,16 +145,15 @@ export function LiveTerminal() {
       scheduleNextLine();
     }
 
-    // Kick off: brief pause → show cursor → start typing
-    timers.push(setTimeout(() => {
-      setTypedChars(0); // cursor appears with 0 chars
-      timers.push(setTimeout(typeChar, 150)); // first keystroke after a blink
-    }, 400));
+    // Kick off: short pause then start typing (cursor already visible)
+    timers.push(setTimeout(typeChar, 200));
 
     return () => {
       timers.forEach(clearTimeout);
     };
-  }, [currentScenario, reducedMotion, lines]);
+    // lines is derived from currentScenario — no need in deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentScenario, reducedMotion]);
 
   /* ── Color helpers ── */
   const prefixColor = (type: TerminalLine["type"]) =>

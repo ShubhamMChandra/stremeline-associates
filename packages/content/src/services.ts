@@ -38,7 +38,7 @@ export const services: Service[] = [
     slug: "scaling-operations",
     title: "Scale Operations",
     description:
-      "As volume grows, agents grow with it. More throughput, same team size. No hiring, no onboarding, no overhead.",
+      "As volume grows, agents grow with it. More throughput, same team size. No hiring. No onboarding. No overhead.",
     longDescription:
       "Hiring is slow and expensive. AI agents let you handle more leads, more customers, and more reporting without adding people. Volume doubles, your team stays the same size, and nothing falls through.",
     icon: "trending-up",

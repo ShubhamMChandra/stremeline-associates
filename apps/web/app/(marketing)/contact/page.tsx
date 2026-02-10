@@ -76,6 +76,11 @@ export default function ContactPage() {
                       </li>
                     ))}
                   </ol>
+                  <p className="mt-5 text-sm leading-relaxed text-muted-foreground/80">
+                    Not ready to commit? Ask about our limited pilot — we deploy a
+                    single exploratory agent so you can see real results before
+                    scaling.
+                  </p>
                 </div>
 
                 <div className="rounded-xl border border-border bg-card/50 p-6">

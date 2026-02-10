@@ -13,7 +13,7 @@ export const useCases: UseCase[] = [
     slug: "crm-data-hygiene",
     title: "CRM Data You Can't Trust",
     description:
-      "Duplicate records, stale contacts, missing fields. Your team makes decisions on bad data every day. Agents clean and enrich your CRM continuously in the background — no manual audits needed.",
+      "Duplicate records. Stale contacts. Missing fields. Your team makes decisions on bad data every day. Agents clean and enrich your CRM continuously in the background — no manual audits needed.",
     icon: "database",
     relatedServices: ["error-reduction", "workflow-automation"],
   },
