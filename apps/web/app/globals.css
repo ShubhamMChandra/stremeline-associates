@@ -52,8 +52,13 @@
     transform: translateY(calc(-100% - var(--gap)));
     }
   }
-  --animate-orbit: orbit calc(var(--duration)*1s) linear infinite
-;
+  --animate-orbit: orbit calc(var(--duration)*1s) linear infinite;
+
+  /* Terminal cursor blink — true on/off like a real terminal */
+  @keyframes terminal-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
   /* Circular orbit using rotate-translate-counterrotate */
   @keyframes orbit {
   0% {
