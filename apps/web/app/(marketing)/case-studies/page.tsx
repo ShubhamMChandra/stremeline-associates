@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Container, Heading, Code, Card, CardHeader, CardTitle, CardDescription, Badge } from "@repo/ui";
+import { Container, Heading, Badge, Button } from "@repo/ui";
 import { AnimateOnScroll, FadeIn } from "@repo/animation";
 import { caseStudies } from "@repo/content";
+
+/**
+ * What this does: Case studies page with atmospheric hero, featured case study layout, and serif CTA
+ * Why it's here: Social proof and credibility — shows actual outcomes from AI agent deployments
+ * How it works: Hero with gradient blobs, featured full-width case study card with prominent results,
+ *   additional studies in a card grid below, and a typographic CTA to drive conversions
+ * Dependencies: @repo/ui, @repo/content, @repo/animation
+ */
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -11,51 +19,154 @@ export const metadata: Metadata = {
 };
 
 export default function CaseStudiesPage() {
+  const featured = caseStudies[0];
+  const rest = caseStudies.slice(1);
+
   return (
     <>
-      <section className="py-[clamp(4rem,3rem+5vw,8rem)]">
-        <Container>
+      {/* ── Hero — atmospheric ── */}
+      <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-20">
+        {/* Ambient gradient blobs */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+          <div className="absolute -left-1/4 -top-1/4 h-[250px] w-[250px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/10 blur-[100px] lg:h-[500px] lg:w-[500px]" />
+          <div className="absolute -right-1/4 top-1/3 h-[200px] w-[200px] animate-[drift_25s_ease-in-out_infinite_reverse] rounded-full bg-sky-500/[0.05] blur-[80px] lg:h-[400px] lg:w-[400px]" />
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "repeat",
+              backgroundSize: "256px 256px",
+            }}
+          />
+        </div>
+
+        <Container className="relative z-10">
           <FadeIn>
-            <Code className="mb-4 block">// case-studies</Code>
+            <span className="mb-4 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
+              // case studies
+            </span>
             <Heading size="h1" as="h1" className="max-w-3xl">
               Real Results, Real Businesses
             </Heading>
-            <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               See how AI agents have transformed operations for businesses like yours.
             </p>
           </FadeIn>
         </Container>
       </section>
 
-      <section className="pb-[clamp(4rem,3rem+5vw,8rem)]">
-        <Container>
-          <div className="grid gap-6 md:grid-cols-2">
-            {caseStudies.map((study, i) => (
-              <AnimateOnScroll key={study.slug} delay={i * 0.1}>
-                <Link href={`/case-studies/${study.slug}`}>
-                  <Card className="group h-full cursor-pointer transition-all hover:border-amber-500/20">
-                    <CardHeader>
-                      <div className="flex items-center gap-2 mb-2">
+      {/* ── Featured Case Study — light section, full-width ── */}
+      {featured && (
+        <section className="light bg-background py-20 md:py-28">
+          <Container>
+            <AnimateOnScroll>
+              <Link
+                href={`/case-studies/${featured.slug}`}
+                className="group block"
+              >
+                <div className="rounded-xl border border-border bg-card p-8 transition-all hover:shadow-md md:p-12">
+                  {/* Header */}
+                  <div className="flex flex-wrap items-center gap-3 mb-6">
+                    <Badge variant="mono">{featured.industry}</Badge>
+                    {featured.client && (
+                      <span className="text-sm text-muted-foreground">
+                        {featured.client}
+                      </span>
+                    )}
+                  </div>
+
+                  <h2 className="text-2xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors md:text-3xl">
+                    {featured.title}
+                  </h2>
+
+                  <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+                    {featured.summary}
+                  </p>
+
+                  {/* Results — prominent numbers */}
+                  <div className="mt-10 grid gap-8 border-t border-border pt-10 sm:grid-cols-3">
+                    {featured.results.slice(0, 3).map((r, j) => (
+                      <AnimateOnScroll key={j} delay={j * 0.1}>
+                        <div>
+                          <span className="text-[clamp(2rem,4vw,3.5rem)] font-extralight leading-none tracking-tight text-primary">
+                            {r.after}
+                          </span>
+                          <p className="mt-2 text-sm text-muted-foreground">
+                            {r.metric}
+                          </p>
+                        </div>
+                      </AnimateOnScroll>
+                    ))}
+                  </div>
+
+                  {/* Read more indicator */}
+                  <p className="mt-8 font-mono text-xs text-primary/70 group-hover:text-primary transition-colors">
+                    Read the full case study &rarr;
+                  </p>
+                </div>
+              </Link>
+            </AnimateOnScroll>
+          </Container>
+        </section>
+      )}
+
+      {/* ── Additional Case Studies (if any) — dark section ── */}
+      {rest.length > 0 && (
+        <section className="py-20 md:py-28">
+          <Container>
+            <AnimateOnScroll>
+              <Heading size="h2" as="h2" className="mb-12">
+                More Results
+              </Heading>
+            </AnimateOnScroll>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {rest.map((study, i) => (
+                <AnimateOnScroll key={study.slug} delay={i * 0.1}>
+                  <Link href={`/case-studies/${study.slug}`}>
+                    <div className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/20 hover:shadow-md">
+                      <div className="flex items-center gap-2 mb-3">
                         <Badge variant="mono">{study.industry}</Badge>
                       </div>
-                      <CardTitle className="text-xl group-hover:text-amber-500 transition-colors">
+                      <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
                         {study.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardDescription>{study.summary}</CardDescription>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      {study.results.slice(0, 3).map((r, j) => (
-                        <div key={j} className="text-xs">
-                          <span className="font-semibold text-amber-500">{r.after}</span>
-                          <span className="text-muted-foreground"> — {r.metric}</span>
-                        </div>
-                      ))}
+                      </h3>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        {study.summary}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-4">
+                        {study.results.slice(0, 3).map((r, j) => (
+                          <div key={j} className="text-xs">
+                            <span className="font-semibold text-primary">{r.after}</span>
+                            <span className="text-muted-foreground"> — {r.metric}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </Card>
-                </Link>
-              </AnimateOnScroll>
-            ))}
-          </div>
+                  </Link>
+                </AnimateOnScroll>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* ── CTA — serif typographic moment ── */}
+      <section className="py-20 md:py-32">
+        <Container>
+          <FadeIn>
+            <div className="mx-auto max-w-3xl text-center">
+              <p
+                className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
+                style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
+              >
+                Your results could be next.
+              </p>
+              <Button asChild size="lg" className="btn-glow mt-10">
+                <Link href="/contact">Book an Audit</Link>
+              </Button>
+            </div>
+          </FadeIn>
         </Container>
       </section>
     </>
