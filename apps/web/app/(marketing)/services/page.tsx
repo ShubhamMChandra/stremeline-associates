@@ -120,6 +120,12 @@ export default function ServicesPage() {
                       <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
                         {service.longDescription}
                       </p>
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="mt-5 inline-flex items-center gap-1 font-mono text-sm text-primary transition-colors hover:text-primary/80"
+                      >
+                        Learn more &rarr;
+                      </Link>
                     </div>
                   </div>
                 </FadeIn>

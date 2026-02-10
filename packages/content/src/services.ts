@@ -3,7 +3,7 @@ import type { Service } from "@repo/types";
 export const services: Service[] = [
   {
     slug: "lead-capture",
-    title: "Automate What Comes In",
+    title: "Lead Capture",
     description:
       "Leads, requests, applications — whatever enters your business gets captured, validated, and routed automatically. Nothing waits. Nothing slips.",
     longDescription:
@@ -14,7 +14,7 @@ export const services: Service[] = [
   },
   {
     slug: "workflow-automation",
-    title: "Connect Your Tools Into One Flow",
+    title: "Workflow Automation",
     description:
       "Your team uses 10+ tools. Agents bridge them — syncing data, triggering actions, and eliminating the copy-paste between systems.",
     longDescription:
@@ -25,7 +25,7 @@ export const services: Service[] = [
   },
   {
     slug: "error-reduction",
-    title: "Clean Data, Fewer Mistakes",
+    title: "Error Reduction",
     description:
       "Agents that validate, deduplicate, and enrich your data continuously — so decisions are based on what's actually true.",
     longDescription:
@@ -36,7 +36,7 @@ export const services: Service[] = [
   },
   {
     slug: "scaling-operations",
-    title: "Scale Without Adding Headcount",
+    title: "Scale Operations",
     description:
       "As volume grows, agents grow with it. More throughput, same team size. No hiring, no onboarding, no overhead.",
     longDescription:

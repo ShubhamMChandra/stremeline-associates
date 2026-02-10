@@ -34,7 +34,9 @@ export function Footer() {
 
           {/* Services */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-foreground">Services</h4>
+            <Link href="/services" className="text-sm font-semibold text-foreground transition-colors hover:text-primary">
+              Services
+            </Link>
             <ul className="space-y-1">
               {footerNav.services.map((item) => (
                 <li key={item.href}>
