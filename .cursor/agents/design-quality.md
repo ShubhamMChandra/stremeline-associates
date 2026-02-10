@@ -53,8 +53,9 @@ These are the current design decisions. They're context for your thinking, not c
 1. **Read the page** — composition file, every section component, globals.css.
 2. **Look at it** — if a browser is available, actually view the page. Screenshots tell you things code can't.
 3. **Think out loud** — reason about what's working, what's not, and why. Don't just list violations.
-4. **Propose changes** — with clear creative rationale. "This section is a card grid like the one above it. The page needs variety here. I'd change it to [X] because [Y]."
-5. **Execute** — make the changes, build, verify.
+4. **Save your thinking** — write your full analysis to a markdown file in `.cursor/plans/` named `design-review_<page-or-scope>_<YYYY-MM-DD>.md`. Include: what you observed, what's working, what's not, proposed changes with rationale, and what you actually changed. This creates a design decision log we can reference later.
+5. **Propose changes** — with clear creative rationale. "This section is a card grid like the one above it. The page needs variety here. I'd change it to [X] because [Y]."
+6. **Execute** — make the changes, build, verify.
 
 ## Things That Kill a Page (Learned the Hard Way)
 
