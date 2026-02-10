@@ -1,145 +1,62 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Container } from "@repo/ui";
-import { useReducedMotion } from "@repo/animation";
-
-gsap.registerPlugin(ScrollTrigger);
+import { AnimateOnScroll } from "@repo/animation";
 
 /**
- * What this does: Full-viewport dark section with three enormous scroll-driven numbers and a serif quote
- * Why it's here: The "typographic wow" — numbers at 15-20vw create the design. Serif quote adds humanity.
- * How it works: GSAP ScrollTrigger with scrub ties number values directly to scroll position.
- *   Numbers count up (or down) as the visitor scrolls through the section.
- * Dependencies: gsap, gsap/ScrollTrigger, @repo/ui, @repo/animation
+ * What this does: Three brand promises — fast, no lock-in, your tools
+ * Why it's here: Addresses the three biggest hesitations a B2B buyer has:
+ *   "How long will this take?", "Am I stuck?", "Do I have to change everything?"
+ * How it works: Simple grid with bold headlines and one-line explanations.
+ *   Serif italic closer ties it together. No fake metrics — just honest commitments.
+ * Dependencies: @repo/ui, @repo/animation
  */
 
-interface CounterItem {
-  from: number;
-  to: number;
-  suffix: string;
-  label: string;
-}
-
-// Numbers should be internally consistent with the problem section
-// (3.0 hrs/day manual → ~35 min/day = ~2.4 hrs saved/day × 20 days ≈ 48 hrs/month)
-const counters: CounterItem[] = [
-  { from: 0, to: 50, suffix: "+", label: "hours reclaimed per month" },
-  { from: 0, to: 90, suffix: "%", label: "fewer data-entry errors" },
-  { from: 5, to: 1, suffix: "", label: "week to first live workflow" },
+const values = [
+  {
+    headline: "Live in weeks",
+    subline: "Most engagements deploy in under two weeks — not months of scoping and planning.",
+  },
+  {
+    headline: "Zero lock-in",
+    subline: "Month-to-month. Your agents earn their place — or we haven't built them right.",
+  },
+  {
+    headline: "Your tools, not ours",
+    subline: "We build inside your existing stack. No new platforms to learn, nothing gets replaced.",
+  },
 ];
 
 export function CounterWall() {
-  const reducedMotion = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const [count1, setCount1] = useState(0);
-  const [count2, setCount2] = useState(0);
-  const [count3, setCount3] = useState(5);
-
-  useEffect(() => {
-    if (reducedMotion || !sectionRef.current) {
-      setCount1(50);
-      setCount2(90);
-      setCount3(1);
-      return;
-    }
-
-    const tween1 = gsap.to({ val: 0 }, {
-      val: 50,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        scrub: true,
-        start: "top 60%",
-        end: "bottom 40%",
-      },
-      onUpdate: function () {
-        setCount1(Math.round(this.targets()[0].val));
-      },
-    });
-
-    const tween2 = gsap.to({ val: 0 }, {
-      val: 90,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        scrub: true,
-        start: "top 60%",
-        end: "bottom 40%",
-      },
-      onUpdate: function () {
-        setCount2(Math.round(this.targets()[0].val));
-      },
-    });
-
-    const tween3 = gsap.to({ val: 5 }, {
-      val: 1,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        scrub: true,
-        start: "top 60%",
-        end: "bottom 40%",
-      },
-      onUpdate: function () {
-        setCount3(Math.round(this.targets()[0].val));
-      },
-    });
-
-    return () => {
-      tween1.scrollTrigger?.kill();
-      tween2.scrollTrigger?.kill();
-      tween3.scrollTrigger?.kill();
-    };
-  }, [reducedMotion]);
-
-  const values = [
-    { value: count1, suffix: counters[0]!.suffix, label: counters[0]!.label },
-    { value: count2, suffix: counters[1]!.suffix, label: counters[1]!.label },
-    { value: count3, suffix: counters[2]!.suffix, label: counters[2]!.label },
-  ];
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative pt-12 pb-12 md:pt-12 md:pb-16 flex items-center"
-    >
+    <section className="py-20 md:py-28">
       <Container>
-        <div className="flex flex-col items-center justify-center w-full">
-          {/* ── Counter grid ── */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full text-center">
-            {values.map((item, i) => (
-              <div key={i} className="flex flex-col items-center">
-                <span
-                  className="text-[clamp(6rem,15vw,18rem)] font-extralight tracking-[-0.05em] leading-none text-foreground"
-                >
-                  {item.value}
-                  {item.suffix}
-                </span>
-                <span className="text-sm text-muted-foreground mt-4">
-                  {item.label}
-                </span>
+        {/* Value propositions */}
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
+          {values.map((v, i) => (
+            <AnimateOnScroll key={i}>
+              <div className="text-center md:text-left">
+                <h3 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+                  {v.headline}
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                  {v.subline}
+                </p>
               </div>
-            ))}
-          </div>
-
-          {/* ── Customer quote ── */}
-          <blockquote className="mt-12 md:mt-16 max-w-3xl mx-auto text-center">
-            <p
-              className="text-2xl md:text-3xl leading-relaxed italic text-foreground/90"
-              style={{ fontFamily: "var(--font-serif)" }}
-            >
-              &ldquo;Response times went from hours to minutes. Our reps stopped
-              doing data entry and started actually selling.&rdquo;
-            </p>
-            <footer className="text-sm text-muted-foreground mt-4">
-              — B2B Software Company
-            </footer>
-          </blockquote>
+            </AnimateOnScroll>
+          ))}
         </div>
+
+        {/* Brand voice closer */}
+        <AnimateOnScroll>
+          <p
+            className="mx-auto mt-16 max-w-2xl text-center text-2xl leading-relaxed italic text-foreground/80 md:mt-20 md:text-3xl"
+            style={{ fontFamily: "var(--font-serif)" }}
+          >
+            We build agents that handle the work your team shouldn&apos;t be doing.
+            Nothing more, nothing less.
+          </p>
+        </AnimateOnScroll>
       </Container>
     </section>
   );

@@ -4,12 +4,11 @@ import { Container, Heading, Button } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
 import { services, processSteps, processTagline } from "@repo/content";
 import { Zap, Workflow, ShieldCheck, TrendingUp } from "lucide-react";
-import { ScrollCounter } from "../../../src/components/ui/scroll-counter";
 import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal";
 
 /**
- * What this does: Services page — four capabilities, process steps, proof stats, and CTA
- * Why it's here: Dedicated page to explain what Stremeline builds, how, and with what results
+ * What this does: Services page — four capabilities, process steps, values, and CTA
+ * Why it's here: Dedicated page to explain what Stremeline builds and how they work
  * How it works: Server component with five visually distinct sections. Each uses a different format:
  *   atmospheric hero → full-width feature rows → 4-column process grid → large scroll counters
  *   → serif CTA. Light/dark alternation with gradient transitions for visual rhythm.
@@ -177,53 +176,46 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      {/* ── 4. Proof band (dark) — large scroll-driven stats + serif quote ── */}
+      {/* ── 4. Values band (dark) — honest commitments, not fake metrics ── */}
       <section className="border-t border-border py-16 md:py-20">
         <Container>
-          <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-3">
-            <div>
-              <ScrollCounter
-                from={0}
-                to={50}
-                suffix="+"
-                className="text-[clamp(3.5rem,8vw,7rem)] font-extralight leading-none tracking-tight text-foreground"
-              />
-              <p className="mt-3 text-sm text-muted-foreground">
-                hours reclaimed per month
-              </p>
-            </div>
-            <div>
-              <ScrollCounter
-                from={0}
-                to={90}
-                suffix="%"
-                className="text-[clamp(3.5rem,8vw,7rem)] font-extralight leading-none tracking-tight text-foreground"
-              />
-              <p className="mt-3 text-sm text-muted-foreground">
-                fewer data-entry errors
-              </p>
-            </div>
-            <div>
-              <ScrollCounter
-                from={5}
-                to={1}
-                className="text-[clamp(3.5rem,8vw,7rem)] font-extralight leading-none tracking-tight text-foreground"
-              />
-              <p className="mt-3 text-sm text-muted-foreground">
-                week to first live workflow
-              </p>
-            </div>
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+            {[
+              {
+                headline: "Live in weeks",
+                description: "Most engagements deploy in under two weeks — not months of scoping.",
+              },
+              {
+                headline: "Zero lock-in",
+                description: "Month-to-month. Your agents earn their place or we haven't built them right.",
+              },
+              {
+                headline: "Your tools, not ours",
+                description: "We build inside your existing stack. Nothing gets replaced.",
+              },
+            ].map((v) => (
+              <FadeIn key={v.headline}>
+                <div className="text-center sm:text-left">
+                  <h3 className="text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+                    {v.headline}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {v.description}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
           </div>
 
-          <blockquote className="mx-auto mt-14 max-w-2xl text-center md:mt-16">
+          <FadeIn>
             <p
-              className="text-xl leading-relaxed italic text-foreground/80 md:text-2xl"
+              className="mx-auto mt-14 max-w-2xl text-center text-xl leading-relaxed italic text-foreground/80 md:mt-16 md:text-2xl"
               style={{ fontFamily: "var(--font-serif)" }}
             >
-              &ldquo;Zero lock-in. Your agents earn their place every
-              month&nbsp;&mdash; or we haven&apos;t built them right.&rdquo;
+              We build agents that handle the work your team shouldn&apos;t be doing.
+              Nothing more, nothing less.
             </p>
-          </blockquote>
+          </FadeIn>
         </Container>
       </section>
 
