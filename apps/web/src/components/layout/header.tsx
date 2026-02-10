@@ -34,14 +34,14 @@ export function Header() {
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        scrolled ? "top-3 px-4 md:px-6" : "top-0 px-0",
+        scrolled ? "top-3 px-4 lg:top-0 lg:px-0" : "top-0 px-0",
       )}
     >
       <div
         className={cn(
           "mx-auto flex h-14 max-w-[1100px] items-center justify-between transition-all duration-500",
           scrolled
-            ? "glass rounded-full border border-white/[0.06] px-5 shadow-lg shadow-black/10"
+            ? "glass rounded-full border border-white/[0.06] px-5 shadow-lg shadow-black/10 lg:rounded-none lg:border-0 lg:border-b lg:border-white/[0.06] lg:px-8 lg:shadow-none"
             : "h-16 rounded-none border-transparent px-6 md:px-8",
         )}
       >

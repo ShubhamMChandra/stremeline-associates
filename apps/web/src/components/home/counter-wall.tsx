@@ -29,7 +29,7 @@ const values = [
 
 export function CounterWall() {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-16 md:py-20">
       <Container>
         {/* Value propositions */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
@@ -50,7 +50,7 @@ export function CounterWall() {
         {/* Brand voice closer */}
         <AnimateOnScroll>
           <p
-            className="mx-auto mt-16 max-w-2xl text-center text-2xl leading-relaxed italic text-foreground/80 md:mt-20 md:text-3xl"
+            className="mx-auto mt-12 max-w-2xl text-center text-2xl leading-relaxed italic text-foreground/80 md:mt-16 md:text-3xl"
             style={{ fontFamily: "var(--font-serif)" }}
           >
             We build agents that handle the work your team shouldn&apos;t be doing.

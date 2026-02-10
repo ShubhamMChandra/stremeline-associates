@@ -63,7 +63,7 @@ export function CTASection() {
     <section
       ref={sectionRef}
       id="cta"
-      className="relative pt-12 pb-16 md:pt-12 md:pb-24"
+      className="relative pt-8 pb-12 md:pt-8 md:pb-16"
       aria-label="Call to action"
     >
       <Container className="flex flex-col items-center text-center">
@@ -90,7 +90,7 @@ export function CTASection() {
           ref={magnetic.ref}
           onMouseMove={magnetic.onMouseMove}
           onMouseLeave={magnetic.onMouseLeave}
-          className="mt-12"
+          className="mt-8"
         >
           <Button asChild size="lg" className="btn-glow">
             <Link href="/contact">Start Your Audit</Link>

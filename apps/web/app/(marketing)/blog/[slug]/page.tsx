@@ -75,7 +75,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <>
       {/* ── Article Header ── */}
-      <section className="pt-16 pb-10 md:pt-24 md:pb-14">
+      <section className="pt-16 pb-8 md:pt-20 md:pb-10">
         <Container className="max-w-3xl">
           <FadeIn>
             <Link
@@ -140,7 +140,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       </section>
 
       {/* ── CTA Footer ── */}
-      <section className="border-t border-border py-16 md:py-24">
+      <section className="border-t border-border py-12 md:py-16">
         <Container className="max-w-3xl">
           <FadeIn>
             <div className="text-center">

@@ -20,7 +20,7 @@ export default function ContactPage() {
   return (
     <>
       {/* ── Main section with atmosphere ── */}
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden py-20 md:py-24">
         {/* Ambient gradient blobs */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
           <div className="absolute -left-1/4 -top-1/4 h-[250px] w-[250px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/10 blur-[100px] lg:h-[500px] lg:w-[500px]" />
@@ -59,7 +59,7 @@ export default function ContactPage() {
 
             {/* Info column */}
             <FadeIn delay={0.3}>
-              <div className="space-y-10 lg:pt-32">
+              <div className="space-y-10 lg:pt-24">
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-5">What happens next</h3>
                   <ol className="space-y-5">
@@ -103,7 +103,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── Closing — serif quote ── */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <FadeIn>

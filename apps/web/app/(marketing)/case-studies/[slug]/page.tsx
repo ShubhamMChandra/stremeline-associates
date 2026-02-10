@@ -31,7 +31,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <Container>
           <FadeIn>
             <Link
@@ -49,7 +49,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
       </section>
 
       {/* Problem */}
-      <section className="bg-card py-16 md:py-24">
+      <section className="bg-card py-12 md:py-16">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2">
             <AnimateOnScroll>
@@ -71,7 +71,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
       </section>
 
       {/* Results */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <Container>
           <AnimateOnScroll>
             <Code className="mb-4 block">// results</Code>
@@ -106,7 +106,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-border py-16 md:py-24">
+      <section className="border-t border-border py-12 md:py-16">
         <Container>
           <FadeIn>
             <div className="mx-auto max-w-xl text-center">

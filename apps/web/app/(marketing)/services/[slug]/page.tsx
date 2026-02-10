@@ -33,7 +33,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <Container>
           <FadeIn>
             <Link
@@ -55,7 +55,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
       {/* Related Use Cases */}
       {relatedUseCases.length > 0 && (
-        <section className="bg-card py-16 md:py-24">
+        <section className="bg-card py-12 md:py-16">
           <Container>
             <AnimateOnScroll>
               <Heading size="h2" as="h2" className="mb-10">
@@ -79,7 +79,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       )}
 
       {/* CTA */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <Container>
           <FadeIn>
             <div className="mx-auto max-w-xl text-center">

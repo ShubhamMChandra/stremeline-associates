@@ -24,7 +24,7 @@ export default function CaseStudiesPage() {
   return (
     <>
       {/* ── Hero — atmospheric ── */}
-      <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-20">
+      <section className="relative overflow-hidden pt-20 pb-12 md:pt-28 md:pb-16">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
           <div className="absolute -left-1/4 -top-1/4 h-[250px] w-[250px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/10 blur-[100px] lg:h-[500px] lg:w-[500px]" />
           <div className="absolute -right-1/4 top-1/3 h-[200px] w-[200px] animate-[drift_25s_ease-in-out_infinite_reverse] rounded-full bg-sky-500/[0.05] blur-[80px] lg:h-[400px] lg:w-[400px]" />
@@ -82,7 +82,7 @@ export default function CaseStudiesPage() {
                   </p>
 
                   {/* Results — prominent display */}
-                  <div className="mt-10 grid gap-8 border-t border-border pt-10 sm:grid-cols-3">
+                  <div className="mt-8 grid gap-8 border-t border-border pt-8 sm:grid-cols-3">
                     {featured.results.slice(0, 3).map((r, j) => (
                       <div key={j}>
                         <span className="text-[clamp(2rem,4vw,3.5rem)] font-extralight leading-none tracking-tight text-primary">
@@ -148,7 +148,7 @@ export default function CaseStudiesPage() {
       )}
 
       {/* ── CTA — serif quote ── */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <FadeIn>
@@ -160,7 +160,7 @@ export default function CaseStudiesPage() {
               </p>
             </FadeIn>
             <FadeIn delay={0.3}>
-              <Button asChild size="lg" className="btn-glow mt-10">
+              <Button asChild size="lg" className="btn-glow mt-8">
                 <Link href="/contact">Book an Audit</Link>
               </Button>
             </FadeIn>

@@ -32,7 +32,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* ── 1. Hero (dark) — atmospheric opening with serif accent ── */}
-      <section className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-28">
+      <section className="relative overflow-hidden pt-20 pb-14 md:pt-28 md:pb-20">
         {/* Background atmosphere */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
           <div className="absolute -left-1/4 -top-1/4 h-[250px] w-[250px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/10 blur-[100px] lg:h-[500px] lg:w-[500px]" />
@@ -84,7 +84,7 @@ export default function ServicesPage() {
             <Heading size="h2" as="h2" className="mb-4">
               Core Capabilities
             </Heading>
-            <p className="mb-12 max-w-lg text-lg text-muted-foreground md:mb-16">
+            <p className="mb-8 max-w-lg text-lg text-muted-foreground md:mb-10">
               Four automation pillars. Each one removes a specific category of
               manual work from your operations.
             </p>
@@ -95,7 +95,7 @@ export default function ServicesPage() {
               const Icon = iconMap[service.icon];
               return (
                 <FadeIn key={service.slug}>
-                  <div className="group grid gap-4 border-t border-border py-10 md:grid-cols-[100px_1fr] md:gap-8 md:py-14">
+                  <div className="group grid gap-4 border-t border-border py-6 md:grid-cols-[100px_1fr] md:gap-8 md:py-8">
                     {/* Left: index + icon */}
                     <div className="flex items-start gap-4 md:flex-col md:items-start md:gap-3">
                       <span className="text-[clamp(2rem,4vw,3.5rem)] font-extralight leading-none tracking-tight text-muted-foreground/20">
@@ -143,7 +143,7 @@ export default function ServicesPage() {
       />
 
       {/* ── 3. How We Work (dark) — 4-column process grid ── */}
-      <section className="py-16 md:py-20">
+      <section className="py-12 md:py-16">
         <Container>
           <FadeIn>
             <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
@@ -152,7 +152,7 @@ export default function ServicesPage() {
             <Heading size="h2" as="h2" className="mb-4">
               How We Work
             </Heading>
-            <p className="mb-12 max-w-lg text-lg text-muted-foreground md:mb-16">
+            <p className="mb-8 max-w-lg text-lg text-muted-foreground md:mb-10">
               {processTagline}
             </p>
           </FadeIn>
@@ -183,7 +183,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ── 4. Values band (dark) — honest commitments, not fake metrics ── */}
-      <section className="border-t border-border py-16 md:py-20">
+      <section className="border-t border-border py-12 md:py-16">
         <Container>
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4 md:gap-0">
             {[
@@ -217,7 +217,7 @@ export default function ServicesPage() {
 
           <FadeIn>
             <p
-              className="mx-auto mt-14 max-w-2xl text-center text-xl leading-relaxed italic text-foreground/80 md:mt-16 md:text-2xl"
+              className="mx-auto mt-10 max-w-2xl text-center text-xl leading-relaxed italic text-foreground/80 md:mt-12 md:text-2xl"
               style={{ fontFamily: "var(--font-serif)" }}
             >
               We build agents that handle the work your team shouldn&apos;t be doing.
@@ -228,7 +228,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ── 5. CTA (dark) — serif text reveal ── */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
             <ScrollTextReveal className="mt-5" start={85} end={55}>
@@ -241,7 +241,7 @@ export default function ServicesPage() {
               </p>
             </ScrollTextReveal>
             <FadeIn delay={0.3}>
-              <Button asChild size="lg" className="btn-glow mt-10">
+              <Button asChild size="lg" className="btn-glow mt-8">
                 <Link href="/contact">Book an Audit</Link>
               </Button>
             </FadeIn>
