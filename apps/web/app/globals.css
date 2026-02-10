@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@repo/config-tailwind/base.css";
+@plugin "@tailwindcss/typography";
 
 /* Scan monorepo packages so their Tailwind classes are generated */
 @source "../../../packages";
