@@ -3,10 +3,9 @@ import Link from "next/link";
 import { Container, Heading, Badge, Button } from "@repo/ui";
 import { FadeIn, AnimateOnScroll } from "@repo/animation";
 /**
- * What this does: Blog listing page with atmospheric hero, featured post layout, and newsletter CTA
+ * What this does: Blog listing page with atmospheric hero and uniform post grid
  * Why it's here: Content marketing and SEO — establishes Stremeline as thought leaders in AI automation
- * How it works: Hero with gradient blobs, featured post as a full-width card in a light section,
- *   additional posts in a grid, and a serif CTA for newsletter/contact
+ * How it works: Hero with gradient blobs, all posts in one consistent card grid, serif CTA at bottom
  * Dependencies: @repo/ui, @repo/animation
  */
 
@@ -23,7 +22,6 @@ const posts = [
       "Not sure where to start with AI automation? These five workflows give you the fastest ROI with the least disruption.",
     publishedAt: "2026-02-03",
     tags: ["Automation", "SMB"],
-    featured: true,
   },
   {
     slug: "why-ai-agents-not-chatbots",
@@ -32,7 +30,6 @@ const posts = [
       "Chatbots answer questions. AI agents take action. Here's why that distinction matters for your business.",
     publishedAt: "2026-01-20",
     tags: ["AI Agents", "Operations"],
-    featured: false,
   },
   {
     slug: "build-vs-buy-ai-automation",
@@ -41,14 +38,10 @@ const posts = [
       "Should you build your own automations, use an off-the-shelf platform, or hire a team to build them for you? Here's a framework.",
     publishedAt: "2026-01-06",
     tags: ["Strategy", "AI Agents"],
-    featured: false,
   },
 ];
 
 export default function BlogPage() {
-  const featured = posts.find((p) => p.featured);
-  const rest = posts.filter((p) => !p.featured);
-
   return (
     <>
       {/* ── Hero — atmospheric ── */}
@@ -83,88 +76,44 @@ export default function BlogPage() {
         </Container>
       </section>
 
-      {/* ── Featured Post — light section, full-width ── */}
-      {featured && (
-        <section className="light bg-background py-20 md:py-28">
-          <Container>
-            <AnimateOnScroll>
-              <Link
-                href={`/blog/${featured.slug}`}
-                className="group block"
-              >
-                <div className="card-lift rounded-xl border border-border bg-card p-8 md:p-12">
-                  <div className="flex flex-wrap items-center gap-3 mb-6">
-                    {featured.tags.map((tag) => (
-                      <Badge key={tag} variant="mono">{tag}</Badge>
-                    ))}
-                    <span className="text-xs text-muted-foreground">
-                      {new Date(featured.publishedAt).toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </span>
-                  </div>
-
-                  <h2 className="text-2xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors md:text-3xl max-w-2xl">
-                    {featured.title}
-                  </h2>
-
-                  <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-                    {featured.description}
-                  </p>
-
-                  <p className="mt-8 font-mono text-xs text-primary/70 group-hover:text-primary transition-colors">
-                    Read article &rarr;
-                  </p>
-                </div>
-              </Link>
-            </AnimateOnScroll>
-          </Container>
-        </section>
-      )}
-
-      {/* ── Additional Posts (if any) — dark section ── */}
-      {rest.length > 0 && (
-        <section className="py-20 md:py-28">
-          <Container>
-            <AnimateOnScroll>
-              <Heading size="h2" as="h2" className="mb-12">
-                More Articles
-              </Heading>
-            </AnimateOnScroll>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {rest.map((post, i) => (
-                <AnimateOnScroll key={post.slug} delay={i * 0.1}>
-                  <Link href={`/blog/${post.slug}`}>
-                    <div className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/20 hover:shadow-md">
-                      <div className="flex flex-wrap items-center gap-2 mb-3">
-                        {post.tags.map((tag) => (
-                          <Badge key={tag} variant="mono">{tag}</Badge>
-                        ))}
-                      </div>
-                      <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                        {post.title}
-                      </h3>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        {post.description}
-                      </p>
-                      <p className="mt-4 text-xs text-muted-foreground">
+      {/* ── All Posts — single uniform grid ── */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <div className="grid gap-6 md:grid-cols-3">
+            {posts.map((post, i) => (
+              <AnimateOnScroll key={post.slug} delay={i * 0.1}>
+                <Link href={`/blog/${post.slug}`} className="group block h-full">
+                  <div className="flex h-full flex-col rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/20 hover:shadow-md">
+                    <div className="flex flex-wrap items-center gap-2 mb-4">
+                      {post.tags.map((tag) => (
+                        <Badge key={tag} variant="mono">{tag}</Badge>
+                      ))}
+                    </div>
+                    <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                      {post.title}
+                    </h2>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {post.description}
+                    </p>
+                    <div className="mt-auto flex items-center justify-between pt-6">
+                      <span className="text-xs text-muted-foreground">
                         {new Date(post.publishedAt).toLocaleDateString("en-US", {
                           month: "long",
                           day: "numeric",
                           year: "numeric",
                         })}
-                      </p>
+                      </span>
+                      <span className="font-mono text-xs text-primary/60 group-hover:text-primary transition-colors">
+                        Read &rarr;
+                      </span>
                     </div>
-                  </Link>
-                </AnimateOnScroll>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
+                  </div>
+                </Link>
+              </AnimateOnScroll>
+            ))}
+          </div>
+        </Container>
+      </section>
 
       {/* ── CTA — serif quote ── */}
       <section className="py-16 md:py-24">
