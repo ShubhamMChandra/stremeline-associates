@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   description:
     "We design and deploy AI agent automations for small-to-medium businesses. Faster execution, fewer errors, systems that scale without adding headcount.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://wam.com",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://wam.team",
   ),
   openGraph: {
     title: "WAM — AI Agents for Leaner Operations",

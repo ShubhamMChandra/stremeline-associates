@@ -248,7 +248,7 @@ Services, case studies, use cases are typed arrays in @repo/content. Blog posts 
 ---
 
 ## Environment Variables
-- `NEXT_PUBLIC_SITE_URL` — default: https://stremelineassociates.com
+- `NEXT_PUBLIC_SITE_URL` — default: https://wam.team
 - `RESEND_API_KEY` — Email service
 - `CONTACT_EMAIL` — Contact form inbox
 

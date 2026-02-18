@@ -30,6 +30,6 @@ export const siteConfig = {
   tagline: "AI agents that cut the manual work out of your operations.",
   description:
     "We design and deploy AI agents that reduce manual overhead and simplify complex processes. Less busywork. Fewer errors. Operations that scale without adding headcount.",
-  url: "https://wam.com",
-  email: "hello@wam.com",
+  url: "https://wam.team",
+  email: "hello@wam.team",
 };

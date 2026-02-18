@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wam.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wam.team";
 const SITE_NAME = "WAM";
 
 interface MetadataOptions {
