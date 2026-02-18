@@ -16,20 +16,30 @@ function Logo({ className, showText = true, ...props }: LogoProps) {
         xmlns="http://www.w3.org/2000/svg"
         {...props}
       >
-        <rect width="32" height="32" rx="8" fill="#D97706" />
+        <rect width="32" height="32" rx="8" fill="#0A0A0B" />
+        {/* Comic starburst */}
         <path
-          d="M8 16C8 11.582 11.582 8 16 8V8C20.418 8 24 11.582 24 16V16"
-          stroke="#0A0A0B"
-          strokeWidth="2.5"
-          strokeLinecap="round"
+          d="M16 2L18.5 8.5L23 6.5L22.5 11.5L29 12L24 16L28.5 20L22.5 21L23.5 26.5L18 23L16 30L13.5 23.5L9 25.5L9.5 21L3.5 20L9 16L3 12L9.5 11.5L8.5 5.5L14 9.5Z"
+          fill="#D97706"
         />
-        <circle cx="12" cy="20" r="2" fill="#0A0A0B" />
-        <circle cx="20" cy="20" r="2" fill="#0A0A0B" />
-        <path d="M12 20H20" stroke="#0A0A0B" strokeWidth="2" strokeLinecap="round" />
+        {/* WAM! text */}
+        <text
+          x="16"
+          y="17"
+          textAnchor="middle"
+          dominantBaseline="central"
+          fontSize="8"
+          fontWeight="900"
+          fontFamily="Impact, 'Arial Black', sans-serif"
+          fill="#0A0A0B"
+          fontStyle="italic"
+        >
+          WAM!
+        </text>
       </svg>
       {showText && (
         <span className="text-lg font-semibold tracking-tight text-foreground">
-          WAM<span className="text-amber-500">.</span>
+          WAM<span className="text-primary">.</span>
         </span>
       )}
     </div>

@@ -4,7 +4,14 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wam.com";
+/**
+ * What this does: Generates the sitemap.xml for the site
+ * Why it's here: Helps search engines discover all pages including dynamic service, case-study, and blog routes
+ * How it works: Combines static marketing pages with dynamic entries from @repo/content and MDX blog posts on disk
+ * Dependencies: @repo/content, gray-matter, fs
+ */
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wam.team";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [

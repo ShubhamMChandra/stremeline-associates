@@ -2,6 +2,13 @@ import { NextResponse } from "next/server";
 import { contactFormSchema } from "@repo/validation";
 import { Resend } from "resend";
 
+/**
+ * What this does: Handles contact form submissions via POST
+ * Why it's here: Validates input, rate-limits requests, and sends emails through Resend
+ * How it works: Zod validates the payload, an in-memory map enforces per-IP rate limits, and Resend dispatches a formatted HTML email. Gracefully degrades when RESEND_API_KEY is unset.
+ * Dependencies: @repo/validation, resend
+ */
+
 function getResend() {
   return new Resend(process.env.RESEND_API_KEY);
 }
@@ -69,11 +76,11 @@ export async function POST(request: Request) {
 
     // Send email to your team's shared inbox via Resend
     // Set RESEND_API_KEY and CONTACT_EMAIL in your .env
-    const teamEmail = process.env.CONTACT_EMAIL || "hello@wam.com";
+    const teamEmail = process.env.CONTACT_EMAIL || "hello@wam.team";
 
     if (process.env.RESEND_API_KEY) {
       await getResend().emails.send({
-        from: "WAM <noreply@wam.com>",
+        from: "WAM <noreply@wam.team>",
         to: [teamEmail],
         replyTo: email,
         subject: `New Contact: ${safeName} from ${safeCompany}`,
@@ -91,7 +98,7 @@ export async function POST(request: Request) {
               <p style="margin: 0; white-space: pre-wrap;">${safeMessage}</p>
             </div>
             <p style="margin-top: 24px; color: #999; font-size: 12px;">
-              Sent from wam.com contact form
+              Sent from wam.team contact form
             </p>
           </div>
         `,
