@@ -66,7 +66,7 @@ export function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Stremeline Associates. All rights reserved.
+            &copy; {new Date().getFullYear()} WAM. All rights reserved.
           </p>
           <p className="font-mono text-xs text-muted-foreground">
             Less overhead. More output. Agents that just work.

@@ -32,19 +32,19 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: {
-    default: "Stremeline Associates — AI Agents for Leaner Operations",
-    template: "%s | Stremeline Associates",
+    default: "WAM — AI Agents for Leaner Operations",
+    template: "%s | WAM",
   },
   description:
     "We design and deploy AI agent automations for small-to-medium businesses. Faster execution, fewer errors, systems that scale without adding headcount.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://stremelineassociates.com",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://wam.com",
   ),
   openGraph: {
-    title: "Stremeline Associates — AI Agents for Leaner Operations",
+    title: "WAM — AI Agents for Leaner Operations",
     description:
       "We design and deploy AI agents that reduce manual overhead and simplify complex processes. Less busywork, fewer errors, operations that scale without adding headcount.",
-    siteName: "Stremeline Associates",
+    siteName: "WAM",
     type: "website",
   },
   twitter: {

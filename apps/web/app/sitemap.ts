@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://stremelineassociates.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wam.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [

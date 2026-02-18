@@ -5,15 +5,15 @@ import { FadeIn, AnimateOnScroll } from "@repo/animation";
 
 /**
  * What this does: Blog listing page with atmospheric hero and uniform post grid
- * Why it's here: Content marketing and SEO — establishes Stremeline as thought leaders in AI automation
+ * Why it's here: Content marketing and SEO — establishes WAM as thought leaders in AI automation
  * How it works: Hero with gradient blobs, all posts in one consistent card grid, serif CTA at bottom
  * Dependencies: @repo/ui, @repo/animation
  */
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Insights",
   description:
-    "Analysis and perspectives on AI agent automation, operational efficiency, and the future of SMB operations.",
+    "Our thinking on AI agent automation, operational efficiency, and how growing businesses can do more with less.",
 };
 
 const posts = [
@@ -21,7 +21,7 @@ const posts = [
     slug: "five-workflows-to-automate-first",
     title: "The Five Workflows That Yield the Highest Automation ROI",
     description:
-      "Most SMBs automate the wrong processes first. Our analysis of dozens of engagements reveals five workflows that consistently deliver 60–80% time savings within weeks — with minimal disruption to existing operations.",
+      "Most companies automate the wrong thing first. After dozens of engagements, we keep seeing the same five workflows deliver 60–80% time savings within weeks, without disrupting how your team works.",
     publishedAt: "2026-02-03",
     readingTime: "7 min read",
     tags: ["Operations", "Automation"],
@@ -30,7 +30,7 @@ const posts = [
     slug: "why-ai-agents-not-chatbots",
     title: "Beyond Chatbots: Why Autonomous AI Agents Are Reshaping SMB Operations",
     description:
-      "The distinction between chatbots and AI agents is not semantic — it is structural. Agents do not wait for input. They monitor, decide, and execute. For SMBs without dedicated operations teams, this shift changes the calculus entirely.",
+      "Chatbots and AI agents are fundamentally different. Chatbots wait for someone to type. Agents watch your systems, make decisions, and execute on their own. If you don't have a dedicated ops team, that difference changes everything.",
     publishedAt: "2026-01-20",
     readingTime: "6 min read",
     tags: ["AI Agents", "Strategy"],
@@ -39,7 +39,7 @@ const posts = [
     slug: "build-vs-buy-ai-automation",
     title: "Build, Buy, or Partner: A Decision Framework for AI Automation",
     description:
-      "The automation landscape offers three paths — DIY tools, platform suites, and custom-built agents. Each carries distinct trade-offs in cost, flexibility, and reliability. Here is a structured framework for choosing the right approach.",
+      "You can go DIY with no-code tools, buy a platform suite, or have custom agents built. Each path has real trade-offs in cost, flexibility, and reliability. Here's how to figure out which one actually fits.",
     publishedAt: "2026-01-06",
     readingTime: "8 min read",
     tags: ["Strategy", "Frameworks"],
@@ -68,14 +68,14 @@ export default function BlogPage() {
         <Container className="relative z-10">
           <FadeIn>
             <span className="mb-4 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // blog
+              // insights
             </span>
             <Heading size="h1" as="h1">
-              Blog
+              Insights
             </Heading>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Analysis and perspectives on AI automation, operational
-              architecture, and the future of work for growth-stage businesses.
+              What we're learning about AI automation, operations design,
+              and building companies that grow without drowning in manual work.
             </p>
           </FadeIn>
         </Container>
@@ -142,8 +142,8 @@ export default function BlogPage() {
                 className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
                 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
               >
-                The highest-performing teams automate the work that does not
-                require judgment — and protect the work that does.
+                The best teams automate the work that doesn't need
+                judgment, and protect the work that does.
               </p>
             </FadeIn>
             <FadeIn delay={0.3}>

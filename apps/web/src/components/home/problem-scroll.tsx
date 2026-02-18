@@ -114,7 +114,7 @@ export function ProblemScroll() {
             <div className="rounded-xl border border-primary/20 bg-primary/[0.03] p-6 md:p-8">
               <div className="mb-6 flex items-baseline justify-between">
                 <p className="text-sm font-medium uppercase tracking-wider text-primary">
-                  With Stremeline
+                  With WAM
                 </p>
                 <span className="font-mono text-3xl font-light tracking-tight text-foreground md:text-4xl">
                   ~{AFTER_MINUTES}

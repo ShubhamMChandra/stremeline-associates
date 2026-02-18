@@ -48,7 +48,7 @@ export function Header() {
         <Link
           href="/"
           className="flex items-center gap-2 transition-opacity hover:opacity-80"
-          aria-label="Stremeline Associates — home"
+          aria-label="WAM — home"
         >
           <Logo />
         </Link>

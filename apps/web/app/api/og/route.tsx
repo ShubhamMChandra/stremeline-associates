@@ -5,7 +5,7 @@ export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
-  const title = searchParams.get("title") || "Stremeline Associates";
+  const title = searchParams.get("title") || "WAM";
   const description =
     searchParams.get("description") ||
     "Your operations, minus the busywork.";
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
               color: "#FAFAF9",
             }}
           >
-            Stremeline Associates
+            WAM
           </span>
         </div>
 

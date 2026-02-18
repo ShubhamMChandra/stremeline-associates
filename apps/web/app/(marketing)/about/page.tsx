@@ -4,7 +4,7 @@ import { Container, Heading, Button } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
 /**
  * What this does: About page with a narrative arc told in a direct, human voice
- * Why it's here: Builds conviction — explains why Stremeline exists and why you'd work with them
+ * Why it's here: Builds conviction — explains why WAM exists and why you'd work with them
  * How it works: Four sections that read as one story: who we are → what we noticed →
  *   how we're different → closing. No generic process steps. No credential flexing.
  * Dependencies: @repo/ui, @repo/animation
@@ -13,7 +13,7 @@ import { FadeIn } from "@repo/animation";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Stremeline is a small studio of engineers that builds AI agent workflows for growing businesses. Fast deployment, no lock-in, real results.",
+    "WAM is a small studio of engineers that builds AI agent workflows for growing businesses. Fast deployment, no lock-in, real results.",
 };
 
 export default function AboutPage() {
@@ -43,9 +43,9 @@ export default function AboutPage() {
               We build AI agents for teams that are growing faster than they can hire.
             </Heading>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Stremeline is a small studio of engineers and operators. We design
+              WAM is a small studio of entrepreneurs, engineers, and operators. We design
               agent workflows that handle the repetitive work your team
-              shouldn&apos;t be doing — and we get them live fast.
+              shouldn&apos;t be doing, and we get them live fast.
             </p>
           </FadeIn>
         </Container>
@@ -73,12 +73,12 @@ export default function AboutPage() {
                 <p>
                   The tools available either cost a fortune and take months to
                   set up, or they&apos;re too fragile for anything beyond a simple
-                  trigger. So teams just keep doing it by hand — and the
+                  trigger. So teams just keep doing it by hand, and the
                   bottleneck gets worse the faster the business grows.
                 </p>
                 <p className="font-medium text-foreground">
                   We thought: what if we could build the kind of automation that
-                  actually works — scoped to what you need, plugged into the
+                  actually works: scoped to what you need, plugged into the
                   tools you already use, and live before you&apos;ve forgotten about it?
                 </p>
               </div>
@@ -105,13 +105,13 @@ export default function AboutPage() {
                 number: "01",
                 title: "We work inside your tools",
                 description:
-                  "No new platforms to learn. We build agents that plug into your CRM, your project management, and your comms — the systems your team already knows. Nothing gets replaced.",
+                  "No new platforms to learn. We build agents that plug into the CRM, project management, and communication tools your team already uses. Nothing gets replaced.",
               },
               {
                 number: "02",
                 title: "We move fast",
                 description:
-                  "We audit your workflows, design the agents, and deploy them — usually in under two weeks. Then we iterate based on what's actually happening, not what a slide deck predicted.",
+                  "We audit your workflows, design the agents, and deploy them, usually in under two weeks. Then we iterate based on what's actually happening, not what a slide deck predicted.",
               },
               {
                 number: "03",

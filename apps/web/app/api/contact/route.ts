@@ -69,11 +69,11 @@ export async function POST(request: Request) {
 
     // Send email to your team's shared inbox via Resend
     // Set RESEND_API_KEY and CONTACT_EMAIL in your .env
-    const teamEmail = process.env.CONTACT_EMAIL || "hello@stremelineassociates.com";
+    const teamEmail = process.env.CONTACT_EMAIL || "hello@wam.com";
 
     if (process.env.RESEND_API_KEY) {
       await getResend().emails.send({
-        from: "Stremeline Associates <noreply@stremelineassociates.com>",
+        from: "WAM <noreply@wam.com>",
         to: [teamEmail],
         replyTo: email,
         subject: `New Contact: ${safeName} from ${safeCompany}`,
@@ -91,7 +91,7 @@ export async function POST(request: Request) {
               <p style="margin: 0; white-space: pre-wrap;">${safeMessage}</p>
             </div>
             <p style="margin-top: 24px; color: #999; font-size: 12px;">
-              Sent from stremelineassociates.com contact form
+              Sent from wam.com contact form
             </p>
           </div>
         `,

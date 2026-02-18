@@ -29,7 +29,7 @@ function Logo({ className, showText = true, ...props }: LogoProps) {
       </svg>
       {showText && (
         <span className="text-lg font-semibold tracking-tight text-foreground">
-          Stremeline<span className="text-amber-500">.</span>
+          WAM<span className="text-amber-500">.</span>
         </span>
       )}
     </div>

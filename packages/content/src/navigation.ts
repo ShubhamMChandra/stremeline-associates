@@ -4,14 +4,14 @@ export const mainNav: NavItem[] = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Case Studies", href: "/case-studies" },
-  { label: "Blog", href: "/blog" },
+  { label: "Insights", href: "/blog" },
 ];
 
 export const footerNav = {
   company: [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "Blog", href: "/blog" },
+    { label: "Insights", href: "/blog" },
   ],
   services: [
     { label: "Lead Capture", href: "/services/lead-capture" },
@@ -21,15 +21,15 @@ export const footerNav = {
   ],
   resources: [
     { label: "Case Studies", href: "/case-studies" },
-    { label: "Blog", href: "/blog" },
+    { label: "Insights", href: "/blog" },
   ],
 };
 
 export const siteConfig = {
-  name: "Stremeline Associates",
+  name: "WAM",
   tagline: "AI agents that cut the manual work out of your operations.",
   description:
     "We design and deploy AI agents that reduce manual overhead and simplify complex processes. Less busywork. Fewer errors. Operations that scale without adding headcount.",
-  url: "https://stremelineassociates.com",
-  email: "hello@stremelineassociates.com",
+  url: "https://wam.com",
+  email: "hello@wam.com",
 };

@@ -86,7 +86,7 @@ export function Hero() {
               className="mb-4"
             >
               <span className="font-mono text-xs tracking-widest text-primary/80 uppercase">
-                // stremeline-associates
+                // wam
               </span>
             </motion.div>
 

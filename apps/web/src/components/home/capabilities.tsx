@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 /**
  * What this does: Light-section capabilities grid with scroll-driven assembly animation
- * Why it's here: Shows what Stremeline automates — cards scatter to grid as user scrolls
+ * Why it's here: Shows what WAM automates — cards scatter to grid as user scrolls
  * How it works: Hand-built CSS Grid with GSAP ScrollTrigger scrub animation. Lead card gets
  *   custom 3D tilt on hover. Light theme wrapper for dark/light contrast.
  * Dependencies: gsap, gsap/ScrollTrigger, @repo/ui, @repo/content, @repo/animation, lucide-react

@@ -8,7 +8,7 @@ import { ScrollTextReveal } from "../../../src/components/ui/scroll-text-reveal"
 
 /**
  * What this does: Services page — four capabilities as cards, process steps, values, and CTA
- * Why it's here: Dedicated page to explain what Stremeline builds and how they work
+ * Why it's here: Dedicated page to explain what WAM builds and how they work
  * How it works: Server component with five visually distinct sections. Featured first service card
  *   + 3-card grid, atmospheric hero, process steps, values with amber borders, serif CTA.
  *   Light/dark alternation with gradient transitions for visual rhythm.

@@ -132,7 +132,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               <span className="text-muted-foreground/40">|</span>
               <span className="font-mono text-xs">{readingTime}</span>
               <span className="text-muted-foreground/40">|</span>
-              <span>Stremeline Associates</span>
+              <span>WAM</span>
             </div>
           </FadeIn>
         </Container>
@@ -198,9 +198,9 @@ export default async function BlogPostPage({ params }: PageProps) {
                 Apply these insights to your operations
               </Heading>
               <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
-                Schedule a 30-minute diagnostic. We will map your workflows,
-                identify automation opportunities, and outline a deployment
-                plan — at no cost.
+                Schedule a 30-minute diagnostic. We'll map your workflows,
+                spot the automation opportunities, and put together a deployment
+                plan. No cost, no commitment.
               </p>
               <Button asChild size="lg" className="btn-glow mt-8">
                 <Link href="/contact">Schedule a Diagnostic</Link>

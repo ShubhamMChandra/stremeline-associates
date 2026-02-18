@@ -95,10 +95,10 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">Email us directly</h3>
                   <a
-                    href="mailto:hello@stremelineassociates.com"
+                    href="mailto:hello@wam.com"
                     className="text-base text-primary hover:underline"
                   >
-                    hello@stremelineassociates.com
+                    hello@wam.com
                   </a>
                 </div>
               </div>
