@@ -2,15 +2,15 @@ import { forwardRef, type HTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./cn";
 
-const headingVariants = cva("font-bold text-foreground", {
+const headingVariants = cva("font-semibold text-foreground", {
   variants: {
     size: {
       /* Use named theme tokens (from base.css @theme) instead of raw clamp()
          so Tailwind's content scanner always generates the right classes */
       display: "text-display leading-none tracking-tighter",
-      h1: "text-6xl leading-tight tracking-tighter",
-      h2: "text-5xl leading-tight tracking-tight",
-      h3: "text-3xl leading-snug tracking-tight",
+      h1: "text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] tracking-[-0.04em]",
+      h2: "text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] leading-[1.05] tracking-[-0.035em]",
+      h3: "text-2xl leading-snug tracking-[-0.02em]",
       h4: "text-xl leading-snug",
     },
   },

@@ -46,8 +46,8 @@
   --color-border-hover: rgba(255, 255, 255, 0.15);
 
   /* ===== Typography ===== */
-  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-plex), ui-monospace, monospace;
 
   /* Fluid type scale with clamp() */
   --font-size-xs: clamp(0.75rem, 0.7rem + 0.15vw, 0.8125rem);

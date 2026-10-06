@@ -14,7 +14,7 @@ export function MobileNav() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-white/5 lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-foreground/5 lg:hidden"
           aria-label="Open menu"
         >
           <svg
@@ -41,10 +41,10 @@ export function MobileNav() {
                 <Link
                   href={item.href}
                   className={cn(
-                    "rounded-lg px-4 py-3 text-base font-medium transition-colors",
+                    "px-1 py-3 text-xl font-medium tracking-tight transition-colors",
                     pathname === item.href
-                      ? "bg-white/5 text-foreground"
-                      : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
+                      ? "text-foreground underline underline-offset-[6px]"
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {item.label}
@@ -54,7 +54,7 @@ export function MobileNav() {
           </nav>
           <SheetClose asChild>
             <Button asChild className="w-full">
-              <Link href="/contact">Get in Touch</Link>
+              <Link href="/contact">Book an audit</Link>
             </Button>
           </SheetClose>
         </div>

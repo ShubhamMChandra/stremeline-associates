@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Container, Heading, Badge, Button } from "@repo/ui";
-import { FadeIn, AnimateOnScroll } from "@repo/animation";
+import { Container, Button } from "@repo/ui";
+import { FadeIn } from "@repo/animation";
 
 /**
- * What this does: Blog listing page with atmospheric hero and uniform post grid
- * Why it's here: Content marketing and SEO — establishes WAM as thought leaders in AI automation
- * How it works: Hero with gradient blobs, all posts in one consistent card grid, serif CTA at bottom
+ * What this does: Blog listing page with a plain hero and an editorial post list
+ * Why it's here: Content marketing and SEO. Establishes WAM as thought leaders in AI automation
+ * How it works: Server component on one paper ground. Posts render as a hairline-divided
+ *   list (meta, title, summary), followed by a plain closing line and CTA.
  * Dependencies: @repo/ui, @repo/animation
  */
 
@@ -49,109 +50,71 @@ const posts = [
 export default function BlogPage() {
   return (
     <>
-      {/* ── Hero — atmospheric ── */}
-      <section className="relative overflow-hidden pt-20 pb-12 md:pt-28 md:pb-16">
-        {/* Ambient gradient blobs */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute -left-1/4 -top-1/4 h-[250px] w-[250px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/10 blur-[100px] lg:h-[500px] lg:w-[500px]" />
-          <div className="absolute -right-1/4 top-1/3 h-[200px] w-[200px] animate-[drift_25s_ease-in-out_infinite_reverse] rounded-full bg-sky-500/[0.05] blur-[80px] lg:h-[400px] lg:w-[400px]" />
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-              backgroundRepeat: "repeat",
-              backgroundSize: "256px 256px",
-            }}
-          />
-        </div>
-
-        <Container className="relative z-10">
+      {/* ── Hero ── */}
+      <section className="pt-20 pb-12 md:pt-28 md:pb-16">
+        <Container>
           <FadeIn>
-            <span className="mb-4 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // insights
-            </span>
-            <Heading size="h1" as="h1">
+            <h1 className="max-w-3xl text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground">
               Insights
-            </Heading>
+            </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              What we're learning about AI automation, operations design,
+              What we&apos;re learning about AI automation, operations design,
               and building companies that grow without drowning in manual work.
             </p>
           </FadeIn>
         </Container>
       </section>
 
-      {/* ── All Posts — single uniform grid ── */}
-      <section className="py-12 md:py-16">
+      {/* ── All posts — hairline list ── */}
+      <section className="py-20 md:py-28">
         <Container>
-          <div className="grid gap-6 md:grid-cols-3">
-            {posts.map((post, i) => (
-              <AnimateOnScroll key={post.slug} delay={i * 0.1}>
-                <Link href={`/blog/${post.slug}`} className="group block h-full">
-                  <div className="flex h-full flex-col rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/20 hover:shadow-md">
-                    <div className="mb-4 flex flex-wrap items-center gap-2">
-                      {post.tags.map((tag) => (
-                        <Badge key={tag} variant="mono">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <h2 className="text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
-                      {post.title}
+          <ul className="border-b border-border">
+            {posts.map((post) => (
+              <li key={post.slug} className="grid gap-3 border-t border-border py-8 md:grid-cols-[12rem_1fr] md:gap-12">
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                    <br />
+                    {post.readingTime}
+                  </p>
+                  <div>
+                    <h2 className="max-w-3xl text-2xl font-semibold tracking-[-0.03em] text-foreground">
+                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                     </h2>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
                       {post.description}
                     </p>
-                    <div className="mt-auto flex items-center justify-between pt-6">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(post.publishedAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "long",
-                              day: "numeric",
-                              year: "numeric",
-                            },
-                          )}
-                        </span>
-                        <span className="text-xs text-muted-foreground/50">
-                          |
-                        </span>
-                        <span className="font-mono text-xs text-muted-foreground">
-                          {post.readingTime}
-                        </span>
-                      </div>
-                      <span className="font-mono text-xs text-primary/80 transition-colors group-hover:text-primary">
-                        Read &rarr;
-                      </span>
-                    </div>
+                    <p className="mt-3 text-sm text-muted-foreground">
+                      {post.tags.join(", ")}
+                    </p>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="mt-4 inline-block text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
+                    >
+                      Read the article
+                    </Link>
                   </div>
-                </Link>
-              </AnimateOnScroll>
+              </li>
             ))}
-          </div>
+          </ul>
         </Container>
       </section>
 
-      {/* ── CTA — serif quote ── */}
-      <section className="py-12 md:py-16">
+      {/* ── CTA ── */}
+      <section className="py-20 md:py-28">
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <FadeIn>
-              <p
-                className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
-                style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
-              >
-                The best teams automate the work that doesn't need
-                judgment, and protect the work that does.
-              </p>
-            </FadeIn>
-            <FadeIn delay={0.3}>
-              <Button asChild size="lg" className="btn-glow mt-8">
-                <Link href="/contact">Schedule a Diagnostic</Link>
-              </Button>
-            </FadeIn>
-          </div>
+          <FadeIn>
+            <p className="max-w-2xl text-2xl font-medium tracking-tight text-foreground md:text-3xl">
+              The best teams automate the work that doesn&apos;t need judgment,
+              and protect the work that does.
+            </p>
+            <Button asChild size="lg" className="mt-8">
+              <Link href="/contact">Schedule a diagnostic</Link>
+            </Button>
+          </FadeIn>
         </Container>
       </section>
     </>

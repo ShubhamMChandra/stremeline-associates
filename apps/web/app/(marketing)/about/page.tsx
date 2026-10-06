@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Container, Heading, Button } from "@repo/ui";
+import { Container, Button } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
 /**
  * What this does: About page with a narrative arc told in a direct, human voice
- * Why it's here: Builds conviction — explains why WAM exists and why you'd work with them
- * How it works: Four sections that read as one story: who we are → what we noticed →
- *   how we're different → closing. No generic process steps. No credential flexing.
+ * Why it's here: Builds conviction. Explains why WAM exists and why you'd work with them
+ * How it works: Four sections on one paper ground that read as one story: who we are,
+ *   what we noticed, what you get (hairline list), and a plain closing line with a CTA.
  * Dependencies: @repo/ui, @repo/animation
  */
 
@@ -16,70 +16,70 @@ export const metadata: Metadata = {
     "WAM is a small studio of engineers that builds AI agent workflows for growing businesses. Fast deployment, no lock-in, real results.",
 };
 
+const principles = [
+  {
+    title: "We work inside your tools",
+    description:
+      "No new platforms to learn. We build agents that plug into the CRM, project management, and communication tools your team already uses. Nothing gets replaced.",
+  },
+  {
+    title: "We move fast",
+    description:
+      "We audit your workflows, design the agents, and deploy them, usually in under two weeks. Then we iterate based on what's actually happening in your operations.",
+  },
+  {
+    title: "We keep it lean",
+    description:
+      "Small team, low overhead. You're paying for the engineering work that ships, without an expensive office or a bench of junior consultants.",
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
-      {/* ── 1. Hero — who we are, said simply ── */}
-      <section className="relative overflow-hidden pt-20 pb-12 md:pt-28 md:pb-16">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute -left-1/4 -top-1/4 h-[250px] w-[250px] animate-[drift_20s_ease-in-out_infinite] rounded-full bg-amber-500/10 blur-[100px] lg:h-[500px] lg:w-[500px]" />
-          <div className="absolute -right-1/4 top-1/3 h-[200px] w-[200px] animate-[drift_25s_ease-in-out_infinite_reverse] rounded-full bg-sky-500/[0.05] blur-[80px] lg:h-[400px] lg:w-[400px]" />
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-              backgroundRepeat: "repeat",
-              backgroundSize: "256px 256px",
-            }}
-          />
-        </div>
-
-        <Container className="relative z-10">
+      {/* ── 1. Hero ── */}
+      <section className="pt-20 pb-12 md:pt-28 md:pb-16">
+        <Container>
           <FadeIn>
-            <span className="mb-4 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // about
-            </span>
-            <Heading size="h1" as="h1" className="max-w-3xl">
-              We build AI agents for teams that are growing faster than they can hire.
-            </Heading>
+            <h1 className="max-w-4xl text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground">
+              We build AI agents for teams that are growing faster than they can
+              hire.
+            </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              WAM is a small studio of entrepreneurs, engineers, and operators. We design
-              agent workflows that handle the repetitive work your team
+              WAM is a small studio of entrepreneurs, engineers, and operators.
+              We design agent workflows that handle the repetitive work your team
               shouldn&apos;t be doing, and we get them live fast.
             </p>
           </FadeIn>
         </Container>
       </section>
 
-      {/* ── 2. What we noticed — the insight, told like a human ── */}
-      <section className="light bg-background py-12 md:py-16">
+      {/* ── 2. What we kept seeing ── */}
+      <section className="py-20 md:py-28">
         <Container>
           <FadeIn>
-            <div className="mx-auto max-w-2xl">
-              <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-                // why this exists
-              </span>
-              <Heading size="h2" as="h2" className="mb-8">
-                What We Kept Seeing
-              </Heading>
+            <div className="max-w-2xl">
+              <h2 className="text-3xl font-semibold tracking-[-0.03em] text-foreground md:text-4xl">
+                What we kept seeing
+              </h2>
 
-              <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
+              <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground">
                 <p>
-                  Growing companies with great products, where smart people spent
-                  half their day on tasks a well-designed agent could handle in
-                  seconds. Manually sorting leads. Copy-pasting between tools.
-                  Chasing follow-ups that slip through the cracks.
+                  Growing companies with great products, where smart people
+                  spent half their day on tasks a well-designed agent could
+                  handle in seconds. Manually sorting leads. Copy-pasting between
+                  tools. Chasing follow-ups that slip through the cracks.
                 </p>
                 <p>
                   The tools available either cost a fortune and take months to
-                  set up, or they&apos;re too fragile for anything beyond a simple
-                  trigger. So teams just keep doing it by hand, and the
+                  set up, or they&apos;re too fragile for anything beyond a
+                  simple trigger. So teams just keep doing it by hand, and the
                   bottleneck gets worse the faster the business grows.
                 </p>
                 <p className="font-medium text-foreground">
-                  We thought: what if we could build the kind of automation that
-                  actually works: scoped to what you need, plugged into the
-                  tools you already use, and live before you&apos;ve forgotten about it?
+                  So we set out to build automation that actually works: scoped
+                  to what you need, plugged into the tools you already use, and
+                  live quickly.
                 </p>
               </div>
             </div>
@@ -87,75 +87,42 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ── 3. How we're different — specific, not generic ── */}
-      <section className="py-12 md:py-16">
+      {/* ── 3. What you get ── */}
+      <section className="py-20 md:py-28">
         <Container>
           <FadeIn>
-            <span className="mb-3 inline-block font-mono text-xs tracking-widest text-primary/80 uppercase">
-              // how we work
-            </span>
-            <Heading size="h2" as="h2" className="mb-10">
-              What You Get
-            </Heading>
+            <h2 className="text-3xl font-semibold tracking-[-0.03em] text-foreground md:text-4xl">
+              What you get
+            </h2>
           </FadeIn>
 
-          <div className="grid gap-8 md:grid-cols-3">
-            {[
-              {
-                number: "01",
-                title: "We work inside your tools",
-                description:
-                  "No new platforms to learn. We build agents that plug into the CRM, project management, and communication tools your team already uses. Nothing gets replaced.",
-              },
-              {
-                number: "02",
-                title: "We move fast",
-                description:
-                  "We audit your workflows, design the agents, and deploy them, usually in under two weeks. Then we iterate based on what's actually happening, not what a slide deck predicted.",
-              },
-              {
-                number: "03",
-                title: "We keep it lean",
-                description:
-                  "Small team, low overhead. You're not paying for an office in Manhattan or a bench of junior consultants. You're paying for the engineering work that actually ships.",
-              },
-            ].map((item) => (
-              <FadeIn key={item.number}>
-                <div className="group">
-                  <span className="font-mono text-sm text-muted-foreground/40">
-                    {item.number}
-                  </span>
-                  <h3 className="mt-3 text-lg font-semibold text-foreground">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
-              </FadeIn>
+          <ul className="mt-10 grid gap-x-8 md:grid-cols-3">
+            {principles.map((item) => (
+              <li key={item.title} className="border-t border-border py-6">
+                <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {item.description}
+                </p>
+              </li>
             ))}
-          </div>
+          </ul>
         </Container>
       </section>
 
-      {/* ── 4. Closing — scroll-driven serif text reveal + CTA ── */}
-      <section className="py-12 md:py-16">
+      {/* ── 4. Closing ── */}
+      <section className="py-20 md:py-28">
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <FadeIn>
-              <p
-                className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.2] text-foreground/90"
-                style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
-              >
-                No bloated teams. No unnecessary platforms. Just automation that works.
-              </p>
-            </FadeIn>
-            <FadeIn delay={0.3}>
-              <Button asChild size="lg" className="btn-glow mt-8">
-                <Link href="/contact">Start a Conversation</Link>
-              </Button>
-            </FadeIn>
-          </div>
+          <FadeIn>
+            <p className="max-w-2xl text-2xl font-medium tracking-tight text-foreground md:text-3xl">
+              A small team, the tools you already use, and automation that
+              works.
+            </p>
+            <Button asChild size="lg" className="mt-8">
+              <Link href="/contact">Start a conversation</Link>
+            </Button>
+          </FadeIn>
         </Container>
       </section>
     </>
