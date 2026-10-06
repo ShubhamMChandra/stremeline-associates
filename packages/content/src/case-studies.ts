@@ -14,24 +14,24 @@ export const caseStudies: CaseStudy[] = [
       "We built an AI agent workflow that transformed their lead pipeline end-to-end. Real-time lead capture from web forms, email, and partner channels. Automatic data validation and enrichment — cleaning, deduplicating, and filling in missing company data. Instant routing to the right sales rep based on territory, deal size, and product interest. Automatic activity logging so every touchpoint was tracked without manual entry.",
     results: [
       {
-        metric: "Response Time",
+        metric: "Lead response time",
         before: "4+ hrs",
         after: "Under 5 min",
         description: "Average lead response time dropped from over four hours to under five minutes.",
       },
       {
-        metric: "Leads Dropped",
+        metric: "Leads dropped",
         before: "~15%",
         after: "0%",
         description: "Every inquiry is now captured and routed — nothing falls through the cracks.",
       },
       {
-        metric: "Admin Time Saved",
+        metric: "Admin time saved per rep",
         after: "12 hrs/week",
         description: "Each rep reclaimed roughly 12 hours a week previously spent on data entry.",
       },
       {
-        metric: "Headcount Added",
+        metric: "Headcount added",
         after: "0",
         description: "Lead volume doubled with zero new hires — the system scales on its own.",
       },

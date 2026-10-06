@@ -20,8 +20,8 @@ export async function GET(request: NextRequest) {
           flexDirection: "column",
           justifyContent: "center",
           padding: "60px 80px",
-          backgroundColor: "#0A0A0B",
-          fontFamily: "Inter, sans-serif",
+          backgroundColor: "#F4F2EC",
+          fontFamily: "sans-serif",
         }}
       >
         {/* Logo area */}
@@ -35,10 +35,9 @@ export async function GET(request: NextRequest) {
         >
           <div
             style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "10px",
-              backgroundColor: "#D97706",
+              width: "18px",
+              height: "18px",
+              backgroundColor: "#E5481F",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -46,23 +45,24 @@ export async function GET(request: NextRequest) {
           />
           <span
             style={{
-              fontSize: "24px",
+              fontSize: "34px",
               fontWeight: 600,
-              color: "#FAFAF9",
+              letterSpacing: "-0.05em",
+              color: "#16150F",
             }}
           >
-            WAM
+            wam
           </span>
         </div>
 
         {/* Title */}
         <div
           style={{
-            fontSize: "56px",
-            fontWeight: 700,
-            color: "#FAFAF9",
+            fontSize: "64px",
+            fontWeight: 600,
+            color: "#16150F",
             lineHeight: 1.1,
-            letterSpacing: "-0.03em",
+            letterSpacing: "-0.045em",
             maxWidth: "900px",
           }}
         >
@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
         <div
           style={{
             fontSize: "20px",
-            color: "#8E8E89",
+            color: "#5E5B52",
             marginTop: "20px",
             maxWidth: "600px",
             lineHeight: 1.5,
@@ -82,15 +82,15 @@ export async function GET(request: NextRequest) {
           {description}
         </div>
 
-        {/* Amber accent line */}
+        {/* Ink rule */}
         <div
           style={{
             position: "absolute",
             bottom: "0",
             left: "0",
             right: "0",
-            height: "4px",
-            backgroundColor: "#D97706",
+            height: "2px",
+            backgroundColor: "#16150F",
           }}
         />
       </div>

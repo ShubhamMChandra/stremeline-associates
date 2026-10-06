@@ -3,11 +3,11 @@ import type { Service } from "@repo/types";
 export const services: Service[] = [
   {
     slug: "lead-capture",
-    title: "Lead Capture",
+    title: "Lead capture",
     description:
       "Leads, requests, applications — whatever enters your business gets captured, validated, and routed automatically. Nothing waits. Nothing slips.",
     longDescription:
-      "Prospects expect instant responses. Our agents monitor intake channels around the clock — validating data, enriching it with context, and routing qualified leads to the right person in seconds. No more 12-hour lag between form fill and first touch.",
+      "Prospects expect instant responses. Our agents monitor intake channels around the clock. They validate data, add context, and route qualified leads to the right person in seconds, so nobody waits until morning for a first reply.",
     icon: "zap",
     label: "// intake",
     useCases: ["lead-intake-qualification", "crm-data-hygiene", "customer-follow-ups"],
@@ -27,11 +27,11 @@ export const services: Service[] = [
   },
   {
     slug: "workflow-automation",
-    title: "Workflow Automation",
+    title: "Workflow automation",
     description:
       "Your team uses 10+ tools. Agents bridge them — syncing data, triggering actions, and eliminating the copy-paste between systems.",
     longDescription:
-      "Most bottlenecks come from manual handoffs between systems. We build agent workflows that connect your CRM, project tools, and comms into automated chains. Work that took hours happens in minutes — no copy-paste, no missed steps.",
+      "Most bottlenecks come from manual handoffs between systems. We build agent workflows that connect your CRM, project tools, and comms into automated chains. Work that took hours happens in minutes, without copy-paste or missed steps.",
     icon: "workflow",
     label: "// orchestration",
     useCases: ["sales-ops-handoffs", "internal-alerts-reporting", "crm-data-hygiene"],
@@ -51,11 +51,11 @@ export const services: Service[] = [
   },
   {
     slug: "error-reduction",
-    title: "Error Reduction",
+    title: "Error reduction",
     description:
       "Agents that validate, deduplicate, and enrich your data continuously — so decisions are based on what's actually true.",
     longDescription:
-      "Bad data leads to bad decisions. Our agents run continuous checks — deduplicating records, filling gaps, flagging anomalies — so your CRM and reporting tools always reflect reality. Your team stops cleaning spreadsheets and starts acting on them.",
+      "Bad data leads to bad decisions. Our agents run continuous checks that merge duplicates, fill gaps, and flag anomalies, so your CRM and reporting tools always reflect reality. Your team stops cleaning spreadsheets and starts acting on them.",
     icon: "shield-check",
     label: "// data-integrity",
     useCases: ["crm-data-hygiene", "internal-alerts-reporting", "lead-intake-qualification"],
@@ -75,7 +75,7 @@ export const services: Service[] = [
   },
   {
     slug: "scaling-operations",
-    title: "Scale Operations",
+    title: "Scaling operations",
     description:
       "As volume grows, agents grow with it. More throughput, same team size. No hiring. No onboarding. No overhead.",
     longDescription:

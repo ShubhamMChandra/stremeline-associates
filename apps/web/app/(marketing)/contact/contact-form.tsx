@@ -7,6 +7,14 @@ import { Button, Input, Textarea, Label } from "@repo/ui";
 import { contactFormSchema, type ContactFormSchema } from "@repo/validation";
 import { services } from "@repo/content";
 
+/**
+ * What this does: Client-side contact form with validation and submit states
+ * Why it's here: Captures leads on the contact page and posts them to /api/contact
+ * How it works: react-hook-form + zod resolver; tracks idle/submitting/success/error.
+ *   Success and error states are plain bordered boxes on the paper ground.
+ * Dependencies: react-hook-form, @hookform/resolvers, @repo/ui, @repo/validation, @repo/content
+ */
+
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -47,8 +55,7 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-8 text-center">
-        <div className="mb-3 text-3xl">&#10003;</div>
+      <div className="rounded-md border border-border bg-card p-8">
         <h3 className="text-lg font-semibold text-foreground">Message sent</h3>
         <p className="mt-2 text-sm text-muted-foreground">
           We&apos;ll review your message and get back to you within 24 hours.
@@ -114,7 +121,7 @@ export function ContactForm() {
         <select
           id="service"
           {...register("service")}
-          className="flex h-11 w-full rounded-lg border border-border bg-card px-4 py-2 text-sm text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+          className="flex h-11 w-full rounded-md border border-border bg-card px-4 py-2 text-sm text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30"
         >
           <option value="">Select a service (optional)</option>
           {services.map((s) => (
@@ -141,13 +148,13 @@ export function ContactForm() {
       </div>
 
       {status === "error" && (
-        <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-3">
+        <div className="rounded-md border border-red-500/30 bg-card p-3">
           <p className="text-sm text-red-500">{errorMessage}</p>
         </div>
       )}
 
       <Button type="submit" size="lg" disabled={status === "submitting"} className="w-full sm:w-auto">
-        {status === "submitting" ? "Sending..." : "Send Message"}
+        {status === "submitting" ? "Sending..." : "Send message"}
       </Button>
     </form>
   );

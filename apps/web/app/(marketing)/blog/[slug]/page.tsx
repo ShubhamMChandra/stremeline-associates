@@ -5,15 +5,16 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
-import { Container, Heading, Prose, Badge, Button, Code } from "@repo/ui";
+import { Container, Prose, Button } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
 import { ScrollProgress } from "../../../../src/components/ui/scroll-progress";
 
 /**
- * What this does: Individual blog post page with McKinsey-style article layout
+ * What this does: Individual blog post page with an editorial article layout
  * Why it's here: Renders MDX blog content with proper typographic hierarchy and professional formatting
- * How it works: Reads MDX from filesystem, parses frontmatter, renders with marked. Includes author
- *   attribution, reading time, tag badges, and a professional CTA footer.
+ * How it works: Reads MDX from filesystem, parses frontmatter, renders with marked. Plain header
+ *   (back link, title, date/reading time/author/tags line), hairline divider, body, a hairline
+ *   list of related posts, and a plain CTA footer. One paper ground throughout.
  * Dependencies: gray-matter, marked, @repo/ui, @repo/animation
  */
 
@@ -93,119 +94,104 @@ export default async function BlogPostPage({ params }: PageProps) {
     <>
       <ScrollProgress />
 
-      {/* ── Article Header ── */}
+      {/* ── Article header ── */}
       <section className="pt-16 pb-8 md:pt-20 md:pb-10">
         <Container className="max-w-3xl">
           <FadeIn>
             <Link
               href="/blog"
-              className="mb-8 inline-flex items-center gap-1 font-mono text-xs tracking-wider text-muted-foreground uppercase transition-colors hover:text-foreground"
+              className="mb-8 inline-block text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              &larr; All Posts
+              &larr; All posts
             </Link>
 
-            <Code className="mb-5 block">{`// blog/${slug}`}</Code>
-
-            <div className="mb-5 flex flex-wrap items-center gap-2">
-              {tags.map((tag: string) => (
-                <Badge key={tag} variant="mono">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-
-            <Heading size="h1" as="h1">
+            <h1 className="text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground">
               {title}
-            </Heading>
+            </h1>
 
-            {/* Byline: date, reading time, author */}
-            <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+            {/* Byline: date, reading time, author, tags */}
+            <p className="mt-6 text-sm text-muted-foreground">
               {publishedAt && (
-                <time dateTime={publishedAt}>
-                  {new Date(publishedAt).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </time>
+                <>
+                  <time dateTime={publishedAt}>
+                    {new Date(publishedAt).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </time>
+                  {" · "}
+                </>
               )}
-              <span className="text-muted-foreground/40">|</span>
-              <span className="font-mono text-xs">{readingTime}</span>
-              <span className="text-muted-foreground/40">|</span>
-              <span>WAM</span>
-            </div>
+              {readingTime} · WAM
+              {tags.length > 0 && <> · {tags.join(", ")}</>}
+            </p>
           </FadeIn>
         </Container>
       </section>
 
-      {/* ── Divider ── */}
-      <Container className="max-w-3xl">
-        <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-      </Container>
-
-      {/* ── Article Body ── */}
-      <section className="py-10 md:py-14">
+      {/* ── Article body ── */}
+      <section className="pb-20 md:pb-28">
         <Container className="max-w-3xl">
-          <Prose>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: marked.parse(
-                  /* Strip the H1 so the page title isn't duplicated */
-                  post.content.replace(/^# .+$/m, ""),
-                  { gfm: true, breaks: false },
-                ) as string,
-              }}
-            />
-          </Prose>
+          <div className="border-t border-border pt-10 md:pt-14">
+            <Prose>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: marked.parse(
+                    /* Strip the H1 so the page title isn't duplicated */
+                    post.content.replace(/^# .+$/m, ""),
+                    { gfm: true, breaks: false },
+                  ) as string,
+                }}
+              />
+            </Prose>
+          </div>
         </Container>
       </section>
 
-      {/* ── Related Posts ── */}
+      {/* ── Related posts ── */}
       {relatedPosts.length > 0 && (
-        <section className="border-t border-border py-10 md:py-14">
+        <section className="py-20 md:py-28">
           <Container className="max-w-3xl">
-            <FadeIn>
-              <Heading size="h3" as="h2" className="mb-6">
-                Continue Reading
-              </Heading>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {relatedPosts.map((related) => (
-                  <Link
-                    key={related.slug}
-                    href={`/blog/${related.slug}`}
-                    className="group rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/20"
-                  >
-                    <h3 className="font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
+            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
+              Continue reading
+            </h2>
+            <ul className="mt-8 border-b border-border">
+              {relatedPosts.map((related) => (
+                <li key={related.slug} className="border-t border-border py-6">
+                  <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                    <Link
+                      href={`/blog/${related.slug}`}
+                      className="underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
+                    >
                       {related.title}
-                    </h3>
-                    <span className="mt-2 block font-mono text-xs text-muted-foreground">
-                      {related.readingTime}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </FadeIn>
+                    </Link>
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {related.readingTime}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </Container>
         </section>
       )}
 
-      {/* ── CTA Footer ── */}
-      <section className="border-t border-border py-12 md:py-16">
+      {/* ── CTA footer ── */}
+      <section className="py-20 md:py-28">
         <Container className="max-w-3xl">
           <FadeIn>
-            <div className="text-center">
-              <Heading size="h3" as="h2">
-                Apply these insights to your operations
-              </Heading>
-              <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
-                Schedule a 30-minute diagnostic. We'll map your workflows,
-                spot the automation opportunities, and put together a deployment
-                plan. No cost, no commitment.
-              </p>
-              <Button asChild size="lg" className="btn-glow mt-8">
-                <Link href="/contact">Schedule a Diagnostic</Link>
-              </Button>
-            </div>
+            <p className="text-2xl font-medium tracking-tight text-foreground md:text-3xl">
+              Apply these insights to your operations.
+            </p>
+            <p className="mt-4 max-w-lg text-muted-foreground">
+              Schedule a 30-minute diagnostic. We&apos;ll map your workflows,
+              spot the automation opportunities, and put together a deployment
+              plan. No cost, no commitment.
+            </p>
+            <Button asChild size="lg" className="mt-8">
+              <Link href="/contact">Schedule a diagnostic</Link>
+            </Button>
           </FadeIn>
         </Container>
       </section>
