@@ -182,7 +182,7 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
     later(() => {
       patch(id, { status: "done" });
       setLog((l) => (l.includes(id) ? l : [...l, id]));
-    }, 420);
+    }, 700);
   };
 
   const onDown = (id: string) => (e: PointerEvent<HTMLButtonElement>) => {
@@ -220,7 +220,7 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
     setPress(null);
     setSway(0);
     setSettle(id);
-    later(() => setSettle((v) => (v === id ? null : v)), 460);
+    later(() => setSettle((v) => (v === id ? null : v)), 640);
   };
 
   const onUp = (e: PointerEvent<HTMLButtonElement>) => {
@@ -306,26 +306,33 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
                   }deg) scale(${flying ? 0.35 : lifted ? 1.06 : 1})`,
                   opacity: flying ? 0 : 1,
                   transition: lifted
-                    ? "none"
-                    : "transform 480ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 380ms ease",
+                    ? "transform 70ms ease-out"
+                    : flying
+                      ? "transform 700ms cubic-bezier(0.45, 0, 0.25, 1), opacity 260ms ease 460ms"
+                      : "transform 760ms cubic-bezier(0.34, 1.22, 0.64, 1), opacity 380ms ease",
                 }}
               >
                 <span
                   className={cn(
-                    "animate-in fade-in-0 zoom-in-95 relative flex size-[7.5rem] flex-col rounded-[2px] p-3 text-left text-[13.5px] leading-[1.3] font-medium text-[#2B2722] duration-500 sm:size-[8.75rem] sm:p-3.5 sm:text-[15px] lg:size-[10rem] lg:p-4 lg:text-[16px]",
-                    bubble?.id === c.id && "animate-[note-nudge_0.45s_ease-in-out_2]",
-                    settle === c.id && !reduced && "animate-[note-stick_0.46s_cubic-bezier(0.3,1.5,0.5,1)]",
+                    "relative flex size-[7.5rem] flex-col rounded-[2px] p-3 text-left text-[13.5px] leading-[1.3] font-medium text-[#2B2722] duration-500 sm:size-[8.75rem] sm:p-3.5 sm:text-[15px] lg:size-[10rem] lg:p-4 lg:text-[16px]",
+                    bubble?.id === c.id
+                      ? "animate-[note-nudge_0.45s_ease-in-out_2]"
+                      : flying && !reduced
+                        ? "animate-[note-fly_0.7s_ease-in-out]"
+                        : settle === c.id && !reduced
+                          ? "animate-[note-stick_0.62s_ease-out]"
+                          : !touched && "animate-in fade-in-0 zoom-in-95",
                   )}
                   style={{
                     background: c.color,
-                    animationDelay: settle === c.id ? "0ms" : `${120 + i * 70}ms`,
+                    animationDelay: settle === c.id || flying ? "0ms" : `${120 + i * 70}ms`,
                     animationFillMode: "backwards",
                     transform: peel
                       ? `perspective(700px) rotateX(${-peel.py * 11}deg) rotateY(${peel.px * 11}deg) rotate(${
                           lifted ? sway : 0
-                        }deg) translateY(-3px)`
+                        }deg) translateY(-7px) scale(1.035)`
                       : undefined,
-                    transition: "transform 170ms ease-out, box-shadow 220ms ease",
+                    transition: "transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 320ms ease",
                     boxShadow:
                       peel || lifted
                         ? `${-(peel?.px ?? 0) * 7}px 3px 4px rgba(60,45,10,0.08), ${-(peel?.px ?? 0) * 10}px 30px 40px -18px rgba(60,45,10,0.45)`

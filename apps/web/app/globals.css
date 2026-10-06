@@ -261,15 +261,31 @@ p, li {
   }
 }
 
-/* A lifted sticky note pressing back onto the page */
+/* A lifted sticky note rising a touch, then pressing back onto the page */
 @keyframes note-stick {
   0% {
-    transform: translateY(-3px) scale(1.035);
+    transform: translateY(-7px) scale(1.035);
   }
-  55% {
-    transform: translateY(0) scale(0.985);
+  35% {
+    transform: translateY(-11px) scale(1.045);
+  }
+  75% {
+    transform: translateY(1px) scale(0.985);
   }
   100% {
     transform: translateY(0) scale(1);
+  }
+}
+
+/* The up-and-over arc of a note travelling into the tray */
+@keyframes note-fly {
+  0% {
+    transform: translateY(-7px) scale(1.035);
+  }
+  45% {
+    transform: translateY(-64px) rotate(-5deg) scale(1.06);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
   }
 }
