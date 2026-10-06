@@ -6,7 +6,8 @@ import { NewsletterForm } from "./newsletter-form";
 /**
  * What this does: Site footer with contact line, nav columns, and newsletter signup
  * Why it's here: Secondary navigation and a last, low-pressure way to get in touch
- * How it works: Server component; one hairline above, plain text columns
+ * How it works: Server component; one hairline above, plain text columns, and an oversized
+ *   wordmark cropped at the bottom edge
  * Dependencies: @repo/ui, @repo/content, NewsletterForm
  */
 
@@ -75,6 +76,12 @@ export function Footer() {
           &copy; {new Date().getFullYear()} WAM
         </p>
       </Container>
+      <div aria-hidden="true" className="mx-auto max-w-[1400px] overflow-hidden px-3 md:px-6">
+        <p className="flex translate-y-[14%] items-end text-[clamp(7rem,31vw,27rem)] leading-[0.78] font-semibold tracking-[-0.075em] text-foreground select-none">
+          wam
+          <span className="mb-[0.1em] ml-[0.06em] inline-block size-[0.13em] bg-signal" />
+        </p>
+      </div>
     </footer>
   );
 }

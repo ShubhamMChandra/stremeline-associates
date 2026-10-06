@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@repo/ui";
+import { useReducedMotion } from "@repo/animation";
 
 /**
  * What this does: Tabbed workflow map showing where an agent runs and where a person stays in
  * Why it's here: Shows the method instead of describing it. Every engagement starts with a map like this
- * How it works: Client tabs swap the process. A filled signal square marks a step an agent runs;
- *   a hollow square marks a step that stays with a person. The signal color does nothing else.
- * Dependencies: React state, @repo/ui cn
+ * How it works: Plays each process step by step while in view, cycling through tabs until the
+ *   visitor picks one. A filled signal square marks a step an agent runs; a hollow square marks
+ *   a step that stays with a person. The signal color does nothing else. Reduced motion shows all rows.
+ * Dependencies: React state, @repo/ui cn, @repo/animation
  */
 
 interface Row {
@@ -75,42 +77,114 @@ const workflows: Workflow[] = [
   },
 ];
 
-function Mark({ agent }: { agent: boolean }) {
+const STEP_MS = 1500;
+const HOLD_MS = 2200;
+
+function Mark({ agent, live = false }: { agent: boolean; live?: boolean }) {
   return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        "inline-block size-2.5 shrink-0",
-        agent ? "bg-signal" : "border-[1.5px] border-foreground/40",
+    <span aria-hidden="true" className="relative inline-flex size-2.5 shrink-0">
+      {live && agent && (
+        <span className="absolute inset-0 animate-ping bg-signal opacity-60 [animation-duration:1.4s]" />
       )}
-    />
+      <span
+        className={cn(
+          "relative inline-block size-2.5",
+          agent ? "bg-signal" : "border-[1.5px] border-foreground/40",
+        )}
+      />
+    </span>
   );
 }
 
 export function WorkflowMap() {
-  const [active, setActive] = useState(workflows[0]!.key);
-  const workflow = workflows.find((w) => w.key === active) ?? workflows[0]!;
+  const reducedMotion = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const [tab, setTab] = useState(0);
+  const [step, setStep] = useState(0);
+  const [inView, setInView] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [pinned, setPinned] = useState(false);
+
+  const workflow = workflows[tab]!;
+  const total = workflow.rows.length;
+  const playing = !reducedMotion && inView && !hovered;
+  const shown = reducedMotion ? total : step;
   const agentCount = workflow.rows.filter((r) => r.agent).length;
-  const humanCount = workflow.rows.length - agentCount;
+  const humanCount = total - agentCount;
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setInView(Boolean(entry?.isIntersecting)), {
+      threshold: 0.35,
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!playing) return;
+    const done = step >= total;
+    const t = setTimeout(
+      () => {
+        if (!done) {
+          setStep((s) => s + 1);
+        } else {
+          if (!pinned) setTab((i) => (i + 1) % workflows.length);
+          setStep(0);
+        }
+      },
+      done ? HOLD_MS : step === 0 ? 500 : STEP_MS,
+    );
+    return () => clearTimeout(t);
+  }, [playing, step, total, pinned]);
+
+  function pick(i: number) {
+    setTab(i);
+    setStep(reducedMotion ? total : 1);
+    setPinned(true);
+  }
+
+  const current = workflow.rows[Math.max(0, Math.min(shown, total) - 1)];
+  const status =
+    shown >= total
+      ? `Done. ${agentCount} steps automated, ${humanCount} ${humanCount === 1 ? "stays" : "stay"} human`
+      : shown === 0
+        ? "Starting"
+        : `Step ${shown} of ${total}: ${current?.agent ? "agent running" : "handed to a person"}`;
+
+  const rowState = (i: number) => (i < shown - 1 ? "done" : i === shown - 1 ? "live" : "next");
 
   return (
-    <figure className="m-0 border-y border-foreground/15 py-6 md:py-8">
+    <figure
+      ref={ref}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="m-0 bg-surface p-5 ring-1 ring-foreground/10 sm:p-8 md:p-10"
+    >
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div role="group" aria-label="Example workflow" className="flex flex-wrap gap-1">
-          {workflows.map((w) => (
+          {workflows.map((w, i) => (
             <button
               key={w.key}
               type="button"
-              aria-pressed={w.key === active}
-              onClick={() => setActive(w.key)}
+              aria-pressed={i === tab}
+              onClick={() => pick(i)}
               className={cn(
-                "min-h-10 px-3.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground",
-                w.key === active
+                "relative min-h-10 overflow-hidden px-3.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground",
+                i === tab
                   ? "bg-foreground text-background"
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
               {w.label}
+              {i === tab && !reducedMotion && (
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-0 left-0 h-[2px] bg-signal transition-[width] duration-500 ease-out"
+                  style={{ width: `${(Math.min(shown, total) / total) * 100}%` }}
+                />
+              )}
             </button>
           ))}
         </div>
@@ -126,12 +200,12 @@ export function WorkflowMap() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pt-8 pb-3">
-        <h3 className="text-2xl font-semibold tracking-[-0.025em] md:text-[28px]">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pt-9 pb-4">
+        <h3 className="text-2xl font-semibold tracking-[-0.025em] md:text-[32px]">
           {workflow.title}
         </h3>
-        <p className="font-mono text-xs text-muted-foreground">
-          {agentCount} steps automated, {humanCount} {humanCount === 1 ? "stays" : "stay"} human
+        <p aria-live="polite" className="font-mono text-xs text-muted-foreground">
+          {status}
         </p>
       </div>
 
@@ -143,40 +217,56 @@ export function WorkflowMap() {
           <span>What the agent does</span>
           <span>The check</span>
         </div>
-        {workflow.rows.map((r) => (
-          <div
-            key={r.step}
-            className="grid grid-cols-[20px_1.1fr_0.9fr_1.5fr_1.2fr] items-center gap-5 border-b border-border py-4 text-[15px] last:border-b-0"
-          >
-            <Mark agent={Boolean(r.agent)} />
-            <span className="font-medium">{r.step}</span>
-            <span className="text-muted-foreground">{r.tool}</span>
-            <span className={r.agent ? "text-foreground" : "text-muted-foreground"}>
-              {r.agent ?? "Stays with a person"}
-            </span>
-            <span className="text-muted-foreground">{r.check}</span>
-          </div>
-        ))}
+        {workflow.rows.map((r, i) => {
+          const state = rowState(i);
+          return (
+            <div
+              key={`${workflow.key}-${r.step}`}
+              className={cn(
+                "-mx-3 grid grid-cols-[20px_1.1fr_0.9fr_1.5fr_1.2fr] items-center gap-5 border-b border-border px-3 py-4 text-[15px] transition-[opacity,background-color] duration-500 last:border-b-0",
+                state === "next" && "opacity-30",
+                state === "live" && "bg-foreground/[0.035]",
+              )}
+            >
+              <Mark agent={Boolean(r.agent)} live={state === "live"} />
+              <span className="font-medium">{r.step}</span>
+              <span className="text-muted-foreground">{r.tool}</span>
+              <span className={r.agent ? "text-foreground" : "text-muted-foreground"}>
+                {r.agent ?? "Stays with a person"}
+              </span>
+              <span className="text-muted-foreground">{r.check}</span>
+            </div>
+          );
+        })}
       </div>
 
       <ol className="md:hidden">
-        {workflow.rows.map((r) => (
-          <li key={r.step} className="flex gap-3 border-b border-border py-4 last:border-b-0">
-            <span className="pt-1.5">
-              <Mark agent={Boolean(r.agent)} />
-            </span>
-            <div className="min-w-0 space-y-1">
-              <p className="text-[15px] font-medium">{r.step}</p>
-              <p className="text-sm text-foreground/80">{r.agent ?? "Stays with a person"}</p>
-              <p className="text-[13px] text-muted-foreground">
-                {r.tool}. {r.check}.
-              </p>
-            </div>
-          </li>
-        ))}
+        {workflow.rows.map((r, i) => {
+          const state = rowState(i);
+          return (
+            <li
+              key={`${workflow.key}-${r.step}`}
+              className={cn(
+                "flex gap-3 border-b border-border py-4 transition-opacity duration-500 last:border-b-0",
+                state === "next" && "opacity-30",
+              )}
+            >
+              <span className="pt-1.5">
+                <Mark agent={Boolean(r.agent)} live={state === "live"} />
+              </span>
+              <div className="min-w-0 space-y-1">
+                <p className="text-[15px] font-medium">{r.step}</p>
+                <p className="text-sm text-foreground/80">{r.agent ?? "Stays with a person"}</p>
+                <p className="text-[13px] text-muted-foreground">
+                  {r.tool}. {r.check}.
+                </p>
+              </div>
+            </li>
+          );
+        })}
       </ol>
 
-      <figcaption className="pt-5 text-[13px] text-muted-foreground">
+      <figcaption className="pt-6 text-[13px] text-muted-foreground">
         Illustrative. Every engagement starts by mapping one of your own processes like this.
       </figcaption>
     </figure>
