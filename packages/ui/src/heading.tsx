@@ -8,9 +8,9 @@ const headingVariants = cva("font-semibold text-foreground", {
       /* Use named theme tokens (from base.css @theme) instead of raw clamp()
          so Tailwind's content scanner always generates the right classes */
       display: "text-display leading-none tracking-tighter",
-      h1: "text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] tracking-[-0.04em]",
-      h2: "text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] leading-[1.05] tracking-[-0.035em]",
-      h3: "text-2xl leading-snug tracking-[-0.02em]",
+      h1: "text-[clamp(2.25rem,1.6rem+2.2vw,3.5rem)] leading-[1.06] tracking-[-0.015em] font-medium [font-stretch:112%]",
+      h2: "text-[clamp(1.75rem,1.4rem+1.4vw,2.5rem)] leading-[1.1] tracking-[-0.01em] font-medium [font-stretch:112%]",
+      h3: "text-xl leading-snug font-medium [font-stretch:106%]",
       h4: "text-xl leading-snug",
     },
   },

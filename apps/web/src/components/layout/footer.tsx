@@ -4,84 +4,66 @@ import { footerNav, siteConfig } from "@repo/content";
 import { NewsletterForm } from "./newsletter-form";
 
 /**
- * What this does: Site footer with contact line, nav columns, and newsletter signup
+ * What this does: Site footer with contact, nav columns, and newsletter signup
  * Why it's here: Secondary navigation and a last, low-pressure way to get in touch
- * How it works: Server component; one hairline above, plain text columns, and an oversized
- *   wordmark cropped at the bottom edge
+ * How it works: Server component; one hairline above, small text columns
  * Dependencies: @repo/ui, @repo/content, NewsletterForm
  */
 
+const item = "inline-block py-1 text-[14px] text-foreground/65 transition-colors hover:text-foreground";
+
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-background">
-      <Container className="py-14 md:py-20">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1.4fr]">
-          <div className="space-y-4">
-            <Logo />
-            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-              {siteConfig.tagline}
-            </p>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="inline-block text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground"
-            >
-              {siteConfig.email}
-            </a>
-          </div>
-
-          <div className="space-y-3">
-            <p className="text-sm font-medium text-foreground">Company</p>
-            <ul className="space-y-1">
-              {footerNav.company.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="inline-block py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <Link href="/services" className="text-sm font-medium text-foreground">
-              Services
-            </Link>
-            <ul className="space-y-1">
-              {footerNav.services.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="inline-block py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <p className="text-sm font-medium text-foreground">Field notes</p>
-            <p className="text-sm text-muted-foreground">
-              Occasional notes on what we automate and what we leave alone.
-            </p>
-            <NewsletterForm />
-          </div>
+    <footer className="border-t border-foreground/15">
+      <Container className="grid gap-12 py-14 md:grid-cols-12 md:gap-8 md:py-16">
+        <div className="space-y-4 md:col-span-4">
+          <Logo />
+          <p className="max-w-[18rem] text-[14px] leading-relaxed text-foreground/65">
+            {siteConfig.tagline}
+          </p>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            className="inline-block text-[14px] underline decoration-foreground/30 underline-offset-[5px] hover:decoration-foreground"
+          >
+            {siteConfig.email}
+          </a>
         </div>
 
-        <p className="mt-16 text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} WAM
+        <nav aria-label="Company" className="md:col-span-2">
+          <ul>
+            {footerNav.company.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className={item}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="Services" className="md:col-span-2">
+          <ul>
+            {footerNav.services.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className={item}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="space-y-3 md:col-span-4">
+          <p className="text-[14px] text-foreground/65">
+            Notes on what we automate and what we leave alone, now and then.
+          </p>
+          <NewsletterForm />
+        </div>
+
+        <p className="text-[13px] text-muted-foreground md:col-span-12 md:pt-6">
+          &copy; {new Date().getFullYear()} WAM. Highlighters not included.
         </p>
       </Container>
-      <div aria-hidden="true" className="mx-auto max-w-[1400px] overflow-hidden px-3 md:px-6">
-        <p className="flex translate-y-[14%] items-end text-[clamp(7rem,31vw,27rem)] leading-[0.78] font-semibold tracking-[-0.075em] text-foreground select-none">
-          wam
-          <span className="mb-[0.1em] ml-[0.06em] inline-block size-[0.13em] bg-signal" />
-        </p>
-      </div>
     </footer>
   );
 }

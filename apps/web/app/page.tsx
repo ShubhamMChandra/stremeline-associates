@@ -1,29 +1,30 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@repo/ui";
 import { services, caseStudies } from "@repo/content";
-import { AnimateOnScroll } from "@repo/animation";
+import { FadeIn } from "@repo/animation";
 import { Header } from "../src/components/layout/header";
 import { Footer } from "../src/components/layout/footer";
-import { WorkflowMap } from "../src/components/home/workflow-map";
+import { StickyPile } from "../src/components/home/sticky-pile";
 
 /**
- * What this does: Home page as one continuous page on a single paper ground
- * Why it's here: Main entry point. Leads with the method (a workflow map), then services,
- *   how an engagement runs, one result in large numerals, and an ink panel ask
- * How it works: Server component. Sections are separated by space and alignment changes,
- *   not bands, dividers, or numbered labels. Only the workflow map is a client component.
- * Dependencies: @repo/ui, @repo/content, Header, Footer, WorkflowMap
+ * What this does: Home page. A sticky-note pile to play with, then services, one result, and an ask
+ * Why it's here: Main entry point. The pile is the one loud moment and shows the method by letting
+ *   visitors hand off chores themselves; everything after it stays short and quiet
+ * How it works: Server component on a single paper ground. Only the pile is a client component.
+ * Dependencies: @repo/ui, @repo/content, @repo/animation, lucide-react, Header, Footer, StickyPile
  */
 
-const steps = [
-  { title: "Audit", body: "We sit with your team and find where hours go to work a machine should own." },
-  { title: "Map", body: "We draw the process step by step and agree where an agent runs and where a person stays in." },
-  { title: "Build", body: "We build inside the tools you already use. Most engagements go live in under two weeks." },
-  { title: "Tune", body: "We watch it run on real volume and adjust as the work changes." },
-];
+const tabs = ["#FFE9A8", "#CDE3F2", "#CFE6D2", "#F9D3DA"];
 
-const linkClass =
-  "text-[15px] font-medium text-foreground underline decoration-foreground/30 underline-offset-[6px] transition-colors hover:decoration-foreground";
+const link =
+  "underline decoration-foreground/30 underline-offset-[5px] transition-colors hover:decoration-foreground";
+
+// Minutes, so the bars compare like with like
+const responseBars = [
+  { label: "Before", value: "4+ hours", width: "100%" },
+  { label: "After", value: "Under 5 minutes", width: "2%" },
+];
 
 export default function HomePage() {
   const study = caseStudies[0];
@@ -34,97 +35,61 @@ export default function HomePage() {
         Skip to main content
       </a>
       <Header />
-      <main id="main-content" className="min-h-screen pt-16">
+      <main id="main-content">
         {/* Hero */}
-        <section className="pt-20 pb-16 md:pt-32 md:pb-24">
-          <Container className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-16">
-            <h1 className="max-w-[14ch] text-[2.75rem] leading-[0.98] font-semibold tracking-[-0.05em] sm:text-7xl lg:text-[6.25rem]">
-              AI agents for teams growing faster than they can hire.
-            </h1>
-            <div className="flex flex-col gap-6 md:w-[340px] md:shrink-0 md:pb-3">
-              <p className="text-[17px] leading-relaxed text-muted-foreground">
-                We find the repetitive work slowing your operations down, then build
-                agents that handle it inside the tools your team already uses.
-              </p>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-                <Link
-                  href="/contact"
-                  className="inline-flex h-12 items-center bg-foreground px-6 text-[15px] font-medium text-background transition-colors hover:bg-foreground/85"
-                >
-                  Book a workflow audit
-                </Link>
-                <a href="#map" className={linkClass}>
-                  See a workflow
-                </a>
-              </div>
-              <p className="text-[13px] text-muted-foreground">
-                Live in under two weeks. Month-to-month. 15+ platforms connected.
-              </p>
-            </div>
-          </Container>
-          <Container className="mt-16 md:mt-24">
-            <p className="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t border-foreground/15 pt-5 text-[15px] text-muted-foreground">
-              <span className="text-foreground">Works inside</span>
-              {["HubSpot", "Salesforce", "Slack", "Notion", "Asana", "Airtable", "Google Sheets", "QuickBooks"].map(
-                (t) => (
-                  <span key={t}>{t}</span>
-                ),
-              )}
-            </p>
-          </Container>
-        </section>
-
-        {/* Workflow map */}
-        <section id="map" aria-labelledby="map-title" className="scroll-mt-20 pb-24 md:pb-36">
+        <section className="pt-24 pb-20 md:pt-28 md:pb-28">
           <Container>
-            <h2 id="map-title" className="sr-only">
-              Example workflows
-            </h2>
-            <WorkflowMap />
+            <StickyPile
+              statement={
+                <div>
+                  <h1 className="text-[2.5rem] leading-[1] font-bold tracking-[-0.035em] md:text-[2.75rem]">
+                    Hand off the busywork.
+                  </h1>
+                  <p className="mt-4 max-w-[21rem] text-[16px] leading-relaxed text-foreground/70">
+                    WAM builds AI agents that take repetitive work off operations teams, inside the
+                    tools they already use.
+                  </p>
+                </div>
+              }
+            />
           </Container>
         </section>
 
         {/* Services */}
         <section aria-labelledby="services-title" className="pb-24 md:pb-36">
-          <Container className="grid gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-            <div className="md:sticky md:top-28 md:self-start">
+          <Container>
+            <FadeIn className="flex flex-wrap items-end justify-between gap-4">
               <h2
                 id="services-title"
-                className="text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] leading-[1.05] font-semibold tracking-[-0.035em]"
+                className="text-[clamp(1.75rem,1.4rem+1.2vw,2.5rem)] leading-[1.05] font-bold tracking-[-0.03em]"
               >
                 What we build
               </h2>
-              <p className="mt-5 max-w-sm text-[17px] leading-relaxed text-muted-foreground">
-                Four kinds of work we take off your team&apos;s plate. Most clients
-                start with one.
-              </p>
-            </div>
-            <ul>
-              {services.map((s) => (
-                <li key={s.slug} className="border-t border-foreground/15 last:border-b">
+              <Link href="/services" className={`text-[15px] ${link}`}>
+                All services
+              </Link>
+            </FadeIn>
+            <ul className="mt-8 grid gap-4 md:mt-10 md:grid-cols-2 md:gap-5">
+              {services.map((s, i) => (
+                <li key={s.slug}>
                   <Link
                     href={`/services/${s.slug}`}
-                    className="group grid gap-2 py-7 md:grid-cols-[1fr_auto] md:gap-8"
+                    className="group relative flex h-full flex-col rounded-2xl bg-surface p-6 pt-9 shadow-[0_1px_2px_rgba(60,45,10,0.06),0_18px_36px_-26px_rgba(60,45,10,0.35)] transition-transform duration-300 hover:-translate-y-0.5 md:p-8 md:pt-11"
                   >
-                    <div>
-                      <h3 className="text-2xl font-semibold tracking-[-0.025em] group-hover:underline group-hover:decoration-foreground/30 group-hover:underline-offset-[6px]">
-                        {s.title}
-                      </h3>
-                      <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-                        {s.longDescription}
-                      </p>
-                      {s.tools && (
-                        <p className="mt-3 font-mono text-xs text-muted-foreground">
-                          {s.tools.join(" / ")}
-                        </p>
-                      )}
-                    </div>
                     <span
                       aria-hidden="true"
-                      className="hidden text-xl text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-foreground md:block"
-                    >
-                      &rarr;
-                    </span>
+                      className="absolute top-0 left-6 h-3 w-12 rounded-b-[3px] md:left-8"
+                      style={{ background: tabs[i % tabs.length] }}
+                    />
+                    <h3 className="text-[22px] leading-tight font-semibold tracking-[-0.02em]">{s.title}</h3>
+                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-foreground/70">{s.description}</p>
+                    <p className="mt-6 flex items-center justify-between gap-4 text-[13px] text-muted-foreground">
+                      <span>{s.tools?.slice(0, 4).join(", ")}</span>
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="size-4 shrink-0 text-foreground/40 transition-transform group-hover:translate-x-0.5 group-hover:text-foreground"
+                      />
+                    </p>
                   </Link>
                 </li>
               ))}
@@ -132,108 +97,87 @@ export default function HomePage() {
           </Container>
         </section>
 
-        {/* How an engagement runs */}
-        <section aria-labelledby="process-title" className="pb-24 md:pb-36">
-          <Container>
-            <h2
-              id="process-title"
-              className="max-w-2xl text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] leading-[1.05] font-semibold tracking-[-0.035em]"
-            >
-              How an engagement runs
-            </h2>
-            <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-              {steps.map((step, i) => (
-                <AnimateOnScroll key={step.title} delay={i * 0.08}>
-                  <div className="flex items-center gap-3 border-t border-foreground pt-4">
-                    <span className="font-mono text-xs text-muted-foreground">{i + 1}</span>
-                    <h3 className="text-lg font-semibold tracking-[-0.015em]">{step.title}</h3>
-                  </div>
-                  <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-                    {step.body}
-                  </p>
-                </AnimateOnScroll>
-              ))}
-            </div>
-            <p className="mt-14 max-w-2xl text-[17px] leading-relaxed text-muted-foreground">
-              No long contracts. You pay month to month, and the agents have to keep
-              earning their place. Everything runs inside the tools you already use.
-            </p>
-          </Container>
-        </section>
-
         {/* One result */}
         {study && (
           <section aria-labelledby="result-title" className="pb-24 md:pb-36">
-            <Container>
-              <AnimateOnScroll>
-                <div className="grid gap-6 border-t border-foreground pt-8 md:grid-cols-[1fr_auto] md:items-end">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Case study. {study.industry}</p>
-                    <h2
-                      id="result-title"
-                      className="mt-3 max-w-2xl text-[clamp(1.5rem,1.2rem+1vw,2rem)] leading-[1.15] font-semibold tracking-[-0.03em]"
-                    >
-                      {study.summary}
-                    </h2>
+            <Container className="grid gap-10 md:grid-cols-12 md:gap-8">
+              <FadeIn className="md:col-span-5">
+                <h2
+                  id="result-title"
+                  className="text-[clamp(1.5rem,1.25rem+0.8vw,2rem)] leading-[1.1] font-bold tracking-[-0.025em]"
+                >
+                  A lead pipeline, before and after
+                </h2>
+                <p className="mt-4 max-w-[26rem] text-[15px] leading-relaxed text-foreground/70">
+                  {study.summary}
+                </p>
+                <Link href={`/case-studies/${study.slug}`} className={`mt-5 inline-block text-[15px] ${link}`}>
+                  Read the case study
+                </Link>
+              </FadeIn>
+
+              <FadeIn className="md:col-span-6 md:col-start-7">
+                <div className="rounded-2xl bg-surface p-6 shadow-[0_1px_2px_rgba(60,45,10,0.06),0_18px_36px_-26px_rgba(60,45,10,0.35)] md:p-8">
+                  <p className="text-[14px] font-medium">Time to first response</p>
+                  <div className="mt-4 space-y-3">
+                    {responseBars.map((b) => (
+                      <div key={b.label} className="grid grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-3">
+                        <span className="text-[13px] text-muted-foreground">{b.label}</span>
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={
+                              b.label === "After"
+                                ? "h-3 min-w-3 rounded-full bg-marker"
+                                : "h-3 rounded-full bg-foreground/15"
+                            }
+                            style={{ width: b.width }}
+                          />
+                          <span className="shrink-0 text-[13px] font-medium">{b.value}</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <Link href={`/case-studies/${study.slug}`} className={linkClass}>
-                    Read the case study
-                  </Link>
+                  <dl className="mt-8 grid grid-cols-3 gap-4 border-t border-border pt-6">
+                    {study.results.slice(1).map((r) => (
+                      <div key={r.metric} className="flex flex-col-reverse justify-end">
+                        <dt className="mt-2 text-[13px] leading-snug text-muted-foreground">{r.metric}</dt>
+                        <dd className="text-[22px] leading-none font-semibold tracking-[-0.02em]">{r.after}</dd>
+                      </div>
+                    ))}
+                  </dl>
                 </div>
-              </AnimateOnScroll>
-              <div className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2">
-                {study.results.map((r, i) => (
-                  <AnimateOnScroll key={r.metric} delay={i * 0.08}>
-                    <div className="border-t border-border pt-5">
-                      <p className="text-[clamp(3rem,1.8rem+4.4vw,6rem)] leading-[0.95] font-semibold tracking-[-0.055em] tabular-nums">
-                        {r.after}
-                      </p>
-                      <p className="mt-4 text-[15px] text-foreground">{r.metric}</p>
-                      {r.before && (
-                        <p className="mt-1 text-sm text-muted-foreground">Was {r.before}</p>
-                      )}
-                    </div>
-                  </AnimateOnScroll>
-                ))}
-              </div>
+              </FadeIn>
             </Container>
           </section>
         )}
 
         {/* Ask */}
-        <section aria-labelledby="cta-title" className="pb-6 md:pb-8">
-          <div className="mx-auto max-w-[1400px] px-3 md:px-6">
-            <div className="bg-foreground px-6 py-20 text-background md:px-14 md:py-32">
-              <AnimateOnScroll>
-                <h2
-                  id="cta-title"
-                  className="max-w-[16ch] text-[clamp(2.5rem,1.5rem+4.5vw,6rem)] leading-[0.96] font-semibold tracking-[-0.05em]"
+        <section aria-labelledby="cta-title" className="pb-28 md:pb-40">
+          <Container>
+            <FadeIn>
+              <h2
+                id="cta-title"
+                className="text-[clamp(2rem,1.5rem+2vw,3.25rem)] leading-[1.02] font-bold tracking-[-0.035em]"
+              >
+                Send us your pile.
+              </h2>
+              <p className="mt-4 max-w-[32rem] text-[16px] leading-relaxed text-foreground/70">
+                It starts with a 30-minute call about one process. Most agents are live within two
+                weeks, and you pay month to month.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex h-12 items-center rounded-full bg-foreground px-6 text-[15px] font-medium text-background transition-colors hover:bg-foreground/85"
                 >
-                  Which process eats the most hours each week?
-                </h2>
-                <div className="mt-12 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-                  <p className="max-w-md text-[17px] leading-relaxed text-background/65">
-                    A 30-minute call. You leave with a map of one process and where an agent
-                    would fit.
-                  </p>
-                  <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-                    <Link
-                      href="/contact"
-                      className="inline-flex h-12 items-center bg-background px-6 text-[15px] font-medium text-foreground transition-colors hover:bg-background/85"
-                    >
-                      Book a workflow audit
-                    </Link>
-                    <a
-                      href="mailto:hello@wam.team"
-                      className="text-[15px] font-medium text-background underline decoration-background/30 underline-offset-[6px] transition-colors hover:decoration-background"
-                    >
-                      hello@wam.team
-                    </a>
-                  </div>
-                </div>
-              </AnimateOnScroll>
-            </div>
-          </div>
+                  Book a workflow audit
+                </Link>
+                <a href="mailto:hello@wam.team" className={`text-[15px] ${link}`}>
+                  hello@wam.team
+                </a>
+              </div>
+            </FadeIn>
+          </Container>
         </section>
       </main>
       <Footer />

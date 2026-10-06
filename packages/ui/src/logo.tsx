@@ -1,30 +1,29 @@
-import { type SVGAttributes } from "react";
+import { type HTMLAttributes } from "react";
 import { cn } from "./cn";
 
 /**
- * What this does: WAM wordmark with the signal square
- * Why it's here: Brand mark used in header, footer, and mobile nav
- * How it works: Lowercase wordmark set in the site sans; the square is the same mark the
- *   workflow map uses for "an agent runs this step"
+ * What this does: WAM wordmark, a wide lowercase "wam" with a highlighter stroke behind it
+ * Why it's here: Brand mark used in the header, footer, and mobile nav
+ * How it works: Text set in the site sans at its widest setting; the stroke is the same marker
+ *   the site uses to show work an agent does
  * Dependencies: cn
  */
 
-interface LogoProps extends SVGAttributes<SVGSVGElement> {
+interface LogoProps extends HTMLAttributes<HTMLSpanElement> {
   showText?: boolean;
 }
 
-function Logo({ className, showText = true, ...props }: LogoProps) {
+function Logo({ className, ...props }: LogoProps) {
   return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" {...props}>
-        <rect width="12" height="12" fill="var(--signal, #E5481F)" />
-      </svg>
-      {showText && (
-        <span className="text-[22px] leading-none font-semibold tracking-[-0.05em] text-foreground">
-          wam
-        </span>
-      )}
-    </div>
+    <span className={cn("relative inline-flex items-center", className)} {...props}>
+      <span
+        aria-hidden="true"
+        className="absolute -inset-x-1 top-[38%] bottom-[8%] -rotate-[1.5deg] rounded-[2px] bg-marker"
+      />
+      <span className="relative text-[21px] leading-none font-[750] tracking-[-0.02em] text-foreground [font-stretch:125%]">
+        wam
+      </span>
+    </span>
   );
 }
 

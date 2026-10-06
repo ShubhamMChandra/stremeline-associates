@@ -5,14 +5,14 @@ import { cn } from "./cn";
 
 // Style variants for each button type
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-none text-sm font-medium transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
           "bg-foreground text-background hover:bg-foreground/85",
         outline:
-          "border border-foreground/25 bg-transparent text-foreground hover:border-foreground",
+          "border border-foreground/20 bg-surface text-foreground hover:border-foreground/50",
         ghost: "text-foreground hover:bg-foreground/5",
         link: "text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground",
       },

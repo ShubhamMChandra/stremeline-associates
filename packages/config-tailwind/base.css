@@ -46,7 +46,8 @@
   --color-border-hover: rgba(255, 255, 255, 0.15);
 
   /* ===== Typography ===== */
-  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-mona), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-news), ui-serif, Georgia, serif;
   --font-mono: var(--font-plex), ui-monospace, monospace;
 
   /* Fluid type scale with clamp() */

@@ -5,7 +5,7 @@ export const services: Service[] = [
     slug: "lead-capture",
     title: "Lead capture",
     description:
-      "Leads, requests, applications — whatever enters your business gets captured, validated, and routed automatically. Nothing waits. Nothing slips.",
+      "Every inquiry is picked up, checked, filled in, and routed to the right person within seconds of arriving.",
     longDescription:
       "Prospects expect instant responses. Our agents monitor intake channels around the clock. They validate data, add context, and route qualified leads to the right person in seconds, so nobody waits until morning for a first reply.",
     icon: "zap",
@@ -29,7 +29,7 @@ export const services: Service[] = [
     slug: "workflow-automation",
     title: "Workflow automation",
     description:
-      "Your team uses 10+ tools. Agents bridge them — syncing data, triggering actions, and eliminating the copy-paste between systems.",
+      "Agents move data between your tools and start the next step, so nobody copies and pastes between tabs.",
     longDescription:
       "Most bottlenecks come from manual handoffs between systems. We build agent workflows that connect your CRM, project tools, and comms into automated chains. Work that took hours happens in minutes, without copy-paste or missed steps.",
     icon: "workflow",
@@ -53,7 +53,7 @@ export const services: Service[] = [
     slug: "error-reduction",
     title: "Error reduction",
     description:
-      "Agents that validate, deduplicate, and enrich your data continuously — so decisions are based on what's actually true.",
+      "Agents check, merge, and complete your records in the background, so your reports reflect what's true.",
     longDescription:
       "Bad data leads to bad decisions. Our agents run continuous checks that merge duplicates, fill gaps, and flag anomalies, so your CRM and reporting tools always reflect reality. Your team stops cleaning spreadsheets and starts acting on them.",
     icon: "shield-check",
@@ -77,7 +77,7 @@ export const services: Service[] = [
     slug: "scaling-operations",
     title: "Scaling operations",
     description:
-      "As volume grows, agents grow with it. More throughput, same team size. No hiring. No onboarding. No overhead.",
+      "When volume grows, agents absorb the extra onboarding, follow-ups, and reporting without new hires.",
     longDescription:
       "Hiring is slow and expensive. AI agents let you handle more leads, more customers, and more reporting without adding people. Volume doubles, your team stays the same size, and nothing falls through.",
     icon: "trending-up",
