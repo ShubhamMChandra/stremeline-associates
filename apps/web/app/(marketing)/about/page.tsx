@@ -79,7 +79,7 @@ export default function AboutPage() {
             {seen.map((n, i) => (
               <span
                 key={n.text}
-                className="-ml-2 flex size-[7rem] shrink-0 rounded-[2px] p-3 text-[13.5px] leading-[1.3] font-medium text-[#2B2722] shadow-[0_1px_1px_rgba(60,45,10,0.06),0_12px_20px_-14px_rgba(60,45,10,0.4)] first:ml-0 sm:size-[8.5rem] sm:text-[15px] lg:size-[9.25rem]"
+                className="-ml-2 flex size-[7rem] shrink-0 rounded-[2px] p-3 text-[13.5px] leading-[1.3] font-medium text-[#2B2722] shadow-[0_1px_1px_rgba(60,45,10,0.06),0_12px_20px_-14px_rgba(60,45,10,0.4)] first:ml-0 sm:size-[8rem] sm:text-[14.5px] md:size-[6.25rem] md:text-[13px] lg:size-[8rem] lg:text-[14.5px] xl:size-[9.25rem] xl:text-[15px]"
                 style={{
                   background: notes[i * 2 % notes.length],
                   transform: `translateY(${(i % 2) * 14}px) rotate(${n.r}deg)`,

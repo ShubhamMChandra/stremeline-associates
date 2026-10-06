@@ -364,7 +364,14 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
               done ? "mt-2 py-3" : "py-10",
             )}
           >
-            {touched ? "Keep going." : "Drag a note here, or tap it."}
+            {touched ? (
+              "Keep going."
+            ) : (
+              <>
+                <span className="md:hidden">Tap a note above.</span>
+                <span className="hidden md:inline">Drag a note here, or tap it.</span>
+              </>
+            )}
           </p>
         ) : (
           <div className="animate-in fade-in-0 mt-4 px-1 duration-500">

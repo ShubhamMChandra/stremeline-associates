@@ -49,17 +49,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   return (
     <>
       <PageIntro
-        title={
-          <>
-            <Link
-              href="/services"
-              className="mb-6 block text-[14px] font-normal tracking-normal text-muted-foreground transition-colors hover:text-foreground"
-            >
-              &larr; All services
-            </Link>
-            {service.title}
-          </>
+        before={
+          <Link href="/services" className="text-muted-foreground transition-colors hover:text-foreground">
+            &larr; All services
+          </Link>
         }
+        title={service.title}
         lead={service.longDescription}
       />
 

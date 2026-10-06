@@ -44,17 +44,12 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
   return (
     <>
       <PageIntro
-        title={
-          <>
-            <Link
-              href="/case-studies"
-              className="mb-6 block text-[14px] font-normal tracking-normal text-muted-foreground transition-colors hover:text-foreground"
-            >
-              &larr; All case studies
-            </Link>
-            {study.title}
-          </>
+        before={
+          <Link href="/case-studies" className="text-muted-foreground transition-colors hover:text-foreground">
+            &larr; All case studies
+          </Link>
         }
+        title={study.title}
         lead={study.industry}
       />
 

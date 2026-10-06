@@ -10,16 +10,19 @@ import { FadeIn } from "@repo/animation";
  */
 
 interface PageIntroProps {
+  /** Rendered above the title, e.g. a back link */
+  before?: ReactNode;
   title: ReactNode;
   lead?: ReactNode;
   children?: ReactNode;
 }
 
-export function PageIntro({ title, lead, children }: PageIntroProps) {
+export function PageIntro({ before, title, lead, children }: PageIntroProps) {
   return (
     <section className="pt-16 pb-12 md:pt-24 md:pb-16">
       <Container>
         <FadeIn className="max-w-[44rem]">
+          {before && <div className="mb-6 text-[14px]">{before}</div>}
           <h1 className="text-[clamp(2.25rem,1.7rem+2vw,3.5rem)] leading-[1.02] font-bold tracking-[-0.035em]">
             {title}
           </h1>
