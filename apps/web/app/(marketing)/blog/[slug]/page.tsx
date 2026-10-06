@@ -5,9 +5,11 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
-import { Container, Prose, Button } from "@repo/ui";
+import { Container, Prose } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
 import { ScrollProgress } from "../../../../src/components/ui/scroll-progress";
+import { ClosingAsk } from "../../../../src/components/site/closing-ask";
+import { notes, paper } from "../../../../src/components/site/paper";
 
 /**
  * What this does: Individual blog post page with an editorial article layout
@@ -105,7 +107,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               &larr; All posts
             </Link>
 
-            <h1 className="text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground">
+            <h1 className="text-[clamp(2rem,1.5rem+2vw,3.25rem)] leading-[1.05] font-bold tracking-[-0.035em] text-foreground">
               {title}
             </h1>
 
@@ -133,8 +135,13 @@ export default async function BlogPostPage({ params }: PageProps) {
       {/* ── Article body ── */}
       <section className="pb-20 md:pb-28">
         <Container className="max-w-3xl">
-          <div className="border-t border-border pt-10 md:pt-14">
-            <Prose>
+          <div className={`relative px-6 pt-12 pb-10 md:px-14 md:pt-16 md:pb-14 ${paper}`}>
+            <span
+              aria-hidden="true"
+              className="absolute top-0 left-6 h-3 w-12 rounded-b-[3px] md:left-14"
+              style={{ background: notes[0] }}
+            />
+            <Prose className="font-serif prose-headings:font-sans prose-p:text-[18px] prose-li:text-[18px] md:prose-p:text-[19px] md:prose-li:text-[19px]">
               <div
                 dangerouslySetInnerHTML={{
                   __html: marked.parse(
@@ -153,12 +160,12 @@ export default async function BlogPostPage({ params }: PageProps) {
       {relatedPosts.length > 0 && (
         <section className="py-20 md:py-28">
           <Container className="max-w-3xl">
-            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
+            <h2 className="text-[clamp(1.6rem,1.3rem+1vw,2.25rem)] leading-[1.08] font-bold tracking-[-0.03em] text-foreground">
               Continue reading
             </h2>
-            <ul className="mt-8 border-b border-border">
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
               {relatedPosts.map((related) => (
-                <li key={related.slug} className="border-t border-border py-6">
+                <li key={related.slug} className={`p-6 ${paper}`}>
                   <h3 className="text-lg font-semibold tracking-tight text-foreground">
                     <Link
                       href={`/blog/${related.slug}`}
@@ -177,24 +184,10 @@ export default async function BlogPostPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* ── CTA footer ── */}
-      <section className="py-20 md:py-28">
-        <Container className="max-w-3xl">
-          <FadeIn>
-            <p className="text-2xl font-medium tracking-tight text-foreground md:text-3xl">
-              Apply these insights to your operations.
-            </p>
-            <p className="mt-4 max-w-lg text-muted-foreground">
-              Schedule a 30-minute diagnostic. We&apos;ll map your workflows,
-              spot the automation opportunities, and put together a deployment
-              plan. No cost, no commitment.
-            </p>
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/contact">Schedule a diagnostic</Link>
-            </Button>
-          </FadeIn>
-        </Container>
-      </section>
+      <ClosingAsk
+        title="Apply this to your operations."
+        lead="On a 30-minute call we'll map one of your workflows, spot what an agent can take, and sketch a plan."
+      />
     </>
   );
 }

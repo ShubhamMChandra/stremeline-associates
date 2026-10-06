@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Container, Button } from "@repo/ui";
-import { FadeIn, AnimateOnScroll } from "@repo/animation";
-import { services, processSteps, processTagline } from "@repo/content";
+import { Container } from "@repo/ui";
+import { FadeIn } from "@repo/animation";
+import { processSteps, processTagline } from "@repo/content";
+import { PageIntro } from "../../../src/components/site/page-intro";
+import { ServiceCards } from "../../../src/components/site/service-cards";
+import { ClosingAsk } from "../../../src/components/site/closing-ask";
+import { ProcessMarkup } from "../../../src/components/home/process-markup";
+import { notes, paper, quietLink } from "../../../src/components/site/paper";
 
 /**
- * What this does: Services page. Four capabilities as a typographic list, a client quote,
- *   process steps, operating commitments, and a closing CTA.
- * Why it's here: Dedicated page to explain what WAM builds and how they work
- * How it works: Server component on a single paper ground. Sections are separated by
- *   spacing, lists use hairline dividers instead of boxed cards. No decorative layers.
- * Dependencies: @repo/ui, @repo/content, @repo/animation
+ * What this does: Services page. The four services, a marked-up process, how an engagement runs,
+ *   one client line, and the closing ask
+ * Why it's here: Explains what WAM builds and shows how we look at a process before building
+ * How it works: Server component on the paper ground. Services and the ask are shared components;
+ *   the marked-up process document is the one interactive object on the page
+ * Dependencies: @repo/ui, @repo/content, @repo/animation, site components, ProcessMarkup
  */
 
 export const metadata: Metadata = {
@@ -19,195 +24,97 @@ export const metadata: Metadata = {
     "AI agent capabilities: lead capture, workflow automation, error reduction, and scaling operations without adding headcount.",
 };
 
-const commitments = [
-  {
-    headline: "Live in weeks",
-    description: "Most engagements deploy in under two weeks.",
-  },
-  {
-    headline: "Zero lock-in",
-    description:
-      "Month-to-month. Your agents earn their place or we haven't built them right.",
-  },
-  {
-    headline: "Works inside your stack",
-    description: "We build inside your existing tools. Nothing gets replaced.",
-  },
-];
+const commitments = ["Live in under two weeks", "Month to month", "Works inside your stack"];
+
+const h2 = "text-[clamp(1.6rem,1.3rem+1vw,2.25rem)] leading-[1.08] font-bold tracking-[-0.03em]";
 
 export default function ServicesPage() {
   return (
     <>
-      {/* ── 1. Hero ── */}
-      <section className="pt-20 pb-12 md:pt-28 md:pb-16">
+      <PageIntro
+        title="What we build"
+        lead="AI agent systems that handle the work your team shouldn't be doing by hand. We design, build, and deploy them quickly."
+      >
+        <ul className="mt-7 flex flex-wrap gap-2">
+          {commitments.map((c) => (
+            <li key={c} className="rounded-full bg-surface px-3.5 py-1.5 text-[13.5px] ring-1 ring-foreground/10">
+              {c}
+            </li>
+          ))}
+        </ul>
+      </PageIntro>
+
+      <section aria-label="Services" className="pb-24 md:pb-32">
         <Container>
-          <FadeIn>
-            <h1 className="max-w-3xl text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground">
-              What we build
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              AI agent systems that handle the work your team shouldn&apos;t be
-              doing manually. We design, build, and deploy them quickly.
-            </p>
-          </FadeIn>
+          <ServiceCards />
         </Container>
       </section>
 
-      {/* ── 2. Capabilities — typographic list with hairlines ── */}
-      <section className="py-20 md:py-28">
+      <section aria-labelledby="markup-title" className="pb-24 md:pb-32">
         <Container>
-          <FadeIn>
-            <h2 className="text-3xl font-semibold tracking-[-0.03em] text-foreground md:text-4xl">
-              Core capabilities
+          <FadeIn className="max-w-[38rem]">
+            <h2 id="markup-title" className={h2}>
+              How we read a process
             </h2>
-            <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-              Four automation pillars. Each one removes a specific category of
-              manual work from your operations.
+            <p className="mt-4 text-[16px] leading-relaxed text-foreground/70">
+              We take the process the way your team wrote it and highlight what an agent can do. The
+              rest stays with your team.
             </p>
           </FadeIn>
-
-          <ul className="mt-10 border-b border-border md:mt-14">
-            {services.map((service) => (
-              <li key={service.slug} className="grid gap-4 border-t border-border py-6 md:grid-cols-[1fr_1.4fr] md:gap-12 md:py-8">
-                  <h3 className="text-2xl font-semibold tracking-[-0.03em] text-foreground">
-                    <Link href={`/services/${service.slug}`}>
-                      {service.title}
-                    </Link>
-                  </h3>
-                  <div>
-                    <p className="text-base leading-relaxed text-muted-foreground">
-                      {service.description}
-                    </p>
-                    {service.tools && service.tools.length > 0 && (
-                      <p className="mt-3 text-sm text-muted-foreground">
-                        Works with {service.tools.slice(0, 4).join(", ")}
-                        {service.tools.length > 4 &&
-                          ` and ${service.tools.length - 4} more`}
-                      </p>
-                    )}
-                    <Link
-                      href={`/services/${service.slug}`}
-                      className="mt-4 inline-block text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
-                    >
-                      Learn more
-                    </Link>
-                  </div>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-10">
+            <ProcessMarkup />
+          </div>
         </Container>
       </section>
 
-      {/* ── 3. Social proof — quote + metrics ── */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <AnimateOnScroll>
-            <figure className="max-w-3xl">
-              <blockquote className="text-2xl font-medium tracking-tight text-foreground md:text-3xl">
-                &ldquo;Response times went from hours to minutes. Our reps
-                stopped doing data entry and started actually selling.&rdquo;
-              </blockquote>
-              <figcaption className="mt-4 text-sm text-muted-foreground">
-                B2B software company
-              </figcaption>
-            </figure>
-          </AnimateOnScroll>
-
-          <AnimateOnScroll delay={0.1}>
-            <dl className="mt-10 grid max-w-2xl grid-cols-3 gap-6 border-t border-border pt-6">
-              {[
-                { value: "< 5 min", label: "Response time" },
-                { value: "0%", label: "Leads dropped" },
-                { value: "12 hrs/wk", label: "Admin time saved" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <dd className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                    {stat.value}
-                  </dd>
-                  <dt className="mt-1 text-sm text-muted-foreground">
-                    {stat.label}
-                  </dt>
-                </div>
-              ))}
-            </dl>
-          </AnimateOnScroll>
-
-          <Link
-            href="/case-studies/b2b-software-lead-automation"
-            className="mt-8 inline-block text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
-          >
-            Read the full case study
-          </Link>
-        </Container>
-      </section>
-
-      {/* ── 4. How we work — process steps ── */}
-      <section className="py-20 md:py-28">
+      <section aria-labelledby="steps-title" className="pb-24 md:pb-32">
         <Container>
           <FadeIn>
-            <h2 className="text-3xl font-semibold tracking-[-0.03em] text-foreground md:text-4xl">
-              How we work
+            <h2 id="steps-title" className={h2}>
+              How an engagement runs
             </h2>
-            <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-              {processTagline}
-            </p>
+            <p className="mt-4 text-[16px] text-foreground/70">{processTagline}</p>
           </FadeIn>
-
-          <ol className="mt-10 grid gap-x-8 md:mt-14 md:grid-cols-4">
+          <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
             {processSteps.map((step, i) => (
-              <li key={step.number} className="border-t border-border py-6">
-                <AnimateOnScroll delay={i * 0.05}>
-                  <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                    {step.number}. {step.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {step.description}
-                  </p>
-                </AnimateOnScroll>
+              <li key={step.number} className={`p-6 ${paper}`}>
+                <span
+                  className="inline-flex size-7 items-center justify-center rounded-full text-[13px] font-semibold"
+                  style={{ background: notes[i % notes.length] }}
+                >
+                  {step.number}
+                </span>
+                <h3 className="mt-4 text-[17px] font-semibold tracking-[-0.01em]">{step.title}</h3>
+                <p className="mt-2 text-[14.5px] leading-relaxed text-foreground/70">{step.description}</p>
               </li>
             ))}
           </ol>
         </Container>
       </section>
 
-      {/* ── 5. Commitments ── */}
-      <section className="py-20 md:py-28">
+      <section aria-label="What a client said" className="pb-24 md:pb-32">
         <Container>
           <FadeIn>
-            <h2 className="text-3xl font-semibold tracking-[-0.03em] text-foreground md:text-4xl">
-              How we operate
-            </h2>
-          </FadeIn>
-
-          <ul className="mt-10 grid gap-x-8 sm:grid-cols-3">
-            {commitments.map((v) => (
-              <li key={v.headline} className="border-t border-border py-6">
-                <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                  {v.headline}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {v.description}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      {/* ── 6. CTA ── */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <FadeIn>
-            <p className="max-w-2xl text-2xl font-medium tracking-tight text-foreground md:text-3xl">
-              Tell us where the bottlenecks are. We&apos;ll show you what agents
-              can do.
-            </p>
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/contact">Book an audit</Link>
-            </Button>
+            <figure className="max-w-[46rem]">
+              <blockquote className="text-[clamp(1.35rem,1.1rem+1vw,1.9rem)] leading-[1.3] font-medium tracking-[-0.015em]">
+                &ldquo;Response times went from hours to minutes. Our reps stopped doing data entry and
+                started actually selling.&rdquo;
+              </blockquote>
+              <figcaption className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px] text-muted-foreground">
+                <span>B2B software company</span>
+                <Link href="/case-studies/b2b-software-lead-automation" className={`text-foreground ${quietLink}`}>
+                  Read the case study
+                </Link>
+              </figcaption>
+            </figure>
           </FadeIn>
         </Container>
       </section>
+
+      <ClosingAsk
+        title="Tell us where the bottlenecks are."
+        lead="We'll show you what agents can do with them. It starts with a 30-minute call about one process."
+      />
     </>
   );
 }

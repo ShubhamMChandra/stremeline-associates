@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Container, Button } from "@repo/ui";
-import { FadeIn, AnimateOnScroll } from "@repo/animation";
+import { Check } from "lucide-react";
+import { Container } from "@repo/ui";
+import { FadeIn } from "@repo/animation";
 import { services, useCases } from "@repo/content";
+import { PageIntro } from "../../../../src/components/site/page-intro";
+import { ServiceCards } from "../../../../src/components/site/service-cards";
+import { ClosingAsk } from "../../../../src/components/site/closing-ask";
+import { notes, paper } from "../../../../src/components/site/paper";
 
 /**
- * What this does: Service detail page with problem/approach/benefits layout
- * Why it's here: Converts B2B prospects by showing depth behind each service offering
- * How it works: Single paper ground, sections separated by spacing. Hero, problem/approach
- *   columns, outcomes list, integrations line, use cases and other services as hairline
- *   lists, and a plain service-specific CTA.
- * Dependencies: @repo/ui, @repo/content, @repo/animation
+ * What this does: Service detail page: the problem, our approach, what changes, where it applies
+ * Why it's here: Shows the depth behind each service for buyers who want specifics
+ * How it works: Server component. Problem and approach sit side by side as paper cards, outcomes
+ *   are checked items, use cases are small cards, and the other services reuse the shared cards.
+ * Dependencies: @repo/ui, @repo/content, @repo/animation, lucide-react, site components
  */
 
 interface PageProps {
@@ -22,9 +26,7 @@ export async function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
@@ -34,105 +36,96 @@ export async function generateMetadata({
   };
 }
 
+const h2 = "text-[clamp(1.6rem,1.3rem+1vw,2.25rem)] leading-[1.08] font-bold tracking-[-0.03em]";
+
 export default async function ServiceDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
-  const relatedUseCases = useCases.filter((uc) =>
-    service.useCases.includes(uc.slug),
-  );
-  const relatedServices = services.filter((s) => s.slug !== slug);
+  const index = services.findIndex((s) => s.slug === slug);
+  const relatedUseCases = useCases.filter((uc) => service.useCases.includes(uc.slug));
 
   return (
     <>
-      {/* ── 1. Hero ── */}
-      <section className="pt-16 pb-12 md:pt-20 md:pb-16">
-        <Container>
-          <FadeIn>
-            <Link
-              href="/services"
-              className="mb-8 inline-block text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              &larr; All services
-            </Link>
-            <h1 className="max-w-3xl text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground">
-              {service.title}
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              {service.longDescription}
-            </p>
+      <PageIntro
+        before={
+          <Link href="/services" className="text-muted-foreground transition-colors hover:text-foreground">
+            &larr; All services
+          </Link>
+        }
+        title={service.title}
+        lead={service.longDescription}
+      />
+
+      <section aria-label="Problem and approach" className="pb-20 md:pb-28">
+        <Container className="grid gap-4 md:grid-cols-2 md:gap-5">
+          <FadeIn className={`relative h-full p-7 pt-10 md:p-9 md:pt-12 ${paper}`}>
+            <span
+              aria-hidden="true"
+              className="absolute top-0 left-7 h-3 w-12 rounded-b-[3px] md:left-9"
+              style={{ background: notes[3] }}
+            />
+            <h2 className="text-[20px] font-semibold tracking-[-0.015em]">The problem</h2>
+            <p className="mt-3 text-[15.5px] leading-relaxed text-foreground/75">{service.problem}</p>
+          </FadeIn>
+          <FadeIn delay={0.08} className={`relative h-full p-7 pt-10 md:p-9 md:pt-12 ${paper}`}>
+            <span
+              aria-hidden="true"
+              className="absolute top-0 left-7 h-3 w-12 rounded-b-[3px] md:left-9"
+              style={{ background: notes[index % 4] }}
+            />
+            <h2 className="text-[20px] font-semibold tracking-[-0.015em]">Our approach</h2>
+            <p className="mt-3 text-[15.5px] leading-relaxed text-foreground/75">{service.approach}</p>
           </FadeIn>
         </Container>
       </section>
 
-      {/* ── 2. Problem / approach ── */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <div className="grid gap-10 md:grid-cols-2 md:gap-16">
-            <AnimateOnScroll>
-              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
-                The problem
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                {service.problem}
-              </p>
-            </AnimateOnScroll>
-
-            <AnimateOnScroll delay={0.1}>
-              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
-                Our approach
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                {service.approach}
-              </p>
-            </AnimateOnScroll>
-          </div>
-        </Container>
-      </section>
-
-      {/* ── 3. Outcomes ── */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
-            What changes
-          </h2>
-          <ul className="mt-8 grid gap-x-8 sm:grid-cols-2 md:grid-cols-4">
-            {service.benefits.map((benefit) => (
-              <li key={benefit} className="border-t border-border py-6">
-                <p className="text-base font-medium leading-relaxed text-foreground">
-                  {benefit}
-                </p>
+      <section aria-labelledby="changes-title" className="pb-20 md:pb-28">
+        <Container className="grid gap-10 md:grid-cols-12 md:gap-8">
+          <FadeIn className="md:col-span-4">
+            <h2 id="changes-title" className={h2}>
+              What changes
+            </h2>
+            {service.tools && service.tools.length > 0 && (
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {service.tools.map((t) => (
+                  <li
+                    key={t}
+                    className="rounded-full bg-surface px-3 py-1 text-[13px] text-foreground/75 ring-1 ring-foreground/10"
+                  >
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </FadeIn>
+          <ul className="grid gap-3 sm:grid-cols-2 md:col-span-8">
+            {service.benefits.map((b) => (
+              <li key={b} className={`flex items-start gap-3 p-5 ${paper}`}>
+                <span className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-marker">
+                  <Check className="size-3" strokeWidth={3} aria-hidden="true" />
+                </span>
+                <span className="text-[15px] leading-snug font-medium">{b}</span>
               </li>
             ))}
           </ul>
-          {service.tools && service.tools.length > 0 && (
-            <p className="mt-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Integrates with {service.tools.join(", ")}.
-            </p>
-          )}
         </Container>
       </section>
 
-      {/* ── 4. Use cases ── */}
       {relatedUseCases.length > 0 && (
-        <section className="py-20 md:py-28">
+        <section aria-labelledby="applies-title" className="pb-20 md:pb-28">
           <Container>
-            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
-              Where this applies
-            </h2>
-            <ul className="mt-8 border-b border-border">
+            <FadeIn>
+              <h2 id="applies-title" className={h2}>
+                Where this applies
+              </h2>
+            </FadeIn>
+            <ul className="mt-8 grid gap-4 md:grid-cols-3 md:gap-5">
               {relatedUseCases.map((uc) => (
-                <li
-                  key={uc.slug}
-                  className="grid gap-2 border-t border-border py-6 md:grid-cols-[1fr_2fr] md:gap-12"
-                >
-                  <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                    {uc.title}
-                  </h3>
-                  <p className="text-base leading-relaxed text-muted-foreground">
-                    {uc.description}
-                  </p>
+                <li key={uc.slug} className={`p-6 ${paper}`}>
+                  <h3 className="text-[17px] leading-snug font-semibold tracking-[-0.01em]">{uc.title}</h3>
+                  <p className="mt-2 text-[14.5px] leading-relaxed text-foreground/70">{uc.description}</p>
                 </li>
               ))}
             </ul>
@@ -140,48 +133,18 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* ── 5. Other services ── */}
-      <section className="py-20 md:py-28">
+      <section aria-labelledby="other-title" className="pb-24 md:pb-32">
         <Container>
-          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
+          <h2 id="other-title" className={h2}>
             Other services
           </h2>
-          <ul className="mt-8 border-b border-border">
-            {relatedServices.map((rs) => (
-              <li
-                key={rs.slug}
-                className="grid gap-2 border-t border-border py-6 md:grid-cols-[1fr_2fr] md:gap-12"
-              >
-                <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                  <Link
-                    href={`/services/${rs.slug}`}
-                    className="underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
-                  >
-                    {rs.title}
-                  </Link>
-                </h3>
-                <p className="text-base leading-relaxed text-muted-foreground">
-                  {rs.description}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-8">
+            <ServiceCards exclude={service.slug} />
+          </div>
         </Container>
       </section>
 
-      {/* ── 6. CTA ── */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <FadeIn>
-            <p className="max-w-2xl text-2xl font-medium tracking-tight text-foreground md:text-3xl">
-              {service.ctaLine}
-            </p>
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/contact">Book an audit</Link>
-            </Button>
-          </FadeIn>
-        </Container>
-      </section>
+      <ClosingAsk title={service.ctaLine} />
     </>
   );
 }

@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Container, Button } from "@repo/ui";
-import { FadeIn, AnimateOnScroll } from "@repo/animation";
+import { Container } from "@repo/ui";
+import { FadeIn } from "@repo/animation";
 import { caseStudies } from "@repo/content";
+import { PageIntro } from "../../../../src/components/site/page-intro";
+import { ClosingAsk } from "../../../../src/components/site/closing-ask";
+import { ResultsCard } from "../../../../src/components/site/results-card";
+import { notes, paper } from "../../../../src/components/site/paper";
+
 
 /**
- * What this does: Case study detail page (problem, what we built, results, CTA)
- * Why it's here: Gives prospects the full story behind each deployment
- * How it works: Statically generated per slug. One paper ground, sections separated by
- *   spacing, results as a hairline list instead of boxed cards.
- * Dependencies: @repo/ui, @repo/content, @repo/animation
+ * What this does: Case study detail: the problem, what we built, and the results
+ * Why it's here: Specific proof for buyers who want to see the work
+ * How it works: Server component. Problem and build sit side by side as paper cards; results use
+ *   the shared results card with each result's note listed beside it.
+ * Dependencies: @repo/ui, @repo/content, @repo/animation, site components
  */
 
 interface PageProps {
@@ -38,88 +43,62 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
 
   return (
     <>
-      {/* Hero */}
-      <section className="pt-16 pb-12 md:pt-20 md:pb-16">
-        <Container>
-          <FadeIn>
-            <Link
-              href="/case-studies"
-              className="mb-8 inline-block text-sm text-muted-foreground transition-colors hover:text-foreground"
+      <PageIntro
+        before={
+          <Link href="/case-studies" className="text-muted-foreground transition-colors hover:text-foreground">
+            &larr; All case studies
+          </Link>
+        }
+        title={study.title}
+        lead={study.industry}
+      />
+
+      <section aria-label="Problem and what we built" className="pb-20 md:pb-28">
+        <Container className="grid gap-4 md:grid-cols-2 md:gap-5">
+          {[
+            { title: "The problem", body: study.problem, tab: notes[3] },
+            { title: "What we built", body: study.solution, tab: notes[0] },
+          ].map((c, i) => (
+            <FadeIn key={c.title} delay={i * 0.08} className={`relative h-full p-7 pt-10 md:p-9 md:pt-12 ${paper}`}>
+              <span
+                aria-hidden="true"
+                className="absolute top-0 left-7 h-3 w-12 rounded-b-[3px] md:left-9"
+                style={{ background: c.tab }}
+              />
+              <h2 className="text-[20px] font-semibold tracking-[-0.015em]">{c.title}</h2>
+              <p className="mt-3 text-[15.5px] leading-relaxed text-foreground/75">{c.body}</p>
+            </FadeIn>
+          ))}
+        </Container>
+      </section>
+
+      <section aria-labelledby="results-title" className="pb-24 md:pb-32">
+        <Container className="grid gap-10 md:grid-cols-12 md:gap-8">
+          <FadeIn className="md:col-span-5">
+            <h2
+              id="results-title"
+              className="text-[clamp(1.6rem,1.3rem+1vw,2.25rem)] leading-[1.08] font-bold tracking-[-0.03em]"
             >
-              &larr; All case studies
-            </Link>
-            <p className="mb-4 text-sm text-muted-foreground">{study.industry}</p>
-            <h1 className="max-w-3xl text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground">
-              {study.title}
-            </h1>
+              The results
+            </h2>
+            <ul className="mt-6 space-y-4">
+              {study.results.map((r) => (
+                <li key={r.metric} className="text-[15px] leading-relaxed text-foreground/75">
+                  <span className="font-medium text-foreground">{r.metric}.</span> {r.description}
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+          <FadeIn className="md:col-span-6 md:col-start-7">
+            <ResultsCard study={study} />
           </FadeIn>
         </Container>
       </section>
 
-      {/* Problem / what we built */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <div className="grid gap-12 lg:grid-cols-2">
-            <AnimateOnScroll>
-              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
-                The problem
-              </h2>
-              <p className="mt-4 leading-relaxed text-muted-foreground">{study.problem}</p>
-            </AnimateOnScroll>
-            <AnimateOnScroll delay={0.1}>
-              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground md:text-3xl">
-                What we built
-              </h2>
-              <p className="mt-4 leading-relaxed text-muted-foreground">{study.solution}</p>
-            </AnimateOnScroll>
-          </div>
-        </Container>
-      </section>
-
-      {/* Results */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <h2 className="text-3xl font-semibold tracking-[-0.03em] text-foreground md:text-4xl">
-            The results
-          </h2>
-          <ul className="mt-10 grid gap-x-8 sm:grid-cols-2">
-            {study.results.map((result, i) => (
-              <li key={i} className="border-t border-border py-6">
-                <p className="text-sm text-muted-foreground">{result.metric}</p>
-                <p className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
-                  {result.before ? (
-                    <>
-                      <span className="text-lg font-normal text-muted-foreground line-through">
-                        {result.before}
-                      </span>{" "}
-                      {result.after}
-                    </>
-                  ) : (
-                    result.after
-                  )}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {result.description}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <FadeIn>
-            <p className="max-w-2xl text-2xl font-medium tracking-tight text-foreground md:text-3xl">
-              This pattern is repeatable across sales, ops, and support teams.
-            </p>
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/contact">Let&apos;s build yours</Link>
-            </Button>
-          </FadeIn>
-        </Container>
-      </section>
+      <ClosingAsk
+        title="This pattern repeats across sales, ops, and support teams."
+        lead="Tell us which process to start with. It begins with a 30-minute call."
+      />
     </>
   );
 }

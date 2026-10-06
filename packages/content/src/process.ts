@@ -5,30 +5,30 @@ export const processSteps: ProcessStep[] = [
     number: 1,
     title: "Audit",
     description:
-      "We identify bottlenecks and wasted effort across your operations — where your team spends time on work that should be automated.",
+      "We find where your team spends time on work that should be automated.",
     label: "// audit",
   },
   {
     number: 2,
     title: "Design",
     description:
-      "We architect agent workflows around your existing stack. No rip-and-replace — we build on what you already use.",
+      "We plan agent workflows around the stack you already have and build on what you use.",
     label: "// design",
   },
   {
     number: 3,
-    title: "Build & Deploy",
+    title: "Build and deploy",
     description:
-      "Fast, efficient deployment using no-code and low-code where possible. We get your agents live quickly.",
+      "We use no-code and low-code where it fits, so agents go live quickly.",
     label: "// deploy",
   },
   {
     number: 4,
     title: "Optimize",
     description:
-      "As volume and complexity grow, we refine and improve your agent workflows — continuously making them smarter and faster.",
+      "As volume grows, we keep tuning the agents on real work.",
     label: "// optimize",
   },
 ];
 
-export const processTagline = "Most engagements launch in weeks, not months.";
+export const processTagline = "Most engagements launch within a few weeks.";

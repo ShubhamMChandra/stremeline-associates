@@ -34,7 +34,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-surface: var(--surface);
-  --color-signal: var(--signal);
+  --color-marker: var(--marker);
   /* Infinite scroll animations for marquee elements */
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
@@ -68,34 +68,34 @@
   100% {
     transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));}}}
 
-/* Paper and ink. One signal color, used only to mark work an agent does. */
+/* Warm paper, black ink, a full set of highlighters. Yellow marks work an agent does. */
 :root, .light {
-  --radius: 0.375rem;
-  --background: #F4F2EC;
-  --foreground: #16150F;
-  --surface: #FBFAF6;
-  --card: #FBFAF6;
-  --card-foreground: #16150F;
-  --popover: #FBFAF6;
-  --popover-foreground: #16150F;
-  --primary: #16150F;
-  --primary-foreground: #F4F2EC;
-  --secondary: #E9E6DD;
-  --secondary-foreground: #16150F;
-  --muted: #E9E6DD;
-  --muted-foreground: #5E5B52;
-  --accent: #E9E6DD;
-  --accent-foreground: #16150F;
+  --radius: 0.5rem;
+  --background: #F4F0E3;
+  --foreground: #151514;
+  --surface: #FFFDF8;
+  --card: #FFFDF8;
+  --card-foreground: #151514;
+  --popover: #FFFDF8;
+  --popover-foreground: #151514;
+  --primary: #151514;
+  --primary-foreground: #FFFDF8;
+  --secondary: #EAE5D6;
+  --secondary-foreground: #151514;
+  --muted: #EAE5D6;
+  --muted-foreground: #66625A;
+  --accent: #EAE5D6;
+  --accent-foreground: #151514;
   --destructive: #B42318;
-  --border: rgba(22, 21, 15, 0.12);
-  --input: rgba(22, 21, 15, 0.18);
-  --ring: #16150F;
-  --signal: #E5481F;
+  --border: rgba(21, 21, 20, 0.12);
+  --input: rgba(21, 21, 20, 0.2);
+  --ring: #151514;
+  --marker: #FFE34D;
 }
 
 /* Selection styling */
 ::selection {
-  background-color: rgba(229, 72, 31, 0.22);
+  background-color: rgba(255, 225, 77, 0.55);
   color: inherit;
 }
 
@@ -216,4 +216,47 @@ h1, h2, h3 {
 }
 p, li {
   text-wrap: pretty;
+}
+
+/* Highlighter: a marker stroke behind inline text. Draws left to right when .is-drawn is set. */
+.marker {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 14%,
+    var(--marker) 14%,
+    var(--marker) 90%,
+    transparent 90%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  padding: 0 0.12em;
+  margin: 0 -0.12em;
+  border-radius: 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 0.7s cubic-bezier(0.25, 0.7, 0.2, 1);
+}
+.marker.is-drawn,
+.marker-hover:hover .marker,
+.marker-hover:focus-visible .marker {
+  background-size: 100% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marker {
+    transition: none;
+  }
+}
+
+/* A small shake for a sticky note that springs back */
+@keyframes note-nudge {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(-4deg);
+  }
+  70% {
+    transform: rotate(4deg);
+  }
 }
