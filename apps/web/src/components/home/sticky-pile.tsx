@@ -11,7 +11,8 @@ import { useReducedMotion } from "@repo/animation";
  * Why it's here: The one playful object on the homepage. Visitors hand off busywork themselves and
  *   see which chores an agent can take and which ones stay with a person
  * How it works: Notes are draggable with pointer events (touch included) and also respond to a tap
- *   or Enter. Dropping an agent chore in the tray folds it into a checked log line; a chore that
+ *   or Enter. Dropping an agent chore in the tray, or letting go once it is 60% of the way there,
+ *   folds it into a checked log line; a chore that
  *   needs a person springs back with a short reason. Positions are percentages per breakpoint.
  *   The statement sits in the empty bottom-left corner of the desk on large screens.
  *   Grabbing a note peels it up toward the held corner; it sways while dragged and settles back
@@ -125,7 +126,17 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
   const trayRef = useRef<HTMLDivElement>(null);
   const deskRef = useRef<HTMLDivElement>(null);
   const noteRefs = useRef<Record<string, HTMLElement | null>>({});
-  const drag = useRef<{ id: string; sx: number; sy: number; dx: number; dy: number; moved: boolean } | null>(null);
+  const drag = useRef<{
+    id: string;
+    sx: number;
+    sy: number;
+    dx: number;
+    dy: number;
+    moved: boolean;
+    from: { x: number; y: number };
+    to: { x: number; y: number };
+    near: boolean;
+  } | null>(null);
   const top = useRef(chores.length);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -195,7 +206,19 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
       py: Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1)),
     });
     const cur = notes[id]!;
-    drag.current = { id, sx: e.clientX, sy: e.clientY, dx: cur.dx, dy: cur.dy, moved: false };
+    const t = trayRef.current?.getBoundingClientRect();
+    const from = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    drag.current = {
+      id,
+      sx: e.clientX,
+      sy: e.clientY,
+      dx: cur.dx,
+      dy: cur.dy,
+      moved: false,
+      from,
+      to: t ? { x: t.left + t.width / 2, y: t.top + t.height / 2 } : from,
+      near: false,
+    };
     patch(id, { z: ++top.current });
   };
 
@@ -210,7 +233,11 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
     }
     if (d.moved) {
       patch(d.id, { dx: d.dx + mx, dy: d.dy + my });
-      setOver(inTray(e.clientX, e.clientY));
+      // Past 60% of the way to the tray counts as handed off
+      const total = Math.hypot(d.to.x - d.from.x, d.to.y - d.from.y) || 1;
+      const left = Math.hypot(d.to.x - (d.from.x + mx), d.to.y - (d.from.y + my));
+      d.near = 1 - left / total >= 0.6;
+      setOver(d.near || inTray(e.clientX, e.clientY));
       const push = Math.max(-9, Math.min(9, e.movementX * 0.7));
       setSway((v) => v * 0.6 + push * 0.4);
     }
@@ -231,7 +258,7 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
     setDragging(null);
     setOver(false);
     if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
-    if (!d.moved || inTray(e.clientX, e.clientY)) {
+    if (!d.moved || d.near || inTray(e.clientX, e.clientY)) {
       handOff(d.id);
       return;
     }

@@ -1,0 +1,10 @@
+▲ Next.js 16.1.5 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.0.2.2:3001
+- Experiments (use with caution):
+  · optimizePackageImports
+
+✓ Starting...
+✓ Ready in 3.4s
+ GET / 200 in 3.1s (compile: 2.5s, render: 524ms)
+ GET / 200 in 125ms (compile: 9ms, render: 116ms)
