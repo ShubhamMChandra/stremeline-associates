@@ -12,12 +12,12 @@ export const services: Service[] = [
     label: "// intake",
     useCases: ["lead-intake-qualification", "crm-data-hygiene", "customer-follow-ups"],
     problem:
-      "Leads come in around the clock — web forms, emails, referrals — but your team only works business hours. By the time someone opens the CRM, the prospect has gone cold. Slow response times and inconsistent follow-up quietly bleed revenue every single week.",
+      "Leads come in around the clock (web forms, emails, referrals), but your team only works business hours. By the time someone opens the CRM, the prospect has gone cold. Slow response times and inconsistent follow-up quietly bleed revenue every single week.",
     approach:
-      "We wire an agent directly into your form endpoints, shared inboxes, and referral channels. It validates contact data on arrival, pulls firmographic context from third-party APIs, scores the lead against criteria you define, and drops a fully enriched record into your CRM — tagged, assigned, and ready to work before your rep finishes their coffee.",
+      "We wire an agent directly into your form endpoints, shared inboxes, and referral channels. It validates contact data on arrival, pulls firmographic context from third-party APIs, scores the lead against criteria you define, and drops a fully enriched record into your CRM: tagged, assigned, and ready to work before your rep finishes their coffee.",
     benefits: [
       "Sub-minute response times on every lead",
-      "Automatic enrichment — company size, industry, tech stack",
+      "Automatic enrichment: company size, industry, tech stack",
       "Consistent qualification scoring, no matter who's on shift",
       "Zero manual data entry into your CRM",
     ],
@@ -36,9 +36,9 @@ export const services: Service[] = [
     label: "// orchestration",
     useCases: ["sales-ops-handoffs", "internal-alerts-reporting", "crm-data-hygiene"],
     problem:
-      "Your team switches between ten or more tools every day — copying data from the CRM to the project tracker, pasting updates into Slack, reconciling spreadsheets by hand. Every handoff is a chance for something to fall through the cracks.",
+      "Your team switches between ten or more tools every day: copying data from the CRM to the project tracker, pasting updates into Slack, reconciling spreadsheets by hand. Every handoff is a chance for something to fall through the cracks.",
     approach:
-      "We sit with your team, diagram every handoff that crosses a system boundary, and identify where data gets re-keyed or where steps get skipped under pressure. Then we build event-driven agent chains — one tool fires a webhook, the agent picks it up, transforms the data, and pushes it downstream. No scheduled batch jobs. No polling. Just real-time cause and effect across your whole stack.",
+      "We sit with your team, diagram every handoff that crosses a system boundary, and identify where data gets re-keyed or where steps get skipped under pressure. Then we build event-driven agent chains. One tool fires a webhook, the agent picks it up, transforms the data, and pushes it downstream. No scheduled batch jobs. No polling. Just real-time cause and effect across your whole stack.",
     benefits: [
       "Eliminate copy-paste between systems entirely",
       "Automated handoffs from sales to onboarding to delivery",
@@ -60,9 +60,9 @@ export const services: Service[] = [
     label: "// data-integrity",
     useCases: ["crm-data-hygiene", "internal-alerts-reporting", "lead-intake-qualification"],
     problem:
-      "Duplicate CRM records, missing fields, stale contacts, inconsistent formatting — bad data accumulates quietly until someone makes a decision based on numbers that aren't real. By then the damage is done.",
+      "Duplicate CRM records, missing fields, stale contacts, inconsistent formatting. Bad data accumulates quietly until someone makes a decision based on numbers that aren't real. By then the damage is done.",
     approach:
-      "We start with a full audit of your CRM and connected systems — mapping duplicates, stale records, and formatting drift. Then we deploy a background agent that enforces your data standards on every write: normalizing fields, merging duplicate contacts using fuzzy matching, enriching sparse records from clearinghouse APIs, and surfacing anomalies to a Slack channel before they compound into reporting errors.",
+      "We start with a full audit of your CRM and connected systems, mapping duplicates, stale records, and formatting drift. Then we deploy a background agent that enforces your data standards on every write: normalizing fields, merging duplicate contacts using fuzzy matching, enriching sparse records from clearinghouse APIs, and surfacing anomalies to a Slack channel before they compound into reporting errors.",
     benefits: [
       "Continuous deduplication and merge across records",
       "Automatic enrichment from third-party data sources",
@@ -84,12 +84,12 @@ export const services: Service[] = [
     label: "// scale",
     useCases: ["sales-ops-handoffs", "customer-follow-ups", "internal-alerts-reporting"],
     problem:
-      "You're growing, but every new client means more manual work — more onboarding tasks, more follow-ups, more reporting. Hiring takes months and costs a fortune. In the meantime, things slip and quality drops.",
+      "You're growing, but every new client means more manual work: more onboarding tasks, more follow-ups, more reporting. Hiring takes months and costs a fortune. In the meantime, things slip and quality drops.",
     approach:
-      "We look at which processes break first when volume spikes — usually onboarding, follow-ups, and reporting — and build parallel agent capacity around each one. The agents share the same queues and tools your team already uses, so nothing changes about how people work. What changes is that Monday morning doesn't start with a backlog anymore, regardless of how many deals closed Friday.",
+      "We look at which processes break first when volume spikes (usually onboarding, follow-ups, and reporting) and build parallel agent capacity around each one. The agents share the same queues and tools your team already uses, so nothing changes about how people work. What changes is that Monday morning doesn't start with a backlog anymore, regardless of how many deals closed Friday.",
     benefits: [
       "Handle 2-3x volume with the same team size",
-      "Instant scaling — no hiring, no onboarding lag",
+      "Scale up without hiring or onboarding lag",
       "Consistent quality at every volume level",
       "Free up senior staff for strategic work",
     ],

@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
           flexDirection: "column",
           justifyContent: "center",
           padding: "60px 80px",
-          backgroundColor: "#F4F2EC",
+          backgroundColor: "#F4F0E3",
           fontFamily: "sans-serif",
         }}
       >
@@ -35,9 +35,11 @@ export async function GET(request: NextRequest) {
         >
           <div
             style={{
-              width: "18px",
+              width: "88px",
               height: "18px",
-              backgroundColor: "#E5481F",
+              marginRight: "-92px",
+              marginTop: "14px",
+              backgroundColor: "#FFE34D",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -48,7 +50,7 @@ export async function GET(request: NextRequest) {
               fontSize: "34px",
               fontWeight: 600,
               letterSpacing: "-0.05em",
-              color: "#16150F",
+              color: "#151514",
             }}
           >
             wam
@@ -59,8 +61,8 @@ export async function GET(request: NextRequest) {
         <div
           style={{
             fontSize: "64px",
-            fontWeight: 600,
-            color: "#16150F",
+            fontWeight: 700,
+            color: "#151514",
             lineHeight: 1.1,
             letterSpacing: "-0.045em",
             maxWidth: "900px",
@@ -73,7 +75,7 @@ export async function GET(request: NextRequest) {
         <div
           style={{
             fontSize: "20px",
-            color: "#5E5B52",
+            color: "#66625A",
             marginTop: "20px",
             maxWidth: "600px",
             lineHeight: 1.5,
@@ -90,7 +92,7 @@ export async function GET(request: NextRequest) {
             left: "0",
             right: "0",
             height: "2px",
-            backgroundColor: "#16150F",
+            backgroundColor: "#151514",
           }}
         />
       </div>

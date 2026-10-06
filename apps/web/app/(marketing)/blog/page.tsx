@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Container, Button } from "@repo/ui";
+import { Container } from "@repo/ui";
 import { FadeIn } from "@repo/animation";
+import { PageIntro } from "../../../src/components/site/page-intro";
+import { ClosingAsk } from "../../../src/components/site/closing-ask";
+import { notes, paper } from "../../../src/components/site/paper";
 
 /**
- * What this does: Blog listing page with a plain hero and an editorial post list
- * Why it's here: Content marketing and SEO. Establishes WAM as thought leaders in AI automation
- * How it works: Server component on one paper ground. Posts render as a hairline-divided
- *   list (meta, title, summary), followed by a plain closing line and CTA.
- * Dependencies: @repo/ui, @repo/animation
+ * What this does: Insights index. Articles as paper cards
+ * Why it's here: Content marketing and SEO: how we think about automation and operations
+ * How it works: Server component; each card links to the article; the shared ask closes the page
+ * Dependencies: @repo/ui, @repo/animation, site components
  */
 
 export const metadata: Metadata = {
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
 const posts = [
   {
     slug: "five-workflows-to-automate-first",
-    title: "The Five Workflows That Yield the Highest Automation ROI",
+    title: "The five workflows that yield the highest automation ROI",
     description:
       "Most companies automate the wrong thing first. After dozens of engagements, we keep seeing the same five workflows deliver 60–80% time savings within weeks, without disrupting how your team works.",
     publishedAt: "2026-02-03",
@@ -29,7 +31,7 @@ const posts = [
   },
   {
     slug: "why-ai-agents-not-chatbots",
-    title: "Beyond Chatbots: Why Autonomous AI Agents Are Reshaping SMB Operations",
+    title: "Beyond chatbots: why autonomous AI agents are reshaping SMB operations",
     description:
       "Chatbots and AI agents are fundamentally different. Chatbots wait for someone to type. Agents watch your systems, make decisions, and execute on their own. If you don't have a dedicated ops team, that difference changes everything.",
     publishedAt: "2026-01-20",
@@ -38,7 +40,7 @@ const posts = [
   },
   {
     slug: "build-vs-buy-ai-automation",
-    title: "Build, Buy, or Partner: A Decision Framework for AI Automation",
+    title: "Build, buy, or partner: a decision framework for AI automation",
     description:
       "You can go DIY with no-code tools, buy a platform suite, or have custom agents built. Each path has real trade-offs in cost, flexibility, and reliability. Here's how to figure out which one actually fits.",
     publishedAt: "2026-01-06",
@@ -50,73 +52,51 @@ const posts = [
 export default function BlogPage() {
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="pt-20 pb-12 md:pt-28 md:pb-16">
-        <Container>
-          <FadeIn>
-            <h1 className="max-w-3xl text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground">
-              Insights
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              What we&apos;re learning about AI automation, operations design,
-              and building companies that grow without drowning in manual work.
-            </p>
-          </FadeIn>
-        </Container>
-      </section>
+      <PageIntro
+        title="Insights"
+        lead="What we're learning about AI automation, operations design, and building companies that grow without drowning in manual work."
+      />
 
-      {/* ── All posts — hairline list ── */}
-      <section className="py-20 md:py-28">
+      <section aria-label="Articles" className="pb-24 md:pb-32">
         <Container>
-          <ul className="border-b border-border">
-            {posts.map((post) => (
-              <li key={post.slug} className="grid gap-3 border-t border-border py-8 md:grid-cols-[12rem_1fr] md:gap-12">
-                  <p className="text-sm text-muted-foreground">
-                    {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                    <br />
-                    {post.readingTime}
-                  </p>
-                  <div>
-                    <h2 className="max-w-3xl text-2xl font-semibold tracking-[-0.03em] text-foreground">
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+          <ul className="grid gap-4 md:grid-cols-3 md:gap-5">
+            {posts.map((post, i) => (
+              <li key={post.slug}>
+                <FadeIn delay={i * 0.06} className="h-full">
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className={`group relative flex h-full flex-col p-6 pt-9 transition-transform duration-300 hover:-translate-y-0.5 md:p-7 md:pt-10 ${paper}`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="absolute top-0 left-6 h-3 w-12 rounded-b-[3px] md:left-7"
+                      style={{ background: notes[(i + 1) % notes.length] }}
+                    />
+                    <p className="text-[13px] text-muted-foreground">
+                      {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}{" "}
+                      <span aria-hidden="true">&middot;</span> {post.readingTime}
+                    </p>
+                    <h2 className="mt-3 text-[20px] leading-snug font-semibold tracking-[-0.015em] group-hover:underline group-hover:decoration-foreground/30 group-hover:underline-offset-[5px]">
+                      {post.title}
                     </h2>
-                    <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-                      {post.description}
-                    </p>
-                    <p className="mt-3 text-sm text-muted-foreground">
-                      {post.tags.join(", ")}
-                    </p>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="mt-4 inline-block text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
-                    >
-                      Read the article
-                    </Link>
-                  </div>
+                    <p className="mt-3 flex-1 text-[14.5px] leading-relaxed text-foreground/70">{post.description}</p>
+                    <p className="mt-6 text-[13px] text-muted-foreground">{post.tags.join(", ")}</p>
+                  </Link>
+                </FadeIn>
               </li>
             ))}
           </ul>
         </Container>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-20 md:py-28">
-        <Container>
-          <FadeIn>
-            <p className="max-w-2xl text-2xl font-medium tracking-tight text-foreground md:text-3xl">
-              The best teams automate the work that doesn&apos;t need judgment,
-              and protect the work that does.
-            </p>
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/contact">Schedule a diagnostic</Link>
-            </Button>
-          </FadeIn>
-        </Container>
-      </section>
+      <ClosingAsk
+        title="Automate the work that doesn't need judgment."
+        lead="Protect the work that does. A 30-minute call is enough to find out which is which."
+      />
     </>
   );
 }
