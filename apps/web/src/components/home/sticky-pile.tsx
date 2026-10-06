@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, typ
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { Logo, cn } from "@repo/ui";
+import { useReducedMotion } from "@repo/animation";
 
 /**
  * What this does: A pile of sticky notes with everyday ops chores and a tray that agents work from
@@ -13,7 +14,9 @@ import { Logo, cn } from "@repo/ui";
  *   or Enter. Dropping an agent chore in the tray folds it into a checked log line; a chore that
  *   needs a person springs back with a short reason. Positions are percentages per breakpoint.
  *   The statement sits in the empty bottom-left corner of the desk on large screens.
- * Dependencies: React state, lucide-react, @repo/ui
+ *   Grabbing a note peels it up toward the held corner; it sways while dragged and settles back
+ *   onto the page on release.
+ * Dependencies: React state, lucide-react, @repo/ui, @repo/animation
  */
 
 interface Chore {
@@ -115,6 +118,10 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
   const [over, setOver] = useState(false);
   const [bubble, setBubble] = useState<{ id: string; text: string } | null>(null);
   const [touched, setTouched] = useState(false);
+  const [press, setPress] = useState<{ id: string; px: number; py: number } | null>(null);
+  const [sway, setSway] = useState(0);
+  const [settle, setSettle] = useState<string | null>(null);
+  const reduced = useReducedMotion();
   const trayRef = useRef<HTMLDivElement>(null);
   const deskRef = useRef<HTMLDivElement>(null);
   const noteRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -181,6 +188,12 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
   const onDown = (id: string) => (e: PointerEvent<HTMLButtonElement>) => {
     if (e.button !== 0 || notes[id]?.status !== "desk") return;
     e.currentTarget.setPointerCapture(e.pointerId);
+    const r = e.currentTarget.getBoundingClientRect();
+    setPress({
+      id,
+      px: Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1)),
+      py: Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1)),
+    });
     const cur = notes[id]!;
     drag.current = { id, sx: e.clientX, sy: e.clientY, dx: cur.dx, dy: cur.dy, moved: false };
     patch(id, { z: ++top.current });
@@ -198,12 +211,22 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
     if (d.moved) {
       patch(d.id, { dx: d.dx + mx, dy: d.dy + my });
       setOver(inTray(e.clientX, e.clientY));
+      const push = Math.max(-9, Math.min(9, e.movementX * 0.7));
+      setSway((v) => v * 0.6 + push * 0.4);
     }
+  };
+
+  const land = (id: string) => {
+    setPress(null);
+    setSway(0);
+    setSettle(id);
+    later(() => setSettle((v) => (v === id ? null : v)), 460);
   };
 
   const onUp = (e: PointerEvent<HTMLButtonElement>) => {
     const d = drag.current;
     if (!d) return;
+    land(d.id);
     drag.current = null;
     setDragging(null);
     setOver(false);
@@ -222,6 +245,7 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
   const onCancel = (e: PointerEvent<HTMLButtonElement>) => {
     const d = drag.current;
     if (!d) return;
+    land(d.id);
     drag.current = null;
     setDragging(null);
     setOver(false);
@@ -247,6 +271,7 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
           if (s.status === "done") return null;
           const lifted = dragging === c.id;
           const flying = s.status === "flying";
+          const peel = press?.id === c.id && !reduced ? press : null;
           return (
             <div
               key={c.id}
@@ -289,16 +314,34 @@ export function StickyPile({ statement }: { statement: ReactNode }) {
                   className={cn(
                     "animate-in fade-in-0 zoom-in-95 relative flex size-[7.5rem] flex-col rounded-[2px] p-3 text-left text-[13.5px] leading-[1.3] font-medium text-[#2B2722] duration-500 sm:size-[8.75rem] sm:p-3.5 sm:text-[15px] lg:size-[10rem] lg:p-4 lg:text-[16px]",
                     bubble?.id === c.id && "animate-[note-nudge_0.45s_ease-in-out_2]",
+                    settle === c.id && !reduced && "animate-[note-stick_0.46s_cubic-bezier(0.3,1.5,0.5,1)]",
                   )}
                   style={{
                     background: c.color,
-                    animationDelay: `${120 + i * 70}ms`,
+                    animationDelay: settle === c.id ? "0ms" : `${120 + i * 70}ms`,
                     animationFillMode: "backwards",
-                    boxShadow: lifted
-                      ? "0 2px 3px rgba(60,45,10,0.08), 0 28px 40px -18px rgba(60,45,10,0.45)"
-                      : "0 1px 1px rgba(60,45,10,0.06), 0 12px 20px -14px rgba(60,45,10,0.4)",
+                    transform: peel
+                      ? `perspective(700px) rotateX(${-peel.py * 11}deg) rotateY(${peel.px * 11}deg) rotate(${
+                          lifted ? sway : 0
+                        }deg) translateY(-3px)`
+                      : undefined,
+                    transition: "transform 170ms ease-out, box-shadow 220ms ease",
+                    boxShadow:
+                      peel || lifted
+                        ? `${-(peel?.px ?? 0) * 7}px 3px 4px rgba(60,45,10,0.08), ${-(peel?.px ?? 0) * 10}px 30px 40px -18px rgba(60,45,10,0.45)`
+                        : "0 1px 1px rgba(60,45,10,0.06), 0 12px 20px -14px rgba(60,45,10,0.4)",
                   }}
                 >
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 rounded-[2px] transition-opacity duration-200"
+                    style={{
+                      opacity: peel ? 1 : 0,
+                      background: peel
+                        ? `radial-gradient(90% 90% at ${(peel.px + 1) * 50}% ${(peel.py + 1) * 50}%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 38%, rgba(60,45,10,0.07) 100%)`
+                        : undefined,
+                    }}
+                  />
                   <span
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-x-0 top-0 h-7 rounded-t-[2px] bg-gradient-to-b from-black/[0.045] to-transparent"
